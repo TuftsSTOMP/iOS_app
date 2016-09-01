@@ -10,6 +10,10 @@ import {
   ActivityIndicatorIOS,
   Image,
 } from 'react-native';
+import AuthenticatedComponent from './AuthenticatedComponent';
+
+import {Actions} from 'react-native-router-flux';
+import Button from 'react-native-button';
 
 
 var styles = StyleSheet.create({
@@ -27,20 +31,15 @@ var styles = StyleSheet.create({
 });
 
 
-class LoginPage extends Component {
+export default AuthenticatedComponent(class MaterialListPage extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.description}>
-          Login Page
+         MaterialListPage
         </Text>
-        <Text style={styles.description}>
-          Search by place-name, postcode or search near your location.
-        </Text>
+        <Button onPress={Actions.MaterialDetailPage}>next screen for MaterialDetailPage</Button>
       </View>
     );
   }
-}
-
-
-module.exports = LoginPage;
+});

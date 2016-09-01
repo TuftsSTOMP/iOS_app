@@ -10,6 +10,9 @@ import {
   ActivityIndicatorIOS,
   Image,
 } from 'react-native';
+import AuthenticatedComponent from './AuthenticatedComponent';
+import Button from 'react-native-button';
+import {Actions} from 'react-native-router-flux';
 
 
 var styles = StyleSheet.create({
@@ -27,20 +30,15 @@ var styles = StyleSheet.create({
 });
 
 
-class MyAccount extends Component {
+export default AuthenticatedComponent(class MaterialDetailPage extends Component {
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.description}>
-          My account page
+         MaterialDetailPage
         </Text>
-        <Text style={styles.description}>
-          Search by place-name, postcode or search near your location.
-        </Text>
+        <Button onPress={Actions.pop}>Back</Button>
       </View>
     );
   }
-}
-
-
-module.exports = MyAccount;
+});
