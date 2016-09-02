@@ -1,53 +1,61 @@
-
-import React from 'react';
+import React, {Component} from 'react';
 import LoginStore from '../stores/LoginStore';
-import {AlertIOS} from 'react-native';
+import StompApiStore from '../stores/StompApiStore';
+import {AlertIOS, AsyncStorage} from 'react-native';
 import LoginActions from '../actions/LoginActions';
 
 export default (ComposedComponent) => {
-  return class AuthenticatedComponent extends React.Component {
+	return class AuthenticatedComponent extends Component {
 
-    componentWillMount() {
-      if (!this.state.userLoggedIn) {
-          LoginActions.logoutUser()
-      }
-    }
+		constructor() {
+	  		super()
+	  		this.state = {
+				user : this._getLoginState()
+	  		}
+		}
 
-    constructor() {
-      super()
-      this.state = this._getLoginState();
-    }
+		componentWillMount() {
+	  		if (!this.state.user.userLoggedIn) {
+		  		LoginActions.logoutUser()
+	  		}
+		}
 
-    _getLoginState() {
-      return {
-        userLoggedIn: LoginStore.isLoggedIn(),
-        user: LoginStore.user,
-        jwt: LoginStore.jwt
-      };
-    }
+		_getLoginState() {
+	  		return {
+				userLoggedIn: LoginStore.isLoggedIn(),
+				userType: LoginStore.user,
+				jwt: LoginStore.jwt,
+				serverName: LoginStore.serverName,
+	  		};
+		}
 
-    componentDidMount() {
-      this.changeListener = this._onChange.bind(this);
-      LoginStore.addChangeListener(this.changeListener);
-    }
+		//First load
+		componentDidMount() {}
 
-    _onChange() {
-      this.setState(this._getLoginState());
-    }
+		//All loads
+		componentWillMount() {
+	 		this.changeLoginListener = this._onLoginChange.bind(this);
+	 	 	LoginStore.addChangeListener(this.changeLoginListener);
+		}
 
-    componentWillUnmount() {
-      LoginStore.removeChangeListener(this.changeListener);
-    }
+		_onLoginChange() {
+	 		this.setState({user : this._getLoginState()});
+		}
 
 
-    render() {
-      return (
-          <ComposedComponent
-            {...this.props}
-            user={this.state.user}
-            jwt={this.state.jwt}
-            userLoggedIn={this.state.userLoggedIn} />
-      );
-    }
-  }
+		componentWillUnmount() {
+	  		LoginStore.removeChangeListener(this.changeLoginListener);
+		}
+
+		render() {
+	  		return (
+		  		<ComposedComponent
+					{...this.props}
+					serverName={this.state.user.serverName}
+					user={this.state.user.userType}
+					jwt={this.state.user.jwt}
+					userLoggedIn={this.state.user.userLoggedIn} />
+	  		);
+		}
+  	}
 };
