@@ -14,7 +14,7 @@ export default {
 			
   	MATERIAL_INFO_URL: '/Stomp/material/%material%/info',
   	MATERIAL_TRANSACTION_TOTAL_URL: '/Stomp/material/%material%/transactionTotal',
-  	MATERIAL_GET_ALL_URL: '/Stomp/getAllMaterials',
+  	MATERIAL_GET_ALL_URL: '/Stomp/getFullMaterialList',
 
   	USER_PERMISSIONS_URL: '/Stomp/user/permissions',
   	USER_API_VERSION_URL: '/Stomp/user/version'

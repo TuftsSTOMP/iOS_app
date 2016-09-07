@@ -16,6 +16,15 @@ class AuthService {
 		} catch (error) {}
 	}
 
+	async _getLocalStorage(item) {
+		try {
+			return AsyncStorage.getItem(item);
+		} catch (error) {
+			return "error";
+			AlertIOS.alert("Local Storage error", error)
+		}
+	}
+
 
 	login(values, postSubmit) {
 		var myHeaders = new Headers();
@@ -42,12 +51,14 @@ class AuthService {
 				} else { //Successful login
 		
 					//Use later for automattically loggin in user if token is available
+					
 					this._onValueChange(LoginConstants.STOMP_JWT, responseData.stomp_jwt),
 					this._onValueChange(LoginConstants.STOMP_USER, responseData.stomp_user),
 					this._onValueChange(LoginConstants.STOMP_SERVER, responseData.stomp_serverName),
+					
 	  
 					LoginActions.loginUser(responseData);
-					return true;
+					//return true;
 				}
 			})
 			.catch((error) => {
@@ -57,6 +68,7 @@ class AuthService {
 			})
 			.done(() => {
 				postSubmit();
+
 			});
 	}
 

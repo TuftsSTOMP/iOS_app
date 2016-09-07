@@ -7,18 +7,23 @@ import LoginActions from '../actions/LoginActions';
 export default (ComposedComponent) => {
 	return class AuthenticatedComponent extends Component {
 
-		constructor() {
-	  		super()
+		constructor(props) {
+	  		super(props)
 	  		this.state = {
 				user : this._getLoginState()
 	  		}
+	  		this.changeLoginListener = this._onLoginChange.bind(this);
 		}
 
+/*
 		componentWillMount() {
-	  		if (!this.state.user.userLoggedIn) {
+			if (!LoginStore.isLoggedIn) {
 		  		LoginActions.logoutUser()
 	  		}
+
+	  		LoginStore.addChangeListener(this.changeLoginListener);
 		}
+		*/
 
 		_getLoginState() {
 	  		return {
@@ -29,23 +34,18 @@ export default (ComposedComponent) => {
 	  		};
 		}
 
-		//First load
-		componentDidMount() {}
-
-		//All loads
-		componentWillMount() {
-	 		this.changeLoginListener = this._onLoginChange.bind(this);
-	 	 	LoginStore.addChangeListener(this.changeLoginListener);
-		}
 
 		_onLoginChange() {
 	 		this.setState({user : this._getLoginState()});
 		}
 
+/*
 
 		componentWillUnmount() {
 	  		LoginStore.removeChangeListener(this.changeLoginListener);
 		}
+
+		*/
 
 		render() {
 	  		return (

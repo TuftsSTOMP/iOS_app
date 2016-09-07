@@ -10,6 +10,8 @@ export default {
 			actionType: STOMP_API_SUCCESS,
 			data: data
 		});
+
+		AlertIOS.alert("Api Success", data);
 	},
 
 	ApiRequestError: (title, error) => {

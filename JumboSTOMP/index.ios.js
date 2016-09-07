@@ -68,7 +68,7 @@ class JumboSTOMP extends Component {
  
 	render() {
 		return (
-			<Router createReducer={reducerCreate} scenes={scenes} />
+			<Router {...this.state} createReducer={reducerCreate} scenes={scenes} />
 		)
 	}
 }

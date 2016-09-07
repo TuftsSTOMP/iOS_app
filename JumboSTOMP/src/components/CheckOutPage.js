@@ -37,7 +37,7 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
         </Text>
         <Text style={styles.description}>
           Search by place-name, postcode or search near your location.
-          **{this.props.userLoggedIn}**
+          **{this.props.userLoggedIn ? "logged in" : "not logged in"}**
         </Text>
       </View>
     );

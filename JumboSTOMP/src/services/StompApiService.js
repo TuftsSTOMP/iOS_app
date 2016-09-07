@@ -13,7 +13,7 @@ class StompApiService {
         myHeaders.append('Accept', 'application/json');
         myHeaders.append('Authorization', jwt);
 
-        return fetch(endpoint, {
+        fetch(endpoint, {
                 method: "POST",
                 mode:'cors',
                 headers: myHeaders,
@@ -22,17 +22,14 @@ class StompApiService {
             .then((response) => {return response.json()})
             .then((responseData) => {
                 if(responseData.error) {  //Api returned an error  
-                    StompApiActions.ApiRequestError("Api Error", responseData.data);
-                    return false;
+                    StompApiActions.ApiRequestError("Api Error", responseData.error);
+                    
                 } else { //Successful api call
                     StompApiActions.ApiRequestSuccess(responseData.data);
-                    return true;
                 }
             })
             .catch((error) => {
-                AlertIOS.alert("Connection Error", error.message)
-                StompApiActions.ApiRequestError("Connection Error", responseData.data);
-                return false;
+                StompApiActions.ApiRequestError("Connection Error", error.message);
             })
             .done();
     }
@@ -44,25 +41,22 @@ class StompApiService {
         myHeaders.append('Accept', 'application/json');
         myHeaders.append('Authorization', jwt);
 
-        return fetch(endpoint, {
+        fetch(endpoint, {
                 method: "GET",
                 mode:'cors',
                 headers: myHeaders
             })
             .then((response) => {return response.json()})
             .then((responseData) => {
-                if(responseData.error) {  //Api returned an error
-                    AlertIOS.alert("Api Error", responseData.error)
-                    return false;
+                if(responseData.error) {  //Api returned an error  
+                    StompApiActions.ApiRequestError("Api Error", responseData.error);
+                    
                 } else { //Successful api call
-                    //AlertIOS.alert("Success", responseData.data)
                     StompApiActions.ApiRequestSuccess(responseData.data);
-                    return true;
                 }
             })
             .catch((error) => {
-                AlertIOS.alert("Connection Error", error.message)
-                return false;
+                StompApiActions.ApiRequestError("Connection Error", error.message);
             })
             .done();
     }

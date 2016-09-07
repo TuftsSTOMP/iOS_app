@@ -16,7 +16,7 @@ class LoginStore extends BaseStore {
 	  		case LOGIN_USER:
 				this._jwt = action.jwt;
 				this._user = action.user;
-				this._serverName = actions.serverName;
+				this._serverName = action.serverName;
 				this.emitChange();
 				break;
 	  		case LOGOUT_USER:
@@ -43,7 +43,11 @@ class LoginStore extends BaseStore {
   	}
 
   	isLoggedIn() {
-		return (!!this._user && !!this._jwt);
+		return !!this._jwt;
+  	}
+
+  	getJwt() {
+  		return this._jwt;
   	}
 }
 
