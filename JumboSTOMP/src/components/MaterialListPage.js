@@ -60,17 +60,18 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 
 	_getStompApiDataState() {
 		return {
-			data: StompApiStore.data
+			data: StompApiStore.getMaterialList()
 		};
 	}
 
 	componentDidMount() {
-		//StompApiService.submitGet(this.props.serverName + StompApiConstants.MATERIAL_GET_ALL_URL, this.props.jwt);
+		StompApiService.getFullMaterialList(this.props.serverName, this.props.jwt);
 	}
 
 
 	//All loads
 	componentWillMount() {
+		console.log("component will mount on material list page")
 		//this.setState({jwt : this.props.jwt});
 		StompApiStore.addChangeListener(this.changeStompApiDataListener);
 
@@ -83,6 +84,7 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 	}
 
 	componentWillUnmount() {
+		console.log("component will unmount on material list page")
 		StompApiStore.removeChangeListener(this.changeStompApiDataListener);
 	}
 

@@ -1,9 +1,10 @@
-import {LOGIN_USER, LOGOUT_USER} from '../constants/LoginConstants';
+import LoginConstants from '../constants/LoginConstants';
 import BaseStore from './BaseStore';
 
 class LoginStore extends BaseStore {
 
  	constructor() {
+ 		console.log("login store created")
 		super();
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._user = null;
@@ -12,42 +13,42 @@ class LoginStore extends BaseStore {
   	}
 
   	_registerToActions(action) {
+  		console.log("login store ACTION: ", action.actionType)
 		switch(action.actionType) {
-	  		case LOGIN_USER:
+	  		case LoginConstants.LOGIN_USER:
+	  			console.log("login store LOGIN USER: ", action)
 				this._jwt = action.jwt;
 				this._user = action.user;
 				this._serverName = action.serverName;
 				this.emitChange();
 				break;
-	  		case LOGOUT_USER:
+	  		case LoginConstants.LOGOUT_USER:
+	  			console.log("login store LOGOUT USER: ", action)
 				this._user = null;
 				this._jwt = null;
 				this._serverName = null;
 				this.emitChange();
 				break;
 	  		default:
+	  			console.log("invalid action in login store", action.actionType)
 				break;
 		};
   	}
 
-  	get user() {
+  	getUser() {
 		return this._user;
   	}
 
-  	get jwt() {
+  	getJwt() {
 		return this._jwt;
   	}
 
-  	get serverName() {
+  	getServerName() {
 		return this._serverName;
   	}
 
   	isLoggedIn() {
 		return !!this._jwt;
-  	}
-
-  	getJwt() {
-  		return this._jwt;
   	}
 }
 

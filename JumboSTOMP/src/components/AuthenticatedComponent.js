@@ -15,22 +15,23 @@ export default (ComposedComponent) => {
 	  		this.changeLoginListener = this._onLoginChange.bind(this);
 		}
 
-/*
+
 		componentWillMount() {
-			if (!LoginStore.isLoggedIn) {
+			console.log("authenticated component: will mount. checking login")
+			if (!LoginStore.isLoggedIn()) {
 		  		LoginActions.logoutUser()
 	  		}
 
 	  		LoginStore.addChangeListener(this.changeLoginListener);
 		}
-		*/
+	
 
 		_getLoginState() {
 	  		return {
 				userLoggedIn: LoginStore.isLoggedIn(),
-				userType: LoginStore.user,
-				jwt: LoginStore.jwt,
-				serverName: LoginStore.serverName,
+				userType: LoginStore.getUser(),
+				jwt: LoginStore.getJwt(),
+				serverName: LoginStore.getServerName(),
 	  		};
 		}
 
@@ -39,13 +40,11 @@ export default (ComposedComponent) => {
 	 		this.setState({user : this._getLoginState()});
 		}
 
-/*
 
 		componentWillUnmount() {
 	  		LoginStore.removeChangeListener(this.changeLoginListener);
 		}
 
-		*/
 
 		render() {
 	  		return (

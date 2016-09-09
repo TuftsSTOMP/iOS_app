@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
-import {LOGIN_USER, LOGOUT_USER} from '../constants/LoginConstants.js';
+import LoginConstants from '../constants/LoginConstants.js';
 import {AlertIOS} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 
@@ -7,7 +7,7 @@ export default {
 	loginUser: (loginJsonResponse) => {
 	
 		AppDispatcher.dispatch({
-	  		actionType: LOGIN_USER,
+	  		actionType: LoginConstants.LOGIN_USER,
 	  		jwt: loginJsonResponse.stomp_jwt,
 	  		serverName: loginJsonResponse.stomp_serverName,
 	  		user: loginJsonResponse.stomp_user,
@@ -19,7 +19,7 @@ export default {
   	logoutUser: () => {
 
 		AppDispatcher.dispatch({
-	  		actionType: LOGOUT_USER
+	  		actionType: LoginConstants.LOGOUT_USER
 		});
 
 	 	Actions.Login()
@@ -28,7 +28,7 @@ export default {
   	loginError: (title, error) => {
 	
 		AppDispatcher.dispatch({
-	  		actionType: LOGOUT_USER,
+	  		actionType: null,
 	  		error: error
 		});
 

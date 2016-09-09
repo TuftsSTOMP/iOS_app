@@ -52,13 +52,13 @@ class AuthService {
 		
 					//Use later for automattically loggin in user if token is available
 					
-					this._onValueChange(LoginConstants.STOMP_JWT, responseData.stomp_jwt),
-					this._onValueChange(LoginConstants.STOMP_USER, responseData.stomp_user),
-					this._onValueChange(LoginConstants.STOMP_SERVER, responseData.stomp_serverName),
+					//this._onValueChange(LoginConstants.STOMP_JWT, responseData.stomp_jwt),
+					//this._onValueChange(LoginConstants.STOMP_USER, responseData.stomp_user),
+					//this._onValueChange(LoginConstants.STOMP_SERVER, responseData.stomp_serverName),
 					
-	  
+	  				console.log("user logged in")
 					LoginActions.loginUser(responseData);
-					//return true;
+					return true;
 				}
 			})
 			.catch((error) => {

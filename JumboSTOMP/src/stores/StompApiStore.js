@@ -1,35 +1,47 @@
-import {STOMP_API_SUCCESS, STOMP_API_ERROR} from '../constants/StompApiConstants';
+import StompApiConstants from '../constants/StompApiConstants';
 import BaseStore from './BaseStore';
 
 class StompApiStore extends BaseStore {
 
 	constructor() {
+		console.log("stomp api store created")
 		super();
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._data = null;
+		this._materialList = null;
 		this._error = null;
 	}
 
 	_registerToActions(action) {
+		console.log("stomp api store ACTION: ", action.actionType)
 		switch(action.actionType) {
-			case STOMP_API_SUCCESS:
+			case StompApiConstants.STOMP_API_SUCCESS:
 				this._data = action.data;
 				this.emitChange();
 				break;
-			case STOMP_API_ERROR:
+			case StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS:
+				this._materialList = action.data;
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_ERROR:
 				this._error = action.error;
 				this.emitChange();
 				break;
 			default:
+				console.log("invalid action in stomp api store", action.actionType)
 				break;
 		};
 	}
 
-	get data() {
+	getData() {
 		return this._data;
 	}
 
-	get error() {
+	getMaterialList() {
+		return this._materialList;
+	}
+
+	getError() {
 		return this._error;
 	}
 

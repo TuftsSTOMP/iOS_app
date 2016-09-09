@@ -4,9 +4,9 @@ import StompApiActions from '../actions/StompApiActions';
 import {AlertIOS, AsyncStorage} from 'react-native';
 
 
-class StompApiService {
+export default {
 
-	submitPost(endpoint, postData, jwt) {
+	submitPost(endpoint, postData, jwt, cbAction) {
 
         var myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -25,16 +25,16 @@ class StompApiService {
                     StompApiActions.ApiRequestError("Api Error", responseData.error);
                     
                 } else { //Successful api call
-                    StompApiActions.ApiRequestSuccess(responseData.data);
+                    cbAction(responseData.data);
                 }
             })
             .catch((error) => {
                 StompApiActions.ApiRequestError("Connection Error", error.message);
             })
             .done();
-    }
+    },
 
-    submitGet(endpoint, jwt) {
+    submitGet(endpoint, jwt, cbAction) {
 
         var myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -52,21 +52,21 @@ class StompApiService {
                     StompApiActions.ApiRequestError("Api Error", responseData.error);
                     
                 } else { //Successful api call
-                    StompApiActions.ApiRequestSuccess(responseData.data);
+                    cbAction(responseData.data);
                 }
             })
             .catch((error) => {
                 StompApiActions.ApiRequestError("Connection Error", error.message);
             })
             .done();
-    }
+    },
 
-    getUserPermission(jwt) {
-        /*"http://stomp.api.local" + StompApiConstants.USER_PERMISSIONS_URL*/
-        submitGet("http://stomp.api.local/Stomp/user/permissions", jwt);
-        
+    getUserPermission(serverName, jwt) {
+        this.submitGet(serverName + StompApiConstants.USER_PERMISSIONS_URL, jwt, StompApiActions.ApiRequestSuccess);  
+    },
+
+    getFullMaterialList(serverName, jwt) {
+        this.submitGet(serverName + StompApiConstants.MATERIAL_GET_ALL_URL, jwt, StompApiActions.ApiMaterialListRequestSuccess);  
     }
 
 }
-
-export default new StompApiService()

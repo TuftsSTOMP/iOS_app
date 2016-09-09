@@ -19,6 +19,7 @@ import LoginConstants from '../constants/LoginConstants';
 import AuthenticatedComponent from './AuthenticatedComponent';
 
 import StompApiStore from '../stores/StompApiStore';
+import LoginStore from '../stores/LoginStore';
 
 import MaterialListPage from './MaterialListPage';
 
@@ -58,16 +59,18 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 
 	_getStompApiDataState() {
 	 	return {
-			data: StompApiStore.data
+			data: StompApiStore.getData()
 	  
 	  	};
 	}
 
 
+	componentWillMount() {
+	  	StompApiStore.addChangeListener(this.changeStompApiDataListener);
+	}
 
 	componentDidMount() {
-	  	StompApiStore.addChangeListener(this.changeStompApiDataListener);
-	  	StompApiService.submitGet(this.props.serverName + StompApiConstants.USER_PERMISSIONS_URL, this.props.jwt);
+		StompApiService.getUserPermission(this.props.serverName, this.props.jwt);
 	}
 
 	_onStompApiDataChange() {
@@ -78,28 +81,19 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 	  	StompApiStore.removeChangeListener(this.changeStompApiDataListener);
 	}
 
-	
 
-	goToMaterialListPage() {
-		//AlertIOS.alert(this.props.serverName)
-		
-		//StompApiService.submitGet(this.props.serverName + StompApiConstants.MATERIAL_GET_ALL_URL, this.props.jwt);
-		Actions.MaterialListPage();
-		
-	}
 
   	render() {
 		return (
 	  		<View style={styles.container}>
 				<Text style={styles.description}>
 		  			My account page. 
-		  			**{this.state.user_permissions.data} **
 		  			**{this.props.serverName}**
+		  			**{this.state.user_permissions.data}**
 		  			
 				</Text>
 				<Button onPress={AuthService.logout}>Logout</Button>
-				<Button onPress={Actions.MaterialListPage}>Go to material list page</Button>
-				<Button>Get user Permissions</Button>
+	
 				<Text style={styles.description}>
 		 			Search by place-name, postcode or search near your location.
 				</Text>
