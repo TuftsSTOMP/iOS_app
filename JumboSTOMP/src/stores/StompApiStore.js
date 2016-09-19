@@ -9,6 +9,7 @@ class StompApiStore extends BaseStore {
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._data = null;
 		this._materialList = null;
+		this._materialDetail = null;
 		this._error = null;
 	}
 
@@ -21,6 +22,10 @@ class StompApiStore extends BaseStore {
 				break;
 			case StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS:
 				this._materialList = action.data;
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_MATERIAL_DETAIL_SUCCESS:
+				this._materialDetail = action.data;
 				this.emitChange();
 				break;
 			case StompApiConstants.STOMP_API_ERROR:
@@ -39,6 +44,10 @@ class StompApiStore extends BaseStore {
 
 	getMaterialList() {
 		return this._materialList;
+	}
+
+	getMaterialDetail() {
+		return this._materialDetail;
 	}
 
 	getError() {

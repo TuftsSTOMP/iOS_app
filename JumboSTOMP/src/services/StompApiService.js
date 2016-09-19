@@ -62,11 +62,24 @@ export default {
     },
 
     getUserPermission(serverName, jwt) {
-        this.submitGet(serverName + StompApiConstants.USER_PERMISSIONS_URL, jwt, StompApiActions.ApiRequestSuccess);  
+        this.submitGet(serverName + StompApiConstants.USER_PERMISSIONS_URL, 
+                        jwt, 
+                        StompApiActions.ApiRequestSuccess);  
     },
 
     getFullMaterialList(serverName, jwt) {
-        this.submitGet(serverName + StompApiConstants.MATERIAL_GET_ALL_URL, jwt, StompApiActions.ApiMaterialListRequestSuccess);  
+        this.submitGet(serverName + StompApiConstants.MATERIAL_GET_ALL_URL, 
+                        jwt, 
+                        StompApiActions.ApiMaterialListRequestSuccess);  
+    },
+
+    getMaterialDetailPage(serverName, jwt, materialName) {
+        var url = (StompApiConstants.MATERIAL_INFO_URL).replace(/%.*%/, materialName);
+        console.log(url);
+
+        this.submitGet(serverName + url, 
+                        jwt, 
+                        StompApiActions.ApiMaterialDetailRequestSuccess);
     }
 
 }

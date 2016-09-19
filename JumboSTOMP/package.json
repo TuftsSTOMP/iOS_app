@@ -11,6 +11,8 @@
     "flux": "^2.1.1",
     "react": "15.3.1",
     "react-addons-linked-state-mixin": "^15.3.1",
+    "react-bootstrap": "^0.30.3",
+    "react-dom": "^15.3.1",
     "react-mixin": "^1.1.0",
     "react-native": "0.32.0",
     "react-native-button": "^1.6.0",
@@ -18,6 +20,8 @@
     "react-native-gifted-form": "0.0.13",
     "react-native-keychain": "^0.3.2",
     "react-native-router-flux": "^3.35.0",
-    "react-native-scrollable-tab-view": "^0.5.5"
+    "react-native-scrollable-tab-view": "^0.5.5",
+    "react-native-swipe-list-view": "^0.3.0",
+    "underscore": "^1.8.3"
   }
 }

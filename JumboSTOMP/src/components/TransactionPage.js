@@ -13,10 +13,10 @@ import CheckOutPage from './CheckOutPage';
 export default AuthenticatedComponent(class TransactionPage extends React.Component {
   render() {
     return (
-    <ScrollableTabView>
-        <CheckInPage tabLabel="Check In" />
-        <CheckOutPage tabLabel="Check Out" />
-    </ScrollableTabView>
+        <ScrollableTabView>
+            <CheckInPage tabLabel="Check In" />
+            <CheckOutPage tabLabel="Check Out" />
+        </ScrollableTabView>
     );
   }
 });

@@ -39,7 +39,7 @@ const scenes = Actions.create(
 		<Scene key = "TransactionWrapper" title="Transaction" hideNavBar={true} icon={TabIcon}>
 			<Scene key="Transaction" component={TransactionPage} title="Transaction" icon={TabIcon}/>
 		</Scene>
-		<Scene key="MaterialWrapper" title="Materials" icon={TabIcon} >
+		<Scene key="MaterialWrapper" title="Materials" icon={TabIcon} hideNavBar={true}>
 			<Scene key="MaterialListPage" component={MaterialListPage} title="Materials" />
 			<Scene key="MaterialDetailPage" component={MaterialDetailPage} title="Material Detail" />
 		</Scene>
@@ -56,7 +56,6 @@ const reducerCreate = params=>{
 		console.log("ACTION:", action);
 		return defaultReducer(state, action);
 	}
-
 };
 
 

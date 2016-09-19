@@ -53,8 +53,7 @@ export default class Login extends Component {
 			return (
 
 				<GiftedForm
-					formName='loginForm' // GiftedForm instances that use the same name will also share the same states
-
+					formName='loginForm' 
 
 					style = {{
 						marginTop: 40,
@@ -110,6 +109,7 @@ export default class Login extends Component {
 						
 						onSubmit = {(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
 							if (isValid === true) {
+								console.log("about to submit");
 								Auth.login(values, postSubmit);
 								GiftedFormManager.reset('loginForm');
 							}

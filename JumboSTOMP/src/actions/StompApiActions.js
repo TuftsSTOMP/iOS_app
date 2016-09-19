@@ -20,6 +20,18 @@ export default {
 			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS,
 			data: data
 		});
+
+		console.log("Api material list request success", data)
+	},
+
+	ApiMaterialDetailRequestSuccess: (data) => {
+
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_MATERIAL_DETAIL_SUCCESS,
+			data: data
+		});
+
+		console.log("stomp api material detail request success: ", data)
 	},
 
 	ApiRequestError: (title, error) => {
