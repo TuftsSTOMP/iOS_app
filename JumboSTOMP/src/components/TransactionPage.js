@@ -11,6 +11,8 @@ import CheckInPage from './CheckInPage';
 import CheckOutPage from './CheckOutPage';
 
 export default AuthenticatedComponent(class TransactionPage extends React.Component {
+
+    
   render() {
     return (
         <ScrollableTabView>

@@ -20,5 +20,14 @@ export default {
 			actionType: MaterialCartConstants.REMOVE_ITEM,
 			materialName: materialName
 		});
+	},
+
+	SuccessfulCartCheckout: (data) => {
+	
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.REMOVE_ALL,
+		});
+
+		AlertIOS.alert("Successful Checkout", "Your transaction has been completed");
 	}
 }

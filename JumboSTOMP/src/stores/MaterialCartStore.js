@@ -22,6 +22,10 @@ class MaterialCartStore extends BaseStore {
 				delete this._cart[action.materialName];
 				this.emitChange();
 				break;
+			case MaterialCartConstants.REMOVE_ALL:
+				this._cart = {};
+				this.emitChange();
+				break;
 			default:
 				console.log("invalid action in material cart store", action.actionType)
 				break;

@@ -6,6 +6,12 @@ import LoginStore from '../stores/LoginStore';
 import StompApiStore from '../stores/StompApiStore';
 
 export default {
+	ApiGenericRequestSuccess: (data) => {
+	
+		console.log("Api generic request success", data);
+		AlertIOS.alert("Successful Api Call", data);
+	},
+
 	ApiRequestSuccess: (data) => {
 	
 		AppDispatcher.dispatch({

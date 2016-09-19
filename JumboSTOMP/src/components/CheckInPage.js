@@ -60,7 +60,7 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
   }
 
 
-  componentDidMount() {
+  componentWillMount() {
       StompApiStore.addChangeListener(this.changeStompApiDataListener);
       //StompApiService.submitGet(this.props.serverName + StompApiConstants.USER_PERMISSIONS_URL, this.props.jwt)
   }

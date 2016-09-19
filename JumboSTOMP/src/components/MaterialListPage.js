@@ -30,155 +30,92 @@ import MaterialCartActions from '../actions/MaterialCartActions';
 import MaterialCartStore from '../stores/MaterialCartStore';
 
 
-var styles2 = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    backgroundColor: '#FFFFFD',
-  },
-  image: {
-    height: 48,
-    width: 48,
-    borderRadius: 25,
-    marginTop: 10,
-    alignSelf: 'flex-start',
-    marginRight: 15,
-    marginLeft: 15
-  },
-  postDetailsContainer:{
-    flex: 1,
-  },
-  postTitle: {
-    fontSize: 15,
-    textAlign: 'left',
-    marginTop: 10,
-    marginRight: 10,
-    color: '#DA552F'
-  },
-  commentorDetails: {
-    fontSize: 12,
-    marginBottom: 5,
-    color: 'gray'
-  },
-  postDetailsLine: {
-    fontSize: 12,
-    marginRight: 10,
-    color: 'gray',
-  },
-  childPostDetailsLine: {
-    fontSize: 12,
-    marginRight: 10,
-    marginBottom: 10,
-    color: 'gray'
-  },
-  postChildrenDetails: {
-    fontSize: 12,
-    marginTop: 5,
-    marginBottom: 10,
-    marginRight: 5,
-    color: 'gray',
-    textAlign: 'right',
-    flex: 1
-  },
-  separator: {
-    height: 0.5,
-    backgroundColor: '#CCCCCC',
-  },
-  icon: {
-    marginTop: 5,
-    marginBottom: 10,
-    marginRight: 10,
-    width: 12,
-    height: 12
-  },
-  pageContainer: {
-  	flex: 1,
-    padding: 30,
-    marginTop: 65,
-    alignItems: 'center'
-  }
-});
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    flex: 1
+	backgroundColor: 'white',
+	flex: 1
   },
   standalone: {
-    marginTop: 30,
-    marginBottom: 30,
+	marginTop: 30,
+	marginBottom: 30,
   },
   standaloneRowFront: {
-    alignItems: 'center',
-    backgroundColor: '#CCC',
-    justifyContent: 'center',
-    height: 50,
+	alignItems: 'center',
+	backgroundColor: '#CCC',
+	justifyContent: 'center',
+	height: 50,
   },
   standaloneRowBack: {
-    alignItems: 'center',
-    backgroundColor: '#8BC645',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 15
+	alignItems: 'center',
+	backgroundColor: '#8BC645',
+	flex: 1,
+	flexDirection: 'row',
+	justifyContent: 'space-between',
+	padding: 15
   },
   backTextWhite: {
-    color: '#FFF'
+	color: '#FFF'
   },
   rowFront: {
-    alignItems: 'center',
-    backgroundColor: '#CCC',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    justifyContent: 'center',
-    height: 50,
+	alignItems: 'center',
+	backgroundColor: '#CCC',
+	borderBottomColor: 'black',
+	borderBottomWidth: 1,
+	justifyContent: 'center',
+	height: 50,
+  },
+   rowFrontSelected: {
+	alignItems: 'center',
+	backgroundColor: '#DDD',
+	borderBottomColor: 'black',
+	borderBottomWidth: 1,
+	justifyContent: 'center',
+	height: 50,
   },
   rowBack: {
-    alignItems: 'center',
-    backgroundColor: '#DDD',
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 15,
+	alignItems: 'center',
+	backgroundColor: '#DDD',
+	flex: 1,
+	flexDirection: 'row',
+	justifyContent: 'space-between',
+	paddingLeft: 15,
   },
   backRightBtn: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    width: 75
+	alignItems: 'center',
+	bottom: 0,
+	justifyContent: 'center',
+	position: 'absolute',
+	top: 0,
+	width: 75
   },
   backRightBtnLeft: {
-    backgroundColor: 'blue',
-    right: 75
+	backgroundColor: 'blue',
+	right: 75
   },
   backRightBtnRight: {
-    backgroundColor: 'red',
-    right: 0
+	backgroundColor: 'red',
+	right: 0
   },
   controls: {
-    alignItems: 'center',
-    marginBottom: 30
+	alignItems: 'center',
+	marginBottom: 30
   },
   switchContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 5
+	flexDirection: 'row',
+	justifyContent: 'center',
+	marginBottom: 5
   },
   switch: {
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
-    paddingVertical: 10,
-    width: 100,
+	alignItems: 'center',
+	borderWidth: 1,
+	borderColor: 'black',
+	paddingVertical: 10,
+	width: 100,
   }, 
   separator: {
-    height: 0.5,
-    backgroundColor: '#CCCCCC',
-  }
+	height: 0.5,
+	backgroundColor: '#CCCCCC',
+  },
 });
 
 
@@ -222,54 +159,70 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 		StompApiStore.removeChangeListener(this.changeStompApiDataListener);
 	}
 
-  viewDetails(materialName) {
-    StompApiService.getMaterialDetailPage(this.props.serverName, this.props.jwt, materialName);
-    Actions.MaterialDetailPage({materialName});
-  }
+  	viewDetails(materialName) {
+		StompApiService.getMaterialDetailPage(this.props.serverName, this.props.jwt, materialName);
+		Actions.MaterialDetailPage({materialName});
+  	}
 
+  	toggleMaterial(materialName) {
+		MaterialCartStore.hasMaterial(materialName) ? 
+	  		MaterialCartActions.RemoveItem(materialName) :
+	  		MaterialCartActions.AddItem(materialName, 1);
+  	}
 
 	_renderRow(material) {
+		let rowContent;
+		if (MaterialCartStore.hasMaterial(material.name)) {
+			rowContent = (
+				<View style={[styles.postDetailsContainer, styles.rowFrontSelected]}>
+					<Text style={styles.postTitle}>{ material.name} </Text>
+					<Text style={styles.commentorDetails}>| maximum quantity: {material.max_quantity} |</Text>
+					<View style={styles.separator} />
+				</View>
+			);
+		} else {
+			rowContent = (
+				<View style={[styles.postDetailsContainer, styles.rowFront]}>
+					<Text style={styles.postTitle}>{ material.name} </Text>
+					<Text style={styles.commentorDetails}>| maximum quantity: {material.max_quantity} |</Text>
+					<View style={styles.separator} />
+				</View>
+			);
+		}
+
 		return (
- 			<View style={styles.container}>
-        <TouchableOpacity onPress ={() => {
-            MaterialCartStore.hasMaterial(material.name) ? 
-              MaterialCartActions.RemoveItem(material.name) :
-              MaterialCartActions.AddItem(material.name, 0);
-        }}>
-        	 <View style={[styles.postDetailsContainer, styles.rowFront]}>
-                <Text style={styles.postTitle}>{ material.name} </Text>
-          			<Text style={styles.commentorDetails}>| maximum quantity: {material.max_quantity} |</Text>
-          			<View style={styles.separator} />
-        		</View>
-        </TouchableOpacity>
-      </View>
-    );
+			<View style={styles.container}>
+				<TouchableOpacity onPress ={this.toggleMaterial.bind(this, material.name)}>
+					{rowContent}
+				</TouchableOpacity>
+			</View>
+		)
 	}
 
+	_renderHiddenRow(material) {
+		return (
+			<View style={styles.rowBack}>
+				<TouchableOpacity 
+					style={[styles.backRightBtn, styles.backRightBtnRight]} 
+					onPress ={this.viewDetails.bind(this, material.name)} 
+				>
+					<Text style={styles.backTextWhite}>View Details</Text>
+				</TouchableOpacity>
+			</View>    
+		)
+	}
 
 	render() {
 		return (
 			<View>
-				<Text>
-				 MaterialListPage
-				</Text>
-        <SwipeListView
-            enableEmptySections = {true}
-            dataSource={this.state.materials}
-            renderRow = {this._renderRow} 
-            renderHiddenRow={ material => (
-                <View style={styles.rowBack}>
-                    <TouchableOpacity 
-                        style={[styles.backRightBtn, styles.backRightBtnRight]} 
-                        onPress ={this.viewDetails.bind(this, material.name)} 
-                    >
-                      <Text style={styles.backTextWhite}>View Details</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-            rightOpenValue={-75} />
-            <Button onPress = {() => {console.log(MaterialCartStore.getCart())}}> Show cart </Button>
-    </View>
+				<Text> MaterialListPage </Text>
+				<SwipeListView
+					enableEmptySections = {true}
+					dataSource={this.state.materials}
+					renderRow = { material => (this._renderRow(material))} 
+					renderHiddenRow={ material => (this._renderHiddenRow(material))}
+					rightOpenValue={-75} />
+			</View>
 		);
 	}
 });

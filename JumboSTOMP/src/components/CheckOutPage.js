@@ -9,6 +9,7 @@ import {
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
+  Button,
   ListView,
   TouchableOpacity
 } from 'react-native';
@@ -18,6 +19,8 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 
 import MaterialCartStore from '../stores/MaterialCartStore';
 import MaterialCartActions from '../actions/MaterialCartActions';
+
+import StompApiService from '../services/StompApiService';
 
 
 var styles = StyleSheet.create({
@@ -111,20 +114,87 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default AuthenticatedComponent(class CheckOutPage extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      cart : ds.cloneWithRows(this._getMaterialCart())
+    }
+
+    this.changeMaterialCartListener = this._onMaterialCartChange.bind(this);
+
+    console.log("Constructor cart", this.state.cart);
+  }
+  
+
+  _getMaterialCart() {
+    var materialCart = MaterialCartStore.getCart();
+    var materialList = [];
+    for(var key in materialCart){ materialList.push(materialCart[key]) }
+
+    return materialList;
+  }
+
+  //All loads
+  componentWillMount() {
+    MaterialCartStore.addChangeListener(this.changeMaterialCartListener);
+  }
+
+  _onMaterialCartChange() {
+    this.setState({cart : ds.cloneWithRows(this._getMaterialCart())});
+  }
+
+  componentWillUnmount() {
+    MaterialCartStore.removeChangeListener(this.changeMaterialCartListener);
+  }
+
+  _removeMaterialFromCart(materialName) {
+    MaterialCartActions.RemoveItem(materialName);
+  }
+
+  _submitCheckout() {
+    var postData = new FormData();
+
+    this._getMaterialCart().map(
+      function(material) {
+        postData.append( material.name.replace(' ', '_'), material.quantity );
+      }
+    );
+
+    console.log("Post data", postData);
+    
+    StompApiService.checkoutMaterial_remove(this.props.serverName, this.props.jwt, postData);
+  }
+
   _renderRow(material) {
     return (
         <View>
             <Text >Name: { material.name} </Text>
             <Text >Quantity: { material.quantity} </Text>
+            <TouchableOpacity 
+              onPress ={this._removeMaterialFromCart.bind(this, material.name)}
+            >
+              
+              <Text style = {{color: 'red'}}>Remove Item</Text>
+            </TouchableOpacity>
         </View>
       );
   }
 
   render() {
-    var materialList = [];
-    var cart = MaterialCartStore.getCart();
-    for(var key in cart){ materialList.push(cart[key]) }
-
+    let submitMessage;
+    if(this.state.cart.getRowCount() == 0) {
+        submitMessage = (
+            <Text> There are no items in your cart </Text>
+          );
+    } else {
+        submitMessage = (
+            <TouchableOpacity
+              onPress = {this._submitCheckout.bind(this)}
+            >
+              <Text style = {{color : 'blue'}}> Submit CheckOut </Text>
+            </TouchableOpacity>
+          );
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.description}>
@@ -136,19 +206,13 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 
         <SwipeListView
             enableEmptySections = {true}
-            dataSource= {ds.cloneWithRows(materialList)}
-            renderRow = {this._renderRow} 
-            renderHiddenRow={ material => (
-                <View style={styles.rowBack}>
-                    <TouchableOpacity 
-                        style={[styles.backRightBtn, styles.backRightBtnRight]} 
-                        onPress ={MaterialCartActions.RemoveItem(material.name)} 
-                    >
-                      <Text style={styles.backTextWhite}>View Details</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-            rightOpenValue={-75} />
+            dataSource= {this.state.cart}
+            renderRow = { material => (this._renderRow(material))} />
+
+        <View>
+          {submitMessage}
+        </View>
+
       </View>
     );
   }

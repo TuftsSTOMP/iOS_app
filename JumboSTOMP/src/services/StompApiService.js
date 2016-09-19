@@ -1,6 +1,7 @@
 
 import StompApiConstants from '../constants/StompApiConstants';
 import StompApiActions from '../actions/StompApiActions';
+import MaterialCartActions from '../actions/MaterialCartActions';
 import {AlertIOS, AsyncStorage} from 'react-native';
 
 
@@ -75,11 +76,16 @@ export default {
 
     getMaterialDetailPage(serverName, jwt, materialName) {
         var url = (StompApiConstants.MATERIAL_INFO_URL).replace(/%.*%/, materialName);
-        console.log(url);
-
         this.submitGet(serverName + url, 
                         jwt, 
                         StompApiActions.ApiMaterialDetailRequestSuccess);
+    },
+
+    checkoutMaterial_remove(serverName, jwt, postData) {
+        this.submitPost(serverName + StompApiConstants.CHECKOUT_REMOVE_URL,
+                        postData,
+                        jwt,
+                        MaterialCartActions.SuccessfulCartCheckout);
     }
 
 }

@@ -70,16 +70,15 @@ export default AuthenticatedComponent(class MaterialDetailPage extends Component
   }
 
 
-//[{"name":"Laptops","q_avail":"15","q_reserved":"0","q_removed":"0","max_checkout_q":"4","low_q_thresh":"0"}]
   _renderRow(material) {
     return (
       <View>
           <Text style={styles.postTitle}>Name: { material.name} </Text>
-          <Text style={styles.postTitle}>q_avail: { material.q_avail} </Text>
-          <Text style={styles.postTitle}>q_reserved: { material.q_reserved} </Text>
-          <Text style={styles.postTitle}>q_removed: { material.q_removed} </Text>
-          <Text style={styles.postTitle}>max_checkout_q: { material.max_checkout_q} </Text>
-          <Text style={styles.postTitle}>low_q_thresh: { material.low_q_thresh} </Text>
+          <Text style={styles.postTitle}>Quantity Available: { material.q_avail} </Text>
+          <Text style={styles.postTitle}>Quantity Reserved: { material.q_reserved} </Text>
+          <Text style={styles.postTitle}>Quantity Removed: { material.q_removed} </Text>
+          <Text style={styles.postTitle}>Maximum Checkout Quantity: { material.max_checkout_q} </Text>
+          <Text style={styles.postTitle}>Low Quantity Threshold: { material.low_q_thresh} </Text>
       </View>
     );
   }
