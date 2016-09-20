@@ -40,6 +40,10 @@ class MaterialCartStore extends BaseStore {
 		return !!this._cart[materialName];
 	}
 
+	getMaterial(materialName) {
+		return this._cart[materialName];
+	}
+
 }
 
 export default new MaterialCartStore();

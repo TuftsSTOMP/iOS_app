@@ -5,6 +5,8 @@ import StompApiConstants from '../constants/StompApiConstants';
 import LoginStore from '../stores/LoginStore';
 import StompApiStore from '../stores/StompApiStore';
 
+import _ from 'underscore';
+
 export default {
 	ApiGenericRequestSuccess: (data) => {
 	
@@ -21,7 +23,7 @@ export default {
 	},
 
 	ApiMaterialListRequestSuccess: (data) => {
-	
+
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS,
 			data: data

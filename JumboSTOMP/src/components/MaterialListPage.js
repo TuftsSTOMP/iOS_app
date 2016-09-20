@@ -15,6 +15,9 @@ import {
 	ListView,
 	AlertIOS
 } from 'react-native';
+
+import Picker from 'react-native-picker';
+
 import AuthenticatedComponent from './AuthenticatedComponent';
 
 import {Actions} from 'react-native-router-flux';
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   },
    rowFrontSelected: {
 	alignItems: 'center',
-	backgroundColor: '#DDD',
+	backgroundColor: '#EEE',
 	borderBottomColor: 'black',
 	borderBottomWidth: 1,
 	justifyContent: 'center',
@@ -124,9 +127,13 @@ const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 export default AuthenticatedComponent(class MaterialListPage extends Component {
 
 	constructor(props) {
-		super(props)
+		super(props);
+
 		this.state = {
-			materials : ds.cloneWithRows([])
+			materials : ds.cloneWithRows([]),
+			pickerData : [1,2,3],
+			selectedValue : 1,
+			pickerTitle : "Material Name"
 		}
 
 		this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
@@ -164,19 +171,31 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 		Actions.MaterialDetailPage({materialName});
   	}
 
-  	toggleMaterial(materialName) {
-		MaterialCartStore.hasMaterial(materialName) ? 
-	  		MaterialCartActions.RemoveItem(materialName) :
-	  		MaterialCartActions.AddItem(materialName, 1);
+  	toggleMaterial(materialName, max_quantity) {
+
+		if (MaterialCartStore.hasMaterial(materialName)) {
+			MaterialCartActions.RemoveItem(materialName);
+		} else {
+			var quantityOptions = [];
+			for (var i = 1; i <= max_quantity; i++) {
+    			quantityOptions.push(i);
+			}
+			this.setState({pickerData : quantityOptions});
+			this.setState({pickerTitle : materialName});
+
+			this.picker.toggle();
+		}
+	  		
   	}
 
 	_renderRow(material) {
 		let rowContent;
 		if (MaterialCartStore.hasMaterial(material.name)) {
+			let current_quantity = MaterialCartStore.getMaterial(material.name).quantity;
 			rowContent = (
 				<View style={[styles.postDetailsContainer, styles.rowFrontSelected]}>
 					<Text style={styles.postTitle}>{ material.name} </Text>
-					<Text style={styles.commentorDetails}>| maximum quantity: {material.max_quantity} |</Text>
+					<Text style={styles.commentorDetails}>current : {current_quantity}</Text>
 					<View style={styles.separator} />
 				</View>
 			);
@@ -184,7 +203,6 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 			rowContent = (
 				<View style={[styles.postDetailsContainer, styles.rowFront]}>
 					<Text style={styles.postTitle}>{ material.name} </Text>
-					<Text style={styles.commentorDetails}>| maximum quantity: {material.max_quantity} |</Text>
 					<View style={styles.separator} />
 				</View>
 			);
@@ -192,7 +210,7 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 
 		return (
 			<View style={styles.container}>
-				<TouchableOpacity onPress ={this.toggleMaterial.bind(this, material.name)}>
+				<TouchableOpacity onPress ={this.toggleMaterial.bind(this, material.name, material.max_quantity)}>
 					{rowContent}
 				</TouchableOpacity>
 			</View>
@@ -222,6 +240,18 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 					renderRow = { material => (this._renderRow(material))} 
 					renderHiddenRow={ material => (this._renderHiddenRow(material))}
 					rightOpenValue={-75} />
+
+				<Picker
+					ref={picker => this.picker = picker}
+					style={{height: 120}}
+					pickerData={this.state.pickerData}
+					pickerTitle = {this.state.pickerTitle}
+					pickerCancelBtnText= "Undo"
+					pickerBtnText= "Save"
+					selectedValue={this.state.selectedValue}
+					onPickerDone={(pickedValue) => {
+						MaterialCartActions.AddItem(this.state.pickerTitle, pickedValue);
+					}} />
 			</View>
 		);
 	}

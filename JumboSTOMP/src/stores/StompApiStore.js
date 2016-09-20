@@ -1,6 +1,8 @@
 import StompApiConstants from '../constants/StompApiConstants';
 import BaseStore from './BaseStore';
 
+import _ from 'underscore';
+
 class StompApiStore extends BaseStore {
 
 	constructor() {
@@ -22,6 +24,20 @@ class StompApiStore extends BaseStore {
 				break;
 			case StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS:
 				this._materialList = action.data;
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_MATERIAL_LIST_SELECTED_TRUE:
+				this._materialList[action.materialName] = _.extend({}, this._materialList[action.materialName], action.update);
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_MATERIAL_LIST_SELECTED_FALSE:
+				this._materialList[action.materialName] = _.extend({}, this._materialList[action.materialName], action.update);
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_MATERIAL_LIST_TOGGLE_FALSE_ALL:
+				this._materialList = this._materialList.map(function(e) {
+					e.selected = 0;
+				});
 				this.emitChange();
 				break;
 			case StompApiConstants.STOMP_API_MATERIAL_DETAIL_SUCCESS:
