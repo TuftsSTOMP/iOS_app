@@ -3,11 +3,24 @@
 import React, { Component } from 'react';
 import {
  	StyleSheet,
-  	Text,
   	View,
   	AlertIOS
 } from 'react-native';
-import Button from 'react-native-button';
+import { 
+	Container, 
+	Content, 
+	Text,
+	List,
+	ListItem,
+	Header,
+	Button,
+	Spinner,
+	Icon,
+	Title
+} from 'native-base';
+
+//import Button from 'react-native-button';
+import Theme from '../themes/version1';
 
 import {Actions} from 'react-native-router-flux';
 
@@ -33,7 +46,7 @@ var styles = StyleSheet.create({
   	},
   	container: {
 		padding: 30,
-		marginTop: 65,
+		marginTop: 15,
 		alignItems: 'center'
   	}
 });
@@ -44,7 +57,8 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			user_permissions : this._getStompApiDataState()
+			user_permissions : this._getStompApiDataState(),
+			loading : true,
 	  	}
 
 	  	this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
@@ -75,6 +89,8 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 
 	_onStompApiDataChange() {
 	  	this.setState({user_permissions : this._getStompApiDataState()});
+
+	  	this.setState({loading : false});
 	}
 
 	componentWillUnmount() {
@@ -85,19 +101,29 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 
   	render() {
 		return (
-	  		<View style={styles.container}>
-				<Text style={styles.description}>
-		  			My account page. 
-		  			**{this.props.serverName}**
-		  			**{this.state.user_permissions.data}**
-		  			
-				</Text>
-				<Button onPress={AuthService.logout}>Logout</Button>
-	
-				<Text style={styles.description}>
-		 			Search by place-name, postcode or search near your location.
-				</Text>
-		  	</View>
+			<Container theme={Theme}>
+
+				<Header> 
+                	<Title>My Account</Title>
+				</Header>
+
+				<Content>
+				{ this.state.loading ? <Spinner/> :
+	  				<View style={styles.container}>
+	  					<Text style={styles.description}>
+		 					Interact with the supply closet from your fingertips!
+						</Text>
+						<Text style={styles.description}>
+		 					Additional features coming soon...
+						</Text>
+						<Text style={styles.description}>
+		 					For any questions or to report an issue, Contact Sam Heilbron at samheilbron@gmail.com
+						</Text>
+						<Button block danger onPress={AuthService.logout}>Logout</Button>
+		  			</View>
+		  		}
+		  		</Content>
+		  	</Container>
 		);
   	}
 });

@@ -42,6 +42,16 @@ export default {
 		console.log("stomp api material detail request success: ", data)
 	},
 
+	ApiCheckinListRequestSuccess: (data) => {
+
+		console.log("stomp api material checkin List request success: ", data);
+
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_CHECKIN_LIST_REQUEST_SUCCESS,
+			data: data
+		});
+	},
+
 	ApiRequestError: (title, error) => {
 	
 		AppDispatcher.dispatch({

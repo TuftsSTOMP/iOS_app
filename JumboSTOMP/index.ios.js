@@ -7,8 +7,13 @@
 import React, { Component } from 'react';
 import {
 	AppRegistry,
-	Text
+	Text,
+	StyleSheet
 } from 'react-native';
+import { 
+	Button,
+	Icon
+} from 'native-base';
 import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux'
 
 /* FULL LIST OF PAGES IN APP STRUCTURE  */
@@ -20,26 +25,40 @@ import CheckOutPage from './src/components/CheckOutPage';
 import MaterialListPage from './src/components/MaterialListPage';
 import MaterialDetailPage from './src/components/MaterialDetailPage';
 
-//tab names. edit display
-class TabIcon extends React.Component {
-	render(){
-		return (
-			<Text style={{color: this.props.selected ? 'red' :'black'}}>{this.props.title}</Text>
-		);
-	}
+//tab display
+// style ={{color: this.props.selected ? 'red' :'black'}} 
+class MenuIcon extends React.Component {
+	render(){ return ( <Icon name='ios-menu'/>);}
 }
+
+class CartIcon extends React.Component {
+	render(){ return ( <Icon name='ios-cart' />);}
+}
+
+class AccountIcon extends React.Component {
+	render(){ return ( <Icon name='ios-person'/>);}
+}
+
+const styles = StyleSheet.create({
+  tabBarStyle: {
+    backgroundColor: '#eee',
+  },
+  tabBarSelectedItemStyle: {
+    backgroundColor: '#ddd',
+  }
+});
 
 /* APP ARCHITECTURE */
 const scenes = Actions.create(
   <Scene key="root">
 	<Scene key="Login" component={LoginPage} hideNavBar={true} title="Login" type={ActionConst.REPLACE} />
 	
-	<Scene key="HomeTabbar" tabs={true} >
-		<Scene key="AccountPage" component={AccountPage} title="My Account" icon={TabIcon}/>
-		<Scene key = "TransactionWrapper" title="Transaction" hideNavBar={true} icon={TabIcon}>
-			<Scene key="Transaction" component={TransactionPage} title="Transaction" icon={TabIcon}/>
+	<Scene key="HomeTabbar" tabs={true}  tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
+		<Scene key="AccountPage" component={AccountPage} title="My Account" hideNavBar={true} icon={AccountIcon}/>
+		<Scene key = "TransactionWrapper" title="Transaction" hideNavBar={true} icon={CartIcon}>
+			<Scene key="Transaction" component={TransactionPage} title="Transaction" icon={CartIcon}/>
 		</Scene>
-		<Scene key="MaterialWrapper" title="Materials" icon={TabIcon} hideNavBar={true}>
+		<Scene key="MaterialWrapper" title="Materials" icon={MenuIcon} hideNavBar={true}>
 			<Scene key="MaterialListPage" component={MaterialListPage} title="Materials" />
 			<Scene key="MaterialDetailPage" component={MaterialDetailPage} title="Material Detail" />
 		</Scene>

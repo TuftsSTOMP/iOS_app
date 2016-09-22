@@ -2,17 +2,27 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableHighlight,
-  ActivityIndicatorIOS,
-  Image,
-  ListView
+	ListView
 } from 'react-native';
+
+import { 
+	Container, 
+	Content, 
+	Text,
+	List,
+	ListItem,
+	Badge,
+	Header,
+	Button,
+	Spinner,
+	Icon,
+	Title
+} from 'native-base';
+
+import Theme from '../themes/version1';
+
 import AuthenticatedComponent from './AuthenticatedComponent';
-import Button from 'react-native-button';
+
 import {Actions} from 'react-native-router-flux';
 
 
@@ -21,81 +31,97 @@ import StompApiConstants from '../constants/StompApiConstants';
 import StompApiStore from '../stores/StompApiStore';
 
 
-var styles = StyleSheet.create({
-  description: {
-    marginBottom: 20,
-    fontSize: 18,
-    textAlign: 'center',
-    color: '#656565'
-  },
-  container: {
-    padding: 30,
-    marginTop: 65,
-    alignItems: 'center'
-  }
-});
-
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 export default AuthenticatedComponent(class MaterialDetailPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      materialDetail : ds.cloneWithRows([])
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			materialDetail : ds.cloneWithRows([]),
+			loading : true
+		}
 
-    this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
-  }
-  
+		this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
+	}
+	
 
-  _getStompApiDataState() {
-    return StompApiStore.getMaterialDetail();
-  }
-
-
-
-  //All loads
-  componentWillMount() {
-    StompApiStore.addChangeListener(this.changeStompApiDataListener);
-  }
-
-  _onStompApiDataChange() {
-    var jsArr = JSON.parse(this._getStompApiDataState());
-    this.setState({materialDetail : ds.cloneWithRows(jsArr)});
-    console.log(this.state.materialDetail);
-  }
-
-  componentWillUnmount() {
-    StompApiStore.removeChangeListener(this.changeStompApiDataListener);
-  }
+	_getStompApiDataState() {
+		return StompApiStore.getMaterialDetail();
+	}
 
 
-  _renderRow(material) {
-    return (
-      <View>
-          <Text style={styles.postTitle}>Name: { material.name} </Text>
-          <Text style={styles.postTitle}>Quantity Available: { material.q_avail} </Text>
-          <Text style={styles.postTitle}>Quantity Reserved: { material.q_reserved} </Text>
-          <Text style={styles.postTitle}>Quantity Removed: { material.q_removed} </Text>
-          <Text style={styles.postTitle}>Maximum Checkout Quantity: { material.max_checkout_q} </Text>
-          <Text style={styles.postTitle}>Low Quantity Threshold: { material.low_q_thresh} </Text>
-      </View>
-    );
-  }
+	componentWillMount() {
+		StompApiStore.addChangeListener(this.changeStompApiDataListener);
+	}
+
+	_onStompApiDataChange() {
+		var jsArr = JSON.parse(this._getStompApiDataState());
+		this.setState({materialDetail : ds.cloneWithRows(jsArr)});
+		
+		this.setState({loading : false});
+	}
+
+	componentWillUnmount() {
+		StompApiStore.removeChangeListener(this.changeStompApiDataListener);
+	}
 
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.description}>
-         MaterialDetailPage
-        </Text>
-        <ListView
-            enableEmptySections = {true}
-            dataSource={this.state.materialDetail}
-            renderRow = {this._renderRow} />
-        <Button onPress={Actions.pop}>Back</Button>
-      </View>
-    );
-  }
+	_renderRow(material) {
+		return (
+			<List>
+                <ListItem iconLeft>
+                	<Icon name='ios-cube' />
+                    <Text>Name </Text>
+                    <Badge>{material.name}</Badge>
+                </ListItem>
+                <ListItem iconLeft>
+                    <Icon name='ios-eye' />
+                    <Text>Quantity Available</Text>
+                    <Badge>{material.q_avail}</Badge>
+                </ListItem>
+                <ListItem iconLeft>
+                    <Icon name='ios-eye-off' />
+                    <Text>Quantity Reserved </Text>
+                    <Badge>{material.q_reserved}</Badge>
+                </ListItem>
+                <ListItem iconLeft>
+                    <Icon name='ios-eye-off' />
+                    <Text>Quantity Removed</Text>
+                    <Badge>{material.q_removed}</Badge>
+                </ListItem>
+                <ListItem iconLeft>
+                    <Icon name='ios-flag' />
+                    <Text>Maximum Checkout Quantity</Text>
+                    <Badge>{material.max_checkout_q}</Badge>
+                </ListItem>
+                <ListItem iconLeft>
+                    <Icon name='ios-notifications' />
+                    <Text>Low Quantity Threshold</Text>
+                    <Badge>{material.low_q_thresh}</Badge>
+                </ListItem>
+            </List>
+		);
+	}
+
+
+	render() {
+		return (
+			<Container theme={Theme}>
+				<Header> 
+					<Button transparent onPress={Actions.pop}>
+						<Icon name = 'ios-arrow-back'/>
+					</Button>
+					<Title> Material Detail </Title>
+				</Header>
+				<Content>
+				{this.state.loading ? <Spinner /> : 
+					<ListView
+						enableEmptySections = {true}
+						dataSource={this.state.materialDetail}
+						renderRow = {this._renderRow} />
+				}
+				</Content>
+			</Container>
+		);
+	}
 });

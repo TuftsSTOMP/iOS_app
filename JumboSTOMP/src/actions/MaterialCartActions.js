@@ -6,12 +6,12 @@ import StompApiConstants from '../constants/StompApiConstants';
 import MaterialCartStore from '../stores/MaterialCartStore';
 
 export default {
-	AddItem: (materialName, quantity) => {
+	AddItem: (materialName, quantity, maxQuantity) => {
 	
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.ADD_ITEM,
 			materialName: materialName,
-			update: {name: materialName, quantity: quantity}
+			update: {name: materialName, quantity: quantity, maxQuantity: maxQuantity}
 		});
 
 		AppDispatcher.dispatch({
