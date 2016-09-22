@@ -7,6 +7,7 @@ import {
 	TouchableOpacity,
 	ScrollView,
 	Dimensions,
+	RefreshControl,
 	AlertIOS
 } from 'react-native';
 
@@ -96,6 +97,11 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 		Actions.MaterialDetailPage({materialName});
   	}
 
+  	_onRefresh() {
+		this.setState({loading : true});
+  		StompApiService.getFullMaterialList(this.props.serverName, this.props.jwt);
+	}
+
   	//
   	// Handle the action when a user selects a material
   	// Material is already in cart : Remove it
@@ -158,7 +164,13 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
                  		<Icon name = 'ios-search' />
                  	</Button>
                 </Header>
-                <Content>
+                <Content 
+                	refreshControl={
+         				<RefreshControl
+            				refreshing={false}
+            				onRefresh={this._onRefresh.bind(this)} />
+        			}
+        		>
             		{ this.state.loading ? <Spinner/> :
 						<List
 							dataArray={this.state.materials}
@@ -178,7 +190,7 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 						elevation={5}
 						selectedValue={this.state.selectedValue}
 						onPickerDone={(pickedValue) => {
-							MaterialCartActions.AddItem(this.state.pickerTitle, pickedValue[0], this.state.selectedValueMax);
+							MaterialCartActions.AddItemWithMaxQuantity(this.state.pickerTitle, pickedValue[0], this.state.selectedValueMax);
 						}} />
 				</Footer>
 			</Container>

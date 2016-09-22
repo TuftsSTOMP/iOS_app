@@ -13,7 +13,6 @@ class LoginStore extends BaseStore {
   	}
 
   	_registerToActions(action) {
-  		console.log("login store ACTION: ", action.actionType)
 		switch(action.actionType) {
 	  		case LoginConstants.LOGIN_USER:
 	  			console.log("login store LOGIN USER: ", action)
@@ -30,7 +29,6 @@ class LoginStore extends BaseStore {
 				this.emitChange();
 				break;
 	  		default:
-	  			console.log("invalid action in login store", action.actionType)
 				break;
 		};
   	}

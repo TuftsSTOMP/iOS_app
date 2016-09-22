@@ -20,6 +20,7 @@ import {
 	Text,
 	List,
 	ListItem,
+	Spinner,
 	Header,
 	Footer,
 	Button,
@@ -63,6 +64,8 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 		}
 
 		this.changeMaterialCartListener = this._onMaterialCartChange.bind(this);
+		
+		//trying to fix crashing bug
 		this.changeQuantityBound = this.changeQuantity.bind(this);
 	}
 	
@@ -79,9 +82,6 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 		console.log("nextProps", nextProps);
 	}
 
-	componentWillUpdate(nextProps, nextState) {
-		console.log("check out page will update");
-	}
 
 	//All loads
 	componentWillMount() {
@@ -124,6 +124,8 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 	//	Submit the material cart for checkout. Query the Stomp API remove endpoint
 	//
 	_submitCheckout() {
+		this.setState({submitting : true});
+
 		var postData = new FormData();
 		this._getMaterialCart().map(
 			function(material) {
@@ -132,6 +134,8 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 		);
 		
 		StompApiService.checkoutMaterial_remove(this.props.serverName, this.props.jwt, postData);
+
+		this.setState({submitting : false});
 	}
 
 	//
@@ -187,7 +191,7 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 						elevation={5}
 						selectedValue={this.state.selectedValue}
 						onPickerDone={(pickedValue) => {
-							MaterialCartActions.AddItem(this.state.pickerTitle, pickedValue[0]);
+							MaterialCartActions.UpdateItemWithQuantity(this.state.pickerTitle, pickedValue[0]);
 						}} />
 				</Footer>
 			</Container>

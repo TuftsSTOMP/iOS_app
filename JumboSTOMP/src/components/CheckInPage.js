@@ -7,7 +7,8 @@ import {
   TouchableHighlight,
   RefreshControl,
   AlertIOS,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 
 import { 
@@ -27,6 +28,8 @@ import {
 
 import Theme from '../themes/version1';
 
+import Picker from 'react-native-picker';
+
 import {Actions} from 'react-native-router-flux';
 
 import StompApiService from '../services/StompApiService';
@@ -35,20 +38,19 @@ import StompApiConstants from '../constants/StompApiConstants';
 import AuthenticatedComponent from './AuthenticatedComponent';
 
 import StompApiStore from '../stores/StompApiStore';
+import MaterialCartStore from '../stores/MaterialCartStore';
+
+import MaterialCartActions from '../actions/MaterialCartActions';
 
 
 var styles = StyleSheet.create({
-  description: {
-	marginBottom: 20,
-	fontSize: 18,
-	textAlign: 'center',
-	color: '#656565'
-  },
-  container: {
-	padding: 30,
-	marginTop: 65,
-	alignItems: 'center'
-  }
+  	emptyCartMsg: {
+		fontSize: 18,
+		textAlign: 'center',
+		color: '#656565',
+		padding: 30,
+		marginTop: 65,
+  	}
 });
 
 
@@ -56,40 +58,83 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
   constructor(props) {
 	super(props)
 	this.state = {
-	  materialList : [],
-	  loading : true
+	  	loading : true,
+	  	checkInCart : this._getCheckInList(),
+	  	pickerData : [1,2,3],
+		selectedValue : 1,
+		pickerTitle : ""
 	}
 
-	  this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
+	  this.changeCheckInListener = this._onCheckInDataChange.bind(this);
   }
 
-  	_getStompApiDataState() {
-		return (StompApiStore.getCheckinList());
-  	}
+  	_getCheckInList() {
+		var cart = MaterialCartStore.getCheckInCart();
+		var list = [];
+		for(var key in cart){ list.push(cart[key]) }
+
+		return list;
+	}
+
+	_onCheckInDataChange() {
+
+		this.setState({loading : false});
+	  	this.setState({checkInCart : this._getCheckInList()});
+	}
 
   	componentDidMount() {
-		StompApiService.getMyCheckedOutList(this.props.serverName, this.props.jwt);
+		StompApiService.getMyCheckedOutTotal(this.props.serverName, this.props.jwt);
  	}
 
   	componentWillMount() {
-	  	StompApiStore.addChangeListener(this.changeStompApiDataListener);
+	  	MaterialCartStore.addChangeListener(this.changeCheckInListener);
   	}
 
-  	_onStompApiDataChange() {
-		this.setState({loading : false});
-
-		var jsArr = JSON.parse(this._getStompApiDataState());
-	  	this.setState({materialList : jsArr});
-  }
-
   	componentWillUnmount() {
-	  	StompApiStore.removeChangeListener(this.changeStompApiDataListener);
+	  	MaterialCartStore.removeChangeListener(this.changeCheckInListener);
   	}
 
 
 	_onRefresh() {
 		this.setState({loading : true});
-  		StompApiService.getMyCheckedOutList(this.props.serverName, this.props.jwt);
+  		StompApiService.getMyCheckedOutTotal(this.props.serverName, this.props.jwt);
+	}
+
+	_removeMaterialFromCart(materialName) {
+		MaterialCartActions.RemoveCheckInItem(materialName);
+	}
+
+	//
+	//	Adjust the quantity of a material in the cart
+	//	Max quantity is used to limit the adjustment
+	//
+	changeQuantity(materialName, currentQuantity, maxQuantity) {
+
+		var quantityOptions = [];
+		for (var i = 1; i <= maxQuantity; i++) {
+    		quantityOptions.push(i);
+		}
+
+		this.setState({pickerData : quantityOptions});
+		this.setState({pickerTitle : materialName});
+		this.setState({selectedValue: currentQuantity});
+
+		this.picker.toggle();
+  	}
+
+  	//
+	//	Submit the material cart for checkout. Query the Stomp API check in endpoint
+	//
+	_submitCheckIn() {
+
+		var postData = new FormData();
+		this._getCheckInList().map(
+			function(material) {
+				postData.append( material.name.replace(' ', '_'), material.quantity );
+			}
+		);
+		
+		StompApiService.checkinMaterial(this.props.serverName, this.props.jwt, postData);
 	}
   
   _renderRow(material) {
@@ -105,15 +150,32 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
   		let prettyDate = (new Date(date)).toLocaleString('en-US', dateOptions);
 
   		return (
-  		<ListItem iconRight>
+  		<ListItem iconRight
+  			onPress = {this.changeQuantity.bind(this, material.name, material.quantity, material.maxQuantity)}
+  		>
   			<Text> {material.quantity} {material.name} </Text>
-  			<Text note>{ prettyDate }</Text>
-  			<Icon name = 'ios-trash'/>
+  			<Text note>Earliest: { prettyDate }</Text>
+  			<Icon name = 'ios-trash' onPress = {this._removeMaterialFromCart.bind(this, material.name)}/>
   		</ListItem>
+
   		);
   }
 
   render() {
+  	let submitMessage;
+		if (this.state.checkInCart.length == 0) {
+			submitMessage = (
+				<Text style={styles.emptyCartMsg}>
+		 			Pull to refresh to confirm that you do not have any items to return
+				</Text>
+			);
+		} else {
+			submitMessage = (
+				<Button block success onPress = {this._submitCheckIn.bind(this)}>
+					<Text> Submit CheckIn </Text>
+				</Button>
+			);
+		}
 	return (
 	  <Container theme={Theme}>
             <Content
@@ -124,13 +186,32 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
         		}
             >
             { this.state.loading ? <Spinner/> :
-					<List
-						dataArray={this.state.materialList}
-						renderRow = { material => (this._renderRow(material)) }>
-					</List>
+            	<View>
+				<List
+					dataArray={this.state.checkInCart}
+					renderRow = { material => (this._renderRow(material)) }>
+				</List>
+				<View>
+					{submitMessage}
+				</View>
+				</View>
 			}
-				
 			</Content>
+			<Footer>
+					<Picker
+						ref={picker => {this.picker = picker}}
+						style={{height: Dimensions.get('window').height / 2}}
+						pickerData={this.state.pickerData}
+						pickerTitle = {this.state.pickerTitle}
+						pickerCancelBtnText= "Undo"
+						pickerBtnText= "Save"
+						showMask={true}
+						elevation={5}
+						selectedValue={this.state.selectedValue}
+						onPickerDone={(pickedValue) => {
+							MaterialCartActions.UpdateCheckInItemWithQuantity(this.state.pickerTitle, pickedValue[0]);
+						}} />
+			</Footer>
 		</Container>
 	);
   }

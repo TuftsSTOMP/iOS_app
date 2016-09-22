@@ -88,8 +88,15 @@ export default {
                         MaterialCartActions.SuccessfulCartCheckout);
     },
 
-    getMyCheckedOutList(serverName, jwt) {
-        this.submitGet(serverName + StompApiConstants.TEAM_CHECKED_OUT_LIST_URL,
+    checkinMaterial(serverName, jwt, postData) {
+        this.submitPost(serverName + StompApiConstants.CHECKIN_URL,
+                        postData,
+                        jwt,
+                        MaterialCartActions.SuccessfulCheckIn);
+    },
+
+    getMyCheckedOutTotal(serverName, jwt) {
+        this.submitGet(serverName + StompApiConstants.TEAM_CHECKED_OUT_TOTAL_URL,
                         jwt,
                         StompApiActions.ApiCheckinListRequestSuccess);
     }

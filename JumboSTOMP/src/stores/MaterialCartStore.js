@@ -9,10 +9,10 @@ class MaterialCartStore extends BaseStore {
 		super();
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._cart = {};
+		this._CheckInCart = {};
 	}
 
 	_registerToActions(action) {
-		console.log("material cart store ACTION: ", action.actionType)
 		switch(action.actionType) {
 			case MaterialCartConstants.ADD_ITEM:
   				this._cart[action.materialName] = _.extend({}, this._cart[action.materialName], action.update);
@@ -26,12 +26,26 @@ class MaterialCartStore extends BaseStore {
 				this._cart = {};
 				this.emitChange();
 				break;
+			case MaterialCartConstants.UPDATE_CHECKIN_QUANTITY:
+				this._CheckInCart[action.materialName] = _.extend({}, this._cart[action.materialName], action.update);
+				break; //need to call REFRESH in MaterialCartACtions method
+			case MaterialCartConstants.REMOVE_CHECKIN_ITEM:
+				delete this._CheckInCart[action.materialName];
+				this.emitChange();
+				break;
+			case MaterialCartConstants.REMOVE_CHECKIN_ALL:
+				this._CheckInCart = {};
+				this.emitChange();
+				break;
+			case MaterialCartConstants.REFRESH:
+				this.emitChange();
+				break;
 			default:
-				console.log("invalid action in material cart store", action.actionType)
 				break;
 		};
 	}
 
+	//CHECK OUT CART
 	getCart() {
 		return this._cart;
 	}
@@ -42,6 +56,19 @@ class MaterialCartStore extends BaseStore {
 
 	getMaterial(materialName) {
 		return this._cart[materialName];
+	}
+
+	//CHECK IN CART
+	getCheckInCart() {
+		return this._CheckInCart;
+	}
+
+	checkInHasMaterial(materialName) {
+		return !!this._CheckInCart[materialName];
+	}
+
+	checkInGetMaterial(materialName) {
+		return this._CheckInCart[materialName];
 	}
 
 }

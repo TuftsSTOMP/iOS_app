@@ -17,7 +17,6 @@ class StompApiStore extends BaseStore {
 	}
 
 	_registerToActions(action) {
-		console.log("stomp api store ACTION: ", action.actionType)
 		switch(action.actionType) {
 			case StompApiConstants.STOMP_API_SUCCESS:
 				this._data = action.data;
@@ -54,7 +53,6 @@ class StompApiStore extends BaseStore {
 				this.emitChange();
 				break;
 			default:
-				console.log("invalid action in stomp api store", action.actionType)
 				break;
 		};
 	}

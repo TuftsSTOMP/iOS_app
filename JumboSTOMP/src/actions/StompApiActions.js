@@ -2,6 +2,8 @@ import {Actions} from 'react-native-router-flux';
 import {AlertIOS} from 'react-native';
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
 import StompApiConstants from '../constants/StompApiConstants';
+import MaterialCartConstants from '../constants/MaterialCartConstants';
+import MaterialCartActions from './MaterialCartActions';
 import LoginStore from '../stores/LoginStore';
 import StompApiStore from '../stores/StompApiStore';
 
@@ -50,6 +52,12 @@ export default {
 			actionType: StompApiConstants.STOMP_API_CHECKIN_LIST_REQUEST_SUCCESS,
 			data: data
 		});
+
+		//Load CheckIn list by incrementally calling ChangeQuantity
+		data = JSON.parse(data);
+  		for (var i = 0; i < data.length; ++i) {
+  			MaterialCartActions.AddCheckInItemWithMaxQuantity(data[i].name, data[i].quantity, data[i].quantity, data[i].transaction_date);
+    	}
 	},
 
 	ApiRequestError: (title, error) => {
