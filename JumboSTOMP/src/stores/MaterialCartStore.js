@@ -27,17 +27,15 @@ class MaterialCartStore extends BaseStore {
 				this.emitChange();
 				break;
 			case MaterialCartConstants.UPDATE_CHECKIN_QUANTITY:
-				this._CheckInCart[action.materialName] = _.extend({}, this._cart[action.materialName], action.update);
-				break; //need to call REFRESH in MaterialCartACtions method
+				this._CheckInCart[action.materialName] = _.extend({}, this._CheckInCart[action.materialName], action.update);
+				this.emitChange();
+				break;
 			case MaterialCartConstants.REMOVE_CHECKIN_ITEM:
 				delete this._CheckInCart[action.materialName];
 				this.emitChange();
 				break;
 			case MaterialCartConstants.REMOVE_CHECKIN_ALL:
 				this._CheckInCart = {};
-				this.emitChange();
-				break;
-			case MaterialCartConstants.REFRESH:
 				this.emitChange();
 				break;
 			default:
@@ -69,6 +67,10 @@ class MaterialCartStore extends BaseStore {
 
 	checkInGetMaterial(materialName) {
 		return this._CheckInCart[materialName];
+	}
+
+	isCheckInCartEmpty() {
+		return this._CheckInCart != {};
 	}
 
 }

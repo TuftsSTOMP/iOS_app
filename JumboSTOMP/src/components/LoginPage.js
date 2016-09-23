@@ -1,6 +1,5 @@
 'use strict';
 
-
 import React, {Component} from 'react';
 import ReactMixin from 'react-mixin';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
@@ -109,7 +108,6 @@ export default class Login extends Component {
 						
 						onSubmit = {(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
 							if (isValid === true) {
-								console.log("about to submit");
 								Auth.login(values, postSubmit);
 								GiftedFormManager.reset('loginForm');
 							}

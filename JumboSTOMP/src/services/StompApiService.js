@@ -62,10 +62,10 @@ export default {
             .done();
     },
 
-    getUserPermission(serverName, jwt) {
-        this.submitGet(serverName + StompApiConstants.USER_PERMISSIONS_URL, 
+    getUserDetails(serverName, jwt) {
+        this.submitGet(serverName + StompApiConstants.USER_DETAILS_URL, 
                         jwt, 
-                        StompApiActions.ApiRequestSuccess);  
+                        StompApiActions.ApiUserDetailsRequestSuccess);  
     },
 
     getFullMaterialList(serverName, jwt) {

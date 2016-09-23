@@ -50,6 +50,11 @@ var styles = StyleSheet.create({
 		color: '#656565',
 		padding: 30,
 		marginTop: 65,
+  	},
+  	container: {
+		padding: 30,
+		marginTop: 15,
+		alignItems: 'center'
   	}
 });
 
@@ -66,6 +71,9 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
 	}
 
 	  this.changeCheckInListener = this._onCheckInDataChange.bind(this);
+
+	  //trying to fix crashing bug
+		this.changeQuantityBound = this.changeQuantity.bind(this);
   }
 
   	_getCheckInList() {
@@ -151,7 +159,7 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
 
   		return (
   		<ListItem iconRight
-  			onPress = {this.changeQuantity.bind(this, material.name, material.quantity, material.maxQuantity)}
+  			onPress = {this.changeQuantityBound.bind(this, material.name, parseInt(material.quantity), material.maxQuantity)}
   		>
   			<Text> {material.quantity} {material.name} </Text>
   			<Text note>Earliest: { prettyDate }</Text>
@@ -164,16 +172,28 @@ export default AuthenticatedComponent(class CheckInPage extends Component {
   render() {
   	let submitMessage;
 		if (this.state.checkInCart.length == 0) {
-			submitMessage = (
-				<Text style={styles.emptyCartMsg}>
-		 			Pull to refresh to confirm that you do not have any items to return
-				</Text>
-			);
+			//cart is empty because the api returned an empty array
+			if (StompApiStore.isCheckinListEmpty()) {
+				submitMessage = (
+					<Text style={styles.emptyCartMsg}>
+		 				There are no items in your cart (Pull to refresh)
+					</Text>
+				);
+			} else { // cart is emtpy because the user deleted some items from the view
+				submitMessage = (
+					<Text style={styles.emptyCartMsg}>
+		 				To see your cart, pull to refresh
+					</Text>
+				);
+			}
+			
 		} else {
 			submitMessage = (
+				<View style={styles.container}>
 				<Button block success onPress = {this._submitCheckIn.bind(this)}>
 					<Text> Submit CheckIn </Text>
 				</Button>
+				</View>
 			);
 		}
 	return (

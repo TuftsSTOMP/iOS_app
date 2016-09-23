@@ -48,6 +48,11 @@ var styles = StyleSheet.create({
 		color: '#656565',
 		padding: 30,
 		marginTop: 65,
+  	},
+  	container: {
+		padding: 30,
+		marginTop: 15,
+		alignItems: 'center'
   	}
 });
 
@@ -76,10 +81,6 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 		for(var key in materialCart){ materialList.push(materialCart[key]) }
 
 		return materialList;
-	}
-	componentWillReceiveProps(nextProps) {
-		console.log("check out page willl receive props");
-		console.log("nextProps", nextProps);
 	}
 
 
@@ -163,9 +164,11 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 			);
 		} else {
 			submitMessage = (
+				<View style={styles.container}>
 				<Button block success onPress = {this._submitCheckout.bind(this)}>
 					<Text> Submit CheckOut </Text>
 				</Button>
+				</View>
 			);
 		}
 		return (

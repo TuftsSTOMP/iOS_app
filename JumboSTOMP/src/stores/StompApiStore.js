@@ -13,6 +13,7 @@ class StompApiStore extends BaseStore {
 		this._materialList = null;
 		this._checkInList = null;
 		this._materialDetail = null;
+		this._userDetails = null;
 		this._error = null;
 	}
 
@@ -20,6 +21,10 @@ class StompApiStore extends BaseStore {
 		switch(action.actionType) {
 			case StompApiConstants.STOMP_API_SUCCESS:
 				this._data = action.data;
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_USER_DETAILS_SUCCESS:
+				this._userDetails = action.data;
 				this.emitChange();
 				break;
 			case StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS:
@@ -69,8 +74,16 @@ class StompApiStore extends BaseStore {
 		return this._checkInList;
 	}
 
+	isCheckinListEmpty() {
+		return (this._checkInList == null || JSON.parse(this._checkInList).length == 0);
+	}
+
 	getMaterialDetail() {
 		return this._materialDetail;
+	}
+
+	getUserDetails() {
+		return this._userDetails;
 	}
 
 	getError() {

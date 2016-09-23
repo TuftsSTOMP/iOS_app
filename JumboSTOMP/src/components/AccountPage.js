@@ -15,6 +15,8 @@ import {
 	Header,
 	Button,
 	Spinner,
+	Card,
+	CardItem,
 	Icon,
 	Title
 } from 'native-base';
@@ -46,7 +48,7 @@ var styles = StyleSheet.create({
   	},
   	container: {
 		padding: 30,
-		marginTop: 15,
+		marginTop: 10,
 		alignItems: 'center'
   	}
 });
@@ -57,72 +59,85 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			user_permissions : this._getStompApiDataState(),
+			details : this._getStompApiUserDetailsState(),
 			loading : true,
 	  	}
 
-	  	this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
+	  	this.changeStompApiUserDetailsListener = this._onStompApiUserDetailsChange.bind(this);
 	}
 
-/*
-	componentWillReceiveProps() {
-		this.setState({jwt : this.props.jwt});
-	}
-	*/
 
-
-	_getStompApiDataState() {
-	 	return {
-			data: StompApiStore.getData()
-	  
-	  	};
+	_getStompApiUserDetailsState() {
+	 	return (StompApiStore.getUserDetails());
 	}
 
 
 	componentWillMount() {
-	  	StompApiStore.addChangeListener(this.changeStompApiDataListener);
+	  	StompApiStore.addChangeListener(this.changeStompApiUserDetailsListener);
 	}
 
 	componentDidMount() {
-		StompApiService.getUserPermission(this.props.serverName, this.props.jwt);
+		StompApiService.getUserDetails(this.props.serverName, this.props.jwt);
 	}
 
-	_onStompApiDataChange() {
-	  	this.setState({user_permissions : this._getStompApiDataState()});
+	_onStompApiUserDetailsChange() {
+	  	this.setState({details : JSON.parse(this._getStompApiUserDetailsState())});
 
 	  	this.setState({loading : false});
 	}
 
 	componentWillUnmount() {
-	  	StompApiStore.removeChangeListener(this.changeStompApiDataListener);
+	  	StompApiStore.removeChangeListener(this.changeStompApiUserDetailsListener);
 	}
 
+	_renderRow(detail) {
+		return (
+			<View>
+				<Card>
+                    <CardItem>              
+                        <Icon name='ios-person' />                
+                        <Text> {detail.f_name} {detail.l_name} ({detail.username})</Text>
+                    </CardItem>
+                    <CardItem>              
+                        <Icon name='ios-mail' />                
+                        <Text> {detail.email}</Text>
+                    </CardItem>
+                    <CardItem>              
+                        <Icon name='ios-call' />                
+                        <Text> {detail.phone == null ? "" : detail.phone}</Text>
+                    </CardItem>
+                    <CardItem>              
+                        <Icon name='ios-people' />                
+                        <Text> {detail.userPermission.join(', ')}</Text>
+                    </CardItem>
+                    <CardItem>              
+                        <Icon name='ios-key' />                
+                        <Text> {detail.apiVersion}</Text>
+                    </CardItem>
+				</Card>
+				<View style = {styles.container}>
+					<Button block danger onPress={AuthService.logout}>Logout</Button>
+				</View>
+			</View>
+		);
+	}
 
 
   	render() {
 		return (
 			<Container theme={Theme}>
-
 				<Header> 
                 	<Title>My Account</Title>
 				</Header>
 
 				<Content>
-				{ this.state.loading ? <Spinner/> :
-	  				<View style={styles.container}>
-	  					<Text style={styles.description}>
-		 					Interact with the supply closet from your fingertips!
-						</Text>
-						<Text style={styles.description}>
-		 					Additional features coming soon...
-						</Text>
-						<Text style={styles.description}>
-		 					For any questions or to report an issue, Contact Sam Heilbron at samheilbron@gmail.com
-						</Text>
-						<Button block danger onPress={AuthService.logout}>Logout</Button>
-		  			</View>
-		  		}
-		  		</Content>
+				{this.state.loading ? <Spinner/> : 
+					<List
+						dataArray={this.state.details}
+						renderRow = { detail => (this._renderRow(detail)) }>
+					</List>
+				}
+				</Content>
 		  	</Container>
 		);
   	}

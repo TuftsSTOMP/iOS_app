@@ -24,14 +24,20 @@ export default {
 		});
 	},
 
+	ApiUserDetailsRequestSuccess: (data) => {
+		
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_USER_DETAILS_SUCCESS,
+			data: data
+		});
+	},
+
 	ApiMaterialListRequestSuccess: (data) => {
 
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS,
 			data: data
 		});
-
-		console.log("Api material list request success", data)
 	},
 
 	ApiMaterialDetailRequestSuccess: (data) => {
@@ -40,13 +46,9 @@ export default {
 			actionType: StompApiConstants.STOMP_API_MATERIAL_DETAIL_SUCCESS,
 			data: data
 		});
-
-		console.log("stomp api material detail request success: ", data)
 	},
 
 	ApiCheckinListRequestSuccess: (data) => {
-
-		console.log("stomp api material checkin List request success: ", data);
 
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_CHECKIN_LIST_REQUEST_SUCCESS,
@@ -55,8 +57,14 @@ export default {
 
 		//Load CheckIn list by incrementally calling ChangeQuantity
 		data = JSON.parse(data);
-  		for (var i = 0; i < data.length; ++i) {
-  			MaterialCartActions.AddCheckInItemWithMaxQuantity(data[i].name, data[i].quantity, data[i].quantity, data[i].transaction_date);
+		if (data.length == 0) {
+			AppDispatcher.dispatch({
+				actionType: MaterialCartConstants.REMOVE_CHECKIN_ALL,
+			});
+		} else {
+  			for (var i = 0; i < data.length; ++i) {
+  				MaterialCartActions.AddCheckInItemWithMaxQuantity(data[i].name, data[i].quantity, data[i].quantity, data[i].transaction_date);
+    		}
     	}
 	},
 

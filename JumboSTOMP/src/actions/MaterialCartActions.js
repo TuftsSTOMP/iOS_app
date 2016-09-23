@@ -72,9 +72,9 @@ export default {
 
 		//needed to help performance of AddQuantity
 		// this way entire cart can be accumulated before a change is rendered
-		AppDispatcher.dispatch({
-			actionType: MaterialCartConstants.REFRESH
-		});
+		//AppDispatcher.dispatch({
+		//	actionType: MaterialCartConstants.REFRESH
+		//});
 	},
 
 	UpdateCheckInItemWithQuantity: (materialName, quantity) => {
@@ -88,9 +88,9 @@ export default {
 			}
 		});
 
-		AppDispatcher.dispatch({
-			actionType: MaterialCartConstants.REFRESH
-		});
+		//AppDispatcher.dispatch({
+		//	actionType: MaterialCartConstants.REFRESH
+		//});
 	},
 
 	RemoveCheckInItem: (materialName) => {
@@ -108,5 +108,11 @@ export default {
 		});
 
 		AlertIOS.alert("Successful CheckIn", "Your transaction has been completed");
+	},
+
+	CheckInCartIsEmpty: () => {
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.EMTPY_CHECKIN_CART,
+		});
 	}
 }
