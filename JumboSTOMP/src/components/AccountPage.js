@@ -36,8 +36,6 @@ import AuthenticatedComponent from './AuthenticatedComponent';
 import StompApiStore from '../stores/StompApiStore';
 import LoginStore from '../stores/LoginStore';
 
-import MaterialListPage from './MaterialListPage';
-
 
 var styles = StyleSheet.create({
  	description: {
@@ -90,6 +88,10 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 	  	StompApiStore.removeChangeListener(this.changeStompApiUserDetailsListener);
 	}
 
+	editAccount() {
+		Actions.EditAccountPage();
+  	}
+
 	_renderRow(detail) {
 		return (
 			<View>
@@ -127,6 +129,9 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 		return (
 			<Container theme={Theme}>
 				<Header> 
+					<Button transparent onPress = {this.editAccount.bind(this)}>
+                 		<Text> Edit </Text>
+                 	</Button>
                 	<Title>My Account</Title>
 				</Header>
 

@@ -10,15 +10,18 @@ import {
 	Text,
 	StyleSheet
 } from 'react-native';
+
 import { 
 	Button,
 	Icon
 } from 'native-base';
-import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux'
+
+import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 
 /* FULL LIST OF PAGES IN APP STRUCTURE  */
 import LoginPage from './src/components/LoginPage';
 import AccountPage from './src/components/AccountPage';
+import EditAccountPage from './src/components/EditAccountPage';
 import TransactionPage from './src/components/TransactionPage';
 import CheckInPage from './src/components/CheckInPage';
 import CheckOutPage from './src/components/CheckOutPage';
@@ -54,7 +57,10 @@ const scenes = Actions.create(
 	<Scene key="Login" component={LoginPage} hideNavBar={true} title="Login" type={ActionConst.REPLACE} />
 	
 	<Scene key="HomeTabbar" tabs={true}  tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
-		<Scene key="AccountPage" component={AccountPage} title="My Account" hideNavBar={true} icon={AccountIcon}/>
+		<Scene key = "AccountWrapper" title="Account" hideNavBar={true} icon={AccountIcon}>
+			<Scene key="AccountPage" component={AccountPage} title="My Account"/>
+			<Scene key="EditAccountPage" component={EditAccountPage} title="Edit Account"/>
+		</Scene>
 		<Scene key = "TransactionWrapper" title="Transaction" hideNavBar={true} icon={CartIcon}>
 			<Scene key="Transaction" component={TransactionPage} title="Transaction" icon={CartIcon}/>
 		</Scene>

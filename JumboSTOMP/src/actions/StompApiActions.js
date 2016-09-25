@@ -68,6 +68,10 @@ export default {
     	}
 	},
 
+	ApiUserUpdateSuccess: (data) => {
+		Actions.AccountPage();
+	},
+
 	ApiRequestError: (title, error) => {
 	
 		AppDispatcher.dispatch({

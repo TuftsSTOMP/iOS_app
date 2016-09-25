@@ -33,8 +33,6 @@ import Theme from '../themes/version1';
 import Picker from 'react-native-picker';
 import AuthenticatedComponent from './AuthenticatedComponent';
 
-import { SwipeListView } from 'react-native-swipe-list-view';
-
 import MaterialCartStore from '../stores/MaterialCartStore';
 import MaterialCartActions from '../actions/MaterialCartActions';
 

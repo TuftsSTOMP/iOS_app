@@ -2,7 +2,7 @@
 
 import React, {Component} from 'react';
 import ReactMixin from 'react-mixin';
-import LinkedStateMixin from 'react-addons-linked-state-mixin';
+//import LinkedStateMixin from 'react-addons-linked-state-mixin';
 import Auth from '../services/AuthService';
 
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
@@ -122,4 +122,4 @@ export default class Login extends Component {
 }
 
 // We’re using the mixin `LinkStateMixin` to have two-way databinding between
-ReactMixin(Login.prototype, LinkedStateMixin);
+//ReactMixin(Login.prototype, LinkedStateMixin);

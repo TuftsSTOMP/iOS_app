@@ -17,7 +17,6 @@ export default (ComposedComponent) => {
 
 
 		componentWillMount() {
-			console.log("authenticated component: will mount. checking login")
 			if (!LoginStore.isLoggedIn()) {
 		  		LoginActions.logoutUser()
 	  		}

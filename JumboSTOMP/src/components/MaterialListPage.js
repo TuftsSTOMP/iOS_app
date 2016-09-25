@@ -160,9 +160,6 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 			<Container theme={Theme}>
                 <Header>
                 	<Title>List of Materials</Title>
-                	<Button transparent>
-                 		<Icon name = 'ios-search' />
-                 	</Button>
                 </Header>
                 <Content 
                 	refreshControl={

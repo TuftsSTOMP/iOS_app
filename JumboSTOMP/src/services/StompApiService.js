@@ -99,6 +99,13 @@ export default {
         this.submitGet(serverName + StompApiConstants.TEAM_CHECKED_OUT_TOTAL_URL,
                         jwt,
                         StompApiActions.ApiCheckinListRequestSuccess);
+    },
+
+    updateUser(serverName, jwt, postData) {
+        this.submitPost(serverName + StompApiConstants.USER_UPDATE_URL,
+                        postData,
+                        jwt,
+                        StompApiActions.ApiUserUpdateSuccess);
     }
 
 }
