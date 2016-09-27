@@ -2,6 +2,8 @@ import LoginConstants from '../constants/LoginConstants';
 import LoginActions from '../actions/LoginActions';
 import {AlertIOS, AsyncStorage} from 'react-native';
 
+const LOGIN_TIMEOUT = 7000;
+
 class AuthService {
 
 	async _onValueChange(item, selectedValue) {
@@ -35,16 +37,25 @@ class AuthService {
 		postData.append( "username", values.username );
 		postData.append( "password", values.password );
 
+		var timeoutId = setTimeout(function () {
+			postSubmit();
+			LoginActions.loginError("Connection Error", "The operation timed out, contact an administrator immediately");
+		}, LOGIN_TIMEOUT);
+
 		return fetch(LoginConstants.LOGIN_URL, {
 				method: "POST",
 				mode:'cors',
 				headers: myHeaders,
 				body: postData
 			})
-			.then((response) => {return response.json()})
+			.then((response) => {
+				clearTimeout(timeoutId);
+				return response.json()
+			})
 			.then((responseData) => {
 				if(responseData.error) {  //Api returned an error
-					LoginActions.loginError("LoginError", responseData.error)
+					LoginActions.loginError("LoginError", responseData.error);
+
 
 					//AlertIOS.alert("Login Error", responseData.error)
 					return false;
