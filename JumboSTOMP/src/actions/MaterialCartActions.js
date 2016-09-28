@@ -62,19 +62,21 @@ export default {
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.UPDATE_CHECKIN_QUANTITY,
 			materialName: materialName,
-			update: {
+			update: [{
 				name: materialName, 
 				quantity: quantity, 
 				maxQuantity: maxQuantity,
 				transaction_date: transaction_date
-			}
+			}]
 		});
+	},
 
-		//needed to help performance of AddQuantity
-		// this way entire cart can be accumulated before a change is rendered
-		//AppDispatcher.dispatch({
-		//	actionType: MaterialCartConstants.REFRESH
-		//});
+	AddCheckInList: (jsonList) => {
+
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.UPDATE_CHECKIN_QUANTITY,
+			update: jsonList
+		});
 	},
 
 	UpdateCheckInItemWithQuantity: (materialName, quantity) => {

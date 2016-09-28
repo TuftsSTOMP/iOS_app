@@ -27,7 +27,10 @@ class MaterialCartStore extends BaseStore {
 				this.emitChange();
 				break;
 			case MaterialCartConstants.UPDATE_CHECKIN_QUANTITY:
-				this._CheckInCart[action.materialName] = _.extend({}, this._CheckInCart[action.materialName], action.update);
+				for (var i = 0; i < action.update.length; i++) {
+					var obj = action.update[i];
+					this._CheckInCart[obj.name] = _.extend({}, this._CheckInCart[obj.name], obj);
+				}
 				this.emitChange();
 				break;
 			case MaterialCartConstants.REMOVE_CHECKIN_ITEM:

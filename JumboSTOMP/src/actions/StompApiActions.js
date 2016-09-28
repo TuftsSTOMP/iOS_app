@@ -56,15 +56,16 @@ export default {
 		});
 
 		//Load CheckIn list by incrementally calling ChangeQuantity
-		data = JSON.parse(data);
-		if (data.length == 0) {
+		jsonData = JSON.parse(data);
+		if (jsonData.length == 0) {
 			AppDispatcher.dispatch({
 				actionType: MaterialCartConstants.REMOVE_CHECKIN_ALL,
 			});
 		} else {
-  			for (var i = 0; i < data.length; ++i) {
-  				MaterialCartActions.AddCheckInItemWithMaxQuantity(data[i].name, data[i].quantity, data[i].quantity, data[i].transaction_date);
-    		}
+			MaterialCartActions.AddCheckInList(jsonData);
+  			//for (var i = 0; i < data.length; ++i) {
+  				//MaterialCartActions.AddCheckInItemWithMaxQuantity(data[i].name, data[i].quantity, data[i].quantity, data[i].transaction_date);
+    		//}
     	}
 	},
 
