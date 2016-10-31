@@ -13,7 +13,7 @@ export default {
 	  		user: loginJsonResponse.stomp_user,
 		});
 
-		Actions.HomeTabbar()
+		Actions.AppContent()
   	},
   
   	logoutUser: () => {

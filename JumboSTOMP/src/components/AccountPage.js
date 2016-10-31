@@ -4,7 +4,9 @@ import React, { Component } from 'react';
 import {
  	StyleSheet,
   	View,
-  	AlertIOS
+  	AlertIOS,
+  	Image,
+  	TouchableOpacity
 } from 'react-native';
 import { 
 	Container, 
@@ -51,8 +53,17 @@ var styles = StyleSheet.create({
   	}
 });
 
+/*
+Look to refactor and add this to the AuthenticatedComponent HOC so that it isn't required
+for each new component. Leave like this for now though because it works
+*/
+const contextTypes = {
+  drawer: React.PropTypes.object,
+};
 
-export default AuthenticatedComponent(class AccountPage extends Component {
+
+
+class AccountPage extends Component {
 
 	constructor(props) {
 		super(props)
@@ -68,7 +79,6 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 	_getStompApiUserDetailsState() {
 	 	return (StompApiStore.getUserDetails());
 	}
-
 
 	componentWillMount() {
 	  	StompApiStore.addChangeListener(this.changeStompApiUserDetailsListener);
@@ -123,16 +133,27 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 			</View>
 		);
 	}
+//this.context.drawer.open()
 
+	menuClick() {
+		console.log("go to material page")
+		Actions.MaterialWrapper();
+	}
 
   	render() {
 		return (
 			<Container theme={Theme}>
 				<Header> 
+					<Button transparent onPress={this.menuClick.bind(this)}>
+                 		<Text> Menu </Text>
+                 	</Button>
 					<Button transparent onPress = {this.editAccount.bind(this)}>
                  		<Text> Edit </Text>
                  	</Button>
-                	<Title>My Account</Title>
+
+					<Title>My Account</Title>
+					
+                	
 				</Header>
 
 				<Content>
@@ -146,4 +167,8 @@ export default AuthenticatedComponent(class AccountPage extends Component {
 		  	</Container>
 		);
   	}
-});
+}
+
+AccountPage.contextTypes = contextTypes;
+
+export default AuthenticatedComponent(AccountPage);

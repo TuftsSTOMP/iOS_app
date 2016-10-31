@@ -30,10 +30,15 @@ import StompApiService from '../services/StompApiService';
 import StompApiConstants from '../constants/StompApiConstants';
 import StompApiStore from '../stores/StompApiStore';
 
+const contextTypes = {
+  drawer: React.PropTypes.object,
+};
+
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-export default AuthenticatedComponent(class MaterialDetailPage extends Component {
+
+class MaterialDetailPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -124,4 +129,7 @@ export default AuthenticatedComponent(class MaterialDetailPage extends Component
 			</Container>
 		);
 	}
-});
+}
+
+MaterialDetailPage.contextTypes = contextTypes;
+export default AuthenticatedComponent(MaterialDetailPage);

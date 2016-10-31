@@ -54,8 +54,12 @@ var styles = StyleSheet.create({
   	}
 });
 
+const contextTypes = {
+  drawer: React.PropTypes.object,
+};
 
-export default AuthenticatedComponent(class CheckOutPage extends Component {
+
+class CheckOutPage extends Component {
 
 	constructor(props) {
 		super(props)
@@ -198,4 +202,7 @@ export default AuthenticatedComponent(class CheckOutPage extends Component {
 			</Container>
 		);
 	}
-});
+}
+
+CheckOutPage.contextTypes = contextTypes;
+export default AuthenticatedComponent(CheckOutPage);

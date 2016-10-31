@@ -46,7 +46,7 @@ export default (ComposedComponent) => {
 
 
 		render() {
-	  		return (
+	  		return (  
 		  		<ComposedComponent
 					{...this.props}
 					serverName={this.state.user.serverName}

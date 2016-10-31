@@ -48,8 +48,12 @@ const styles = StyleSheet.create({
   }
 });
 
+const contextTypes = {
+  drawer: React.PropTypes.object,
+};
 
-export default AuthenticatedComponent(class MaterialListPage extends Component {
+
+class MaterialListPage extends Component {
 
 	constructor(props) {
 		super(props);
@@ -193,6 +197,9 @@ export default AuthenticatedComponent(class MaterialListPage extends Component {
 			</Container>
 		);
 	}
-});
+}
+
+MaterialListPage.contextTypes = contextTypes;
+export default AuthenticatedComponent(MaterialListPage);
 
 
