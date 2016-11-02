@@ -1,41 +1,44 @@
 import React from 'react';
 import {PropTypes} from "react";
 import {StyleSheet, Text, View} from "react-native";
+import {Card, CardItem} from 'native-base';
 import Button from 'react-native-button';
-import { Actions } from 'react-native-router-flux';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 const contextTypes = {
   drawer: React.PropTypes.object,
 };
 
-const propTypes = {
-  name: PropTypes.string,
-  sceneStyle: View.propTypes.style,
-  title: PropTypes.string,
-};
+function visitAccountInfo(drawer) {
+    drawer.close();
+    console.log("visit account info");
+    Actions.AccountIndex();
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    borderWidth: 2,
-    borderColor: 'red',
-  },
-});
+function visitMaterialIndex(drawer) {
+    console.log("visit material index");
+    //drawer.close()
+    Actions.MaterialIndex({type: ActionConst.FOCUS});
+
+}
 
 const SideNavContent = (props, context) => {
   const drawer = context.drawer;
+
   return (
-    <View style={[styles.container, props.sceneStyle ]}>
-      <Button onPress={() => { Actions.AccountIndex(); }}>Account Info</Button>
-      <Button onPress={() => { Actions.MaterialIndex(); }}>Materials</Button>
+    <View>
+        <Card>
+          <CardItem>              
+            <Button onPress={() => {visitAccountInfo(drawer)}}>Account Info</Button>
+          </CardItem>
+          <CardItem>              
+            <Button onPress={() => {visitMaterialIndex(drawer)}}>Materials</Button>
+          </CardItem>
+        </Card>
     </View>
   );
 };
 
 SideNavContent.contextTypes = contextTypes;
-SideNavContent.propTypes = propTypes;
 
 export default SideNavContent;

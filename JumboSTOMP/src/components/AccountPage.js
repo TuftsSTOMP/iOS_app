@@ -133,11 +133,9 @@ class AccountPage extends Component {
 			</View>
 		);
 	}
-//this.context.drawer.open()
 
 	menuClick() {
-		console.log("go to material page")
-		Actions.MaterialWrapper();
+		this.context.drawer.open()
 	}
 
   	render() {
@@ -150,10 +148,7 @@ class AccountPage extends Component {
 					<Button transparent onPress = {this.editAccount.bind(this)}>
                  		<Text> Edit </Text>
                  	</Button>
-
 					<Title>My Account</Title>
-					
-                	
 				</Header>
 
 				<Content>

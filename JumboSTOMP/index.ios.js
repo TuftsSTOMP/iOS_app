@@ -2,7 +2,6 @@
  * JumboSTOMP React Native App
  * Creator: Sam Heilbron
  * [Link to Github]
- *  @flow
  **/
 
 import React, {Component} from 'react';
@@ -60,16 +59,15 @@ class AccountIcon extends Component {
 /* APP ARCHITECTURE */
 
 const scenes = Actions.create(
+	<Scene key="modal" component={Modal} >
  	<Scene key="root">
 		<Scene key="Login" component={LoginPage} hideNavBar={true} title="Login" type={ActionConst.REPLACE} />
 
-		<Scene key="AppContent" component={NavigationDrawer} open={false} wrapRouter={true}>
+		<Scene key="AppContent" component={NavigationDrawer} tabs={false} open={false} direction="vertical">
 
-			<Scene key="AccountIndex" tabs={false} direction="vertical">
-				<Scene key = "AccountWrapper" title="Account" hideNavBar={true} icon={AccountIcon}>
-					<Scene key="AccountPage" component={AccountPage} title="My Account"/>
-					<Scene key="EditAccountPage" component={EditAccountPage} title="Edit Account"/>
-				</Scene>
+			<Scene key="AccountIndex" tabs={false} title="Account" hideNavBar={true} >
+				<Scene key="AccountPage" component={AccountPage} title="My Account"/>
+				<Scene key="EditAccountPage" component={EditAccountPage} title="Edit Account" direction="vertical"/>
 			</Scene>
 			<Scene key="MaterialIndex" tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 				<Scene key="MaterialWrapper" title="Materials" icon={MenuIcon} hideNavBar={true}>
@@ -83,6 +81,7 @@ const scenes = Actions.create(
 		</Scene>
 
   	</Scene> 
+  	</Scene>
 );
 
 

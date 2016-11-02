@@ -15,7 +15,6 @@ export default (ComposedComponent) => {
 	  		this.changeLoginListener = this._onLoginChange.bind(this);
 		}
 
-
 		componentWillMount() {
 			if (!LoginStore.isLoggedIn()) {
 		  		LoginActions.logoutUser()
@@ -24,7 +23,6 @@ export default (ComposedComponent) => {
 	  		LoginStore.addChangeListener(this.changeLoginListener);
 		}
 	
-
 		_getLoginState() {
 	  		return {
 				userLoggedIn: LoginStore.isLoggedIn(),
@@ -34,16 +32,13 @@ export default (ComposedComponent) => {
 	  		};
 		}
 
-
 		_onLoginChange() {
 	 		this.setState({user : this._getLoginState()});
 		}
 
-
 		componentWillUnmount() {
 	  		LoginStore.removeChangeListener(this.changeLoginListener);
 		}
-
 
 		render() {
 	  		return (  

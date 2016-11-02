@@ -93,7 +93,14 @@ export default class Login extends Component {
 						name='username'
 						title='Username'
 						placeholder='Tufts UTLN'
-						clearButtonMode='while-editing' />
+						clearButtonMode='while-editing' 
+						widgetStyles={{
+							row: {height: 50},
+                			textInputTitle: {fontSize: 20},
+                			textInput: {fontSize: 20, height: 80},
+                			textInputInline: {height: 50},
+                			textInputTitleInline: {fontSize: 20,  width: 125}
+              			}} />
 
 
 					<GiftedForm.TextInputWidget
@@ -101,10 +108,21 @@ export default class Login extends Component {
 						title='Password'
 						placeholder='******'
 						clearButtonMode='while-editing'
-						secureTextEntry={true} />
+						secureTextEntry={true} 
+						widgetStyles={{
+							row: {height: 50},
+                			textInputTitle: {fontSize: 20},
+                			textInput: {fontSize: 20},
+                			textInputInline: {height: 50},
+                			textInputTitleInline: {fontSize: 20,  width: 125}
+              			}} />
 
 					<GiftedForm.SubmitWidget
 						title='Login'
+						widgetStyles={{
+							submitButton: {height: 50},
+							textSubmitButton: {fontSize: 20}
+						}}
 						
 						onSubmit = {(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
 							if (isValid === true) {

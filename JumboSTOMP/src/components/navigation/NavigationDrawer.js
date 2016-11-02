@@ -3,11 +3,9 @@ import Drawer from 'react-native-drawer';
 import { DefaultRenderer, Actions } from 'react-native-router-flux';
 import SideNavContent from './SideNavContent'
 
-
 const propTypes = {
   navigationState: PropTypes.object,
 };
-
 
 class NavigationDrawer extends React.Component {
   render() {
@@ -21,7 +19,7 @@ class NavigationDrawer extends React.Component {
         onClose={() => Actions.refresh({ key: state.key, open: false })}
         content={<SideNavContent />}
         tapToClose
-        openDrawerOffset={0.2}
+        openDrawerOffset={0.3}
         panCloseMask={0.2}
         negotiatePan
         tweenHandler={(ratio) => ({
