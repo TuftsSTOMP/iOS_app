@@ -86,6 +86,12 @@ class StompApiStore extends BaseStore {
 		return this._userDetails;
 	}
 
+	getUserFirstName() {
+		console.log(this._userDetails)
+		return ""
+		//return this._userDetails.f_name;
+	}
+
 	getError() {
 		return this._error;
 	}

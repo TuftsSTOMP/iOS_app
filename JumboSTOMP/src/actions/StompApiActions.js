@@ -11,8 +11,7 @@ import _ from 'underscore';
 
 export default {
 	ApiGenericRequestSuccess: (data) => {
-	
-		console.log("Api generic request success", data);
+		//Demo method
 		AlertIOS.alert("Successful Api Call", data);
 	},
 
@@ -49,23 +48,28 @@ export default {
 	},
 
 	ApiCheckinListRequestSuccess: (data) => {
-
+		//Load data into StompApiStore
+		//Used to handle refresh. This is the copy of the real amount that must 
+		//	be returned
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_CHECKIN_LIST_REQUEST_SUCCESS,
 			data: data
 		});
 
-		//Load CheckIn list by incrementally calling ChangeQuantity
+
+		//Load data into the MaterialCartStore
+		//This is so the user can return portions of their cart. Refreshing
+		//	the cart will trigger a call to the StompApiStore
 		jsonData = JSON.parse(data);
 		if (jsonData.length == 0) {
 			AppDispatcher.dispatch({
 				actionType: MaterialCartConstants.REMOVE_CHECKIN_ALL,
 			});
 		} else {
+			for (var i = 0; i < jsonData.length; ++i) {
+				jsonData[i].maxQuantity = jsonData[i].quantity;
+			}
 			MaterialCartActions.AddCheckInList(jsonData);
-  			//for (var i = 0; i < data.length; ++i) {
-  				//MaterialCartActions.AddCheckInItemWithMaxQuantity(data[i].name, data[i].quantity, data[i].quantity, data[i].transaction_date);
-    		//}
     	}
 	},
 

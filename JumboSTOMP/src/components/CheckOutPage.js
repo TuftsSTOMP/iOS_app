@@ -71,9 +71,6 @@ class CheckOutPage extends Component {
 		}
 
 		this.changeMaterialCartListener = this._onMaterialCartChange.bind(this);
-		
-		//trying to fix crashing bug
-		this.changeQuantityBound = this.changeQuantity.bind(this);
 	}
 	
 
@@ -88,7 +85,6 @@ class CheckOutPage extends Component {
 
 	//All loads
 	componentWillMount() {
-		console.log("check out page will mount");
 		MaterialCartStore.addChangeListener(this.changeMaterialCartListener);
 	}
 
@@ -97,7 +93,6 @@ class CheckOutPage extends Component {
 	}
 
 	componentWillUnmount() {
-		console.log("check out page will UNmount");
 		MaterialCartStore.removeChangeListener(this.changeMaterialCartListener);
 	}
 
@@ -147,11 +142,15 @@ class CheckOutPage extends Component {
 	_renderRow(material) {
 		return (
 			<ListItem iconRight 
-				onPress = {this.changeQuantityBound.bind(this, material.name, material.quantity, material.maxQuantity)}>
+				onPress = {this.changeQuantity.bind(this, material.name, material.quantity, material.maxQuantity)}>
 					<Text>{material.quantity} {material.name}</Text>
 					<Icon name = 'ios-trash' onPress = {this._removeMaterialFromCart.bind(this, material.name)}/>
 			</ListItem>
 		);
+	}
+
+	menuClick() {
+		this.context.drawer.open()
 	}
 
 	render() {
@@ -175,6 +174,12 @@ class CheckOutPage extends Component {
 		}
 		return (
 			<Container theme={Theme}>
+				<Header>
+					<Button transparent onPress = {this.menuClick.bind(this)}> 
+                 		{this.props.navImageSrc}
+                 	</Button>
+                 	<Title>{this.props.title}</Title>
+                </Header>
             	<Content>
 					<List
 						dataArray={this.state.cart}

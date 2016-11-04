@@ -75,9 +75,6 @@ class CheckInPage extends Component {
 	}
 
 	  this.changeCheckInListener = this._onCheckInDataChange.bind(this);
-
-	  //trying to fix crashing bug
-		this.changeQuantityBound = this.changeQuantity.bind(this);
   }
 
   	_getCheckInList() {
@@ -149,7 +146,7 @@ class CheckInPage extends Component {
 		StompApiService.checkinMaterial(this.props.serverName, this.props.jwt, postData);
 	}
   
-  _renderRow(material) {
+  	_renderRow(material) {
   		let date = material.transaction_date;
   		let dateOptions = {
   			hour12 : true,
@@ -162,19 +159,22 @@ class CheckInPage extends Component {
   		let prettyDate = (new Date(date)).toLocaleString('en-US', dateOptions);
 
   		return (
-  		<ListItem iconRight
-  			onPress = {this.changeQuantityBound.bind(this, material.name, parseInt(material.quantity), material.maxQuantity)}
-  		>
-  			<Text> {material.quantity} {material.name} </Text>
-  			<Text note>Earliest: { prettyDate }</Text>
-  			<Icon name = 'ios-trash' onPress = {this._removeMaterialFromCart.bind(this, material.name)}/>
-  		</ListItem>
-
+  			<ListItem iconRight
+  				onPress = {this.changeQuantity.bind(this, material.name, parseInt(material.quantity), material.maxQuantity)}
+  			>
+  				<Text> {material.quantity} {material.name} </Text>
+  				<Text note>Earliest: { prettyDate }</Text>
+  				<Icon name = 'ios-trash' onPress = {this._removeMaterialFromCart.bind(this, material.name)}/>
+  			</ListItem>
   		);
-  }
+  	}
+  	
+  	menuClick() {
+		this.context.drawer.open()
+	}
 
-  render() {
-  	let submitMessage;
+  	render() {
+  		let submitMessage;
 		if (this.state.checkInCart.length == 0) {
 			//cart is empty because the api returned an empty array
 			if (StompApiStore.isCheckinListEmpty()) {
@@ -200,28 +200,34 @@ class CheckInPage extends Component {
 				</View>
 			);
 		}
-	return (
-	  <Container theme={Theme}>
-            <Content
-            	refreshControl={
-         			<RefreshControl
-            			refreshing={false}
-            			onRefresh={this._onRefresh.bind(this)} />
-        		}
-            >
-            { this.state.loading ? <Spinner/> :
-            	<View>
-				<List
-					dataArray={this.state.checkInCart}
-					renderRow = { material => (this._renderRow(material)) }>
-				</List>
-				<View>
-					{submitMessage}
-				</View>
-				</View>
-			}
-			</Content>
-			<Footer>
+		return (
+	  		<Container theme={Theme}>
+	  			<Header>
+	  				<Button transparent onPress = {this.menuClick.bind(this)}> 
+                 		{this.props.navImageSrc}
+                 	</Button>
+                 	<Title>{this.props.title}</Title>
+	  			</Header>
+            	<Content
+            		refreshControl={
+         				<RefreshControl
+            				refreshing={false}
+            				onRefresh={this._onRefresh.bind(this)} />
+        			}
+            	>
+            	{ this.state.loading ? <Spinner/> :
+            		<View>
+						<List
+							dataArray={this.state.checkInCart}
+							renderRow = { material => (this._renderRow(material)) }>
+						</List>
+						<View>
+							{submitMessage}
+						</View>
+					</View>
+				}
+				</Content>
+				<Footer>
 					<Picker
 						ref={picker => {this.picker = picker}}
 						style={{height: Dimensions.get('window').height / 2}}
@@ -233,12 +239,13 @@ class CheckInPage extends Component {
 						elevation={5}
 						selectedValue={this.state.selectedValue}
 						onPickerDone={(pickedValue) => {
+							console.log(pickedValue)
 							MaterialCartActions.UpdateCheckInItemWithQuantity(this.state.pickerTitle, pickedValue[0]);
 						}} />
-			</Footer>
-		</Container>
-	);
-  }
+				</Footer>
+			</Container>
+		);
+  	}
 }
 
 CheckInPage.contextTypes = contextTypes;

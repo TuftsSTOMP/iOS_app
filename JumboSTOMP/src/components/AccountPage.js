@@ -68,9 +68,10 @@ class AccountPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			details : this._getStompApiUserDetailsState(),
-			loading : true,
+			details : JSON.parse(this._getStompApiUserDetailsState()),
+			loading : false, //See component did mount function for explanation
 	  	}
+	  	console.log(this.state)
 
 	  	this.changeStompApiUserDetailsListener = this._onStompApiUserDetailsChange.bind(this);
 	}
@@ -85,7 +86,11 @@ class AccountPage extends Component {
 	}
 
 	componentDidMount() {
-		StompApiService.getUserDetails(this.props.serverName, this.props.jwt);
+		console.log(this.state)
+		// Load the user details immediately when the user logs in, not when they visit the page
+		// This way the name is available in the nav bar
+		// If the call were made on the page it would be:
+		// StompApiService.getUserDetails(this.props.serverName, this.props.jwt);
 	}
 
 	_onStompApiUserDetailsChange() {
@@ -127,9 +132,6 @@ class AccountPage extends Component {
                         <Text> {detail.apiVersion}</Text>
                     </CardItem>
 				</Card>
-				<View style = {styles.container}>
-					<Button block danger onPress={AuthService.logout}>Logout</Button>
-				</View>
 			</View>
 		);
 	}
@@ -142,13 +144,13 @@ class AccountPage extends Component {
 		return (
 			<Container theme={Theme}>
 				<Header> 
-					<Button transparent onPress={this.menuClick.bind(this)}>
-                 		<Text> Menu </Text>
+                 	<Button transparent onPress = {this.menuClick.bind(this)}> 
+                 		{this.props.navImageSrc}
                  	</Button>
 					<Button transparent onPress = {this.editAccount.bind(this)}>
                  		<Text> Edit </Text>
                  	</Button>
-					<Title>My Account</Title>
+					<Title>{this.props.title}</Title>
 				</Header>
 
 				<Content>

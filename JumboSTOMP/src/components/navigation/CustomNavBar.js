@@ -1,3 +1,5 @@
+//NOT USED
+
 const React = require('react');
 const ReactNative = require('react-native');
 import Button from 'react-native-scrollable-tab-view';

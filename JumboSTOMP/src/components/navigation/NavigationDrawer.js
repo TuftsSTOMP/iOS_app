@@ -4,8 +4,9 @@ import { DefaultRenderer, Actions } from 'react-native-router-flux';
 import SideNavContent from './SideNavContent'
 
 const propTypes = {
-  navigationState: PropTypes.object,
+  navigationState: PropTypes.object
 };
+
 
 class NavigationDrawer extends React.Component {
   render() {
@@ -17,22 +18,20 @@ class NavigationDrawer extends React.Component {
         type="displace"
         onOpen={() => Actions.refresh({ key: state.key, open: true })}
         onClose={() => Actions.refresh({ key: state.key, open: false })}
-        content={<SideNavContent />}
+        content={<SideNavContent firstName={StompApiStore.getUserFirstName()} />}
         tapToClose
-        openDrawerOffset={0.3}
-        panCloseMask={0.2}
+        openDrawerOffset={0.4}
+        panCloseMask={0.4}
         negotiatePan
         tweenHandler={(ratio) => ({
-          main: { opacity: Math.max(0.54, 1 - ratio) },
+          main: { opacity: Math.max(.2, 1 - ratio) },
         })}
       >
-         <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
-        
+         <DefaultRenderer navigationState={children[children.length-1]} onNavigate={this.props.onNavigate}/>
       </Drawer>
     );
   }
 }
 
 NavigationDrawer.propTypes = propTypes;
-
 export default NavigationDrawer;

@@ -2,6 +2,7 @@ import AppDispatcher from '../dispatchers/AppDispatcher.js';
 import LoginConstants from '../constants/LoginConstants.js';
 import {AlertIOS} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import StompApiService from '../services/StompApiService';
 
 export default {
 	loginUser: (loginJsonResponse) => {
@@ -12,6 +13,8 @@ export default {
 	  		serverName: loginJsonResponse.stomp_serverName,
 	  		user: loginJsonResponse.stomp_user,
 		});
+
+		StompApiService.getUserDetails(loginJsonResponse.stomp_serverName, loginJsonResponse.stomp_jwt);
 
 		Actions.AppContent()
   	},

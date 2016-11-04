@@ -159,11 +159,18 @@ class MaterialListPage extends Component {
 		);
 	}
 
+	menuClick() {
+		this.context.drawer.open()
+	}
+
 	render() {
 		return (
 			<Container theme={Theme}>
                 <Header>
-                	<Title>List of Materials</Title>
+                	<Button transparent onPress = {this.menuClick.bind(this)}> 
+                 		{this.props.navImageSrc}
+                 	</Button>
+                	<Title>{this.props.title}</Title>
                 </Header>
                 <Content 
                 	refreshControl={

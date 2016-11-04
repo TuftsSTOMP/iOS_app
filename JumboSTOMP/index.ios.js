@@ -14,6 +14,7 @@ import {
 
 import { 
 	Button,
+	Image,
 	Icon
 } from 'native-base';
 
@@ -30,7 +31,7 @@ import MaterialListPage from './src/components/MaterialListPage';
 import MaterialDetailPage from './src/components/MaterialDetailPage';
 
 import NavigationDrawer from './src/components/navigation/NavigationDrawer'
-
+const navigationImageSrc = <Icon name='ios-menu'/>
 
 const styles = StyleSheet.create({
 	 tabBarStyle: {
@@ -42,9 +43,10 @@ const styles = StyleSheet.create({
 	
 })
 
+
 //tab display
-class MenuIcon extends Component {
-	render(){ return ( <Icon name='ios-menu'/>);}
+class ListIcon extends Component {
+	render(){ return ( <Icon name='ios-list'/>);}
 }
 
 class CartIcon extends Component {
@@ -65,17 +67,21 @@ const scenes = Actions.create(
 
 		<Scene key="AppContent" component={NavigationDrawer} tabs={false} open={false} direction="vertical">
 
-			<Scene key="AccountIndex" tabs={false} title="Account" hideNavBar={true} >
-				<Scene key="AccountPage" component={AccountPage} title="My Account"/>
-				<Scene key="EditAccountPage" component={EditAccountPage} title="Edit Account" direction="vertical"/>
-			</Scene>
-			<Scene key="MaterialIndex" tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
-				<Scene key="MaterialWrapper" title="Materials" icon={MenuIcon} hideNavBar={true}>
-					<Scene key="MaterialListPage" component={MaterialListPage} title="Materials" />
+			<Scene key="MaterialIndex" initial tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
+				<Scene key="MaterialWrapper" title="Materials" icon={ListIcon} hideNavBar={true}>
+					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
 					<Scene key="MaterialDetailPage" component={MaterialDetailPage} title="Material Detail" />
 				</Scene>
-				<Scene key="CheckIn" component={CheckInPage} title="CheckIn" icon={AccountIcon} hideNavBar={true}/>
-				<Scene key="CheckOut" component={CheckOutPage} title="CheckOut" icon={CartIcon} hideNavBar={true}/>
+				<Scene key="CheckInWrapper" icon={AccountIcon} hideNavBar={true}>
+					<Scene key="CheckIn" title="Check In" component={CheckInPage} navImageSrc={navigationImageSrc}/>
+				</Scene>
+				<Scene key="CheckOutWrapper" icon={CartIcon} hideNavBar={true}>
+					<Scene key="CheckOut" title="Check Out" component={CheckOutPage} navImageSrc={navigationImageSrc}/>
+				</Scene>
+			</Scene>
+			<Scene key="AccountIndex" tabs={false} title="Account" hideNavBar={true}>
+				<Scene key="AccountPage" component={AccountPage} title="My Account" navImageSrc={navigationImageSrc}/>
+				<Scene key="EditAccountPage" component={EditAccountPage} title="Edit Account" direction="vertical"/>
 			</Scene>
 
 		</Scene>

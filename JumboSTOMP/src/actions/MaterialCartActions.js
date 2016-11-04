@@ -84,15 +84,11 @@ export default {
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.UPDATE_CHECKIN_QUANTITY,
 			materialName: materialName,
-			update: {
+			update: [{
 				name: materialName, 
 				quantity: quantity
-			}
+			}]
 		});
-
-		//AppDispatcher.dispatch({
-		//	actionType: MaterialCartConstants.REFRESH
-		//});
 	},
 
 	RemoveCheckInItem: (materialName) => {
