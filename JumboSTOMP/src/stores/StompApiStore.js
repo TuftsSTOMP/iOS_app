@@ -20,6 +20,7 @@ class StompApiStore extends BaseStore {
 		this._checkInList = null;
 		this._materialDetail = null;
 		this._userDetails = null;
+		this._userName = null;
 		this._error = null;
 	}
 
@@ -31,6 +32,7 @@ class StompApiStore extends BaseStore {
 				break;
 			case StompApiConstants.STOMP_API_USER_DETAILS_SUCCESS:
 				this._userDetails = action.data;
+				this._userName = JSON.parse(action.data)[0].f_name;
 				this.emitChange();
 				break;
 			case StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS:
@@ -94,9 +96,7 @@ class StompApiStore extends BaseStore {
 
 	//still working on
 	getUserFirstName() {
-		console.log(this._userDetails)
-		return "a"
-		//return this._userDetails.f_name;
+		return this._userName;
 	}
 
 	getError() {

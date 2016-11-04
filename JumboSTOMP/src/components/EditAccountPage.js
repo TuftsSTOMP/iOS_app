@@ -88,7 +88,7 @@ class EditAccountPage extends Component {
         		postData.append(property, userDetails[property]);
     		}
 		}
-		StompApiActions.ApiUserDetailsRequestSuccess(userDetails);
+		
 		StompApiService.updateUser(this.props.serverName, this.props.jwt, postData);
 	}
 

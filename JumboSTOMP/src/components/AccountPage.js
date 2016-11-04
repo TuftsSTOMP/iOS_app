@@ -95,7 +95,7 @@ class AccountPage extends Component {
 		// Load the user details immediately when the user logs in, not when they visit the page
 		// This way the name is available in the nav bar
 		// If the call were made on the page it would be:
-		// StompApiService.getUserDetails(this.props.serverName, this.props.jwt);
+		 StompApiService.getUserDetails(this.props.serverName, this.props.jwt);
 	}
 
 	_onStompApiUserDetailsChange() {
