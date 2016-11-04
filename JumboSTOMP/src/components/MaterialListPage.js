@@ -1,23 +1,27 @@
+/*
+ *	MaterialListPage.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	The page to view information the list of materials and add them to cart
+ */
+
 'use strict';
 
 import React, { Component } from 'react';
 import {
 	StyleSheet,
 	View,
-	TouchableOpacity,
-	ScrollView,
 	Dimensions,
 	RefreshControl,
-	AlertIOS
 } from 'react-native';
-
 import { 
 	Container, 
 	Content, 
 	Text,
 	List,
 	ListItem,
-	Badge,
 	Header,
 	Spinner,
 	Footer,
@@ -27,34 +31,28 @@ import {
 } from 'native-base';
 
 import Theme from '../themes/version1';
-
 import Picker from 'react-native-picker';
+import {Actions} from 'react-native-router-flux';
 
 import AuthenticatedComponent from './AuthenticatedComponent';
 
-import {Actions} from 'react-native-router-flux';
-
 import StompApiService from '../services/StompApiService';
-import StompApiConstants from '../constants/StompApiConstants';
 import StompApiStore from '../stores/StompApiStore';
 
 import MaterialCartActions from '../actions/MaterialCartActions';
 import MaterialCartStore from '../stores/MaterialCartStore';
 
-
 const styles = StyleSheet.create({
-  selectedQuantity: {
-  	color: 'green'
-  }
+  	selectedQuantity: {
+  		color: 'green'
+  	}
 });
 
 const contextTypes = {
   drawer: React.PropTypes.object,
 };
 
-
 class MaterialListPage extends Component {
-
 	constructor(props) {
 		super(props);
 
@@ -69,7 +67,6 @@ class MaterialListPage extends Component {
 
 		this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
 	}
-	
 
 	_getStompApiDataState() {
 		return (StompApiStore.getMaterialList());
@@ -79,8 +76,6 @@ class MaterialListPage extends Component {
 		StompApiService.getFullMaterialList(this.props.serverName, this.props.jwt);
 	}
 
-
-	//All loads
 	componentWillMount() {
 		StompApiStore.addChangeListener(this.changeStompApiDataListener);
 	}
@@ -129,9 +124,6 @@ class MaterialListPage extends Component {
 	  		
   	}
 
-  	//
-  	// Render the content of a row in the list
-  	//
 	_renderRow(material) {
 		let rowContent;
 		if (MaterialCartStore.hasMaterial(material.name)) {

@@ -1,8 +1,16 @@
+/*
+ *	BaseStore.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Base class for all Stores
+ */
+
 import { EventEmitter } from 'events';
 import AppDispatcher from '../dispatchers/AppDispatcher';
 
 export default class BaseStore extends EventEmitter {
-
 	constructor() {
 		super();
 	}

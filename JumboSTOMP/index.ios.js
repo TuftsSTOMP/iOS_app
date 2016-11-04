@@ -1,24 +1,28 @@
-/**
- * JumboSTOMP React Native App
- * Creator: Sam Heilbron
- * [Link to Github]
- **/
+/*
+ *	index.ios.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	JumboSTOMP React Native App
+ *	
+ *	Application used to handle all STOMP related activities at Tufts University.
+ *	See Docs for further information about functionality
+ *
+ *	Github: https://github.com/TuftsSTOMP/iOS_app
+ */
 
 import React, {Component} from 'react';
-import {
-	AppRegistry,
-	Text,
-	StyleSheet,
-	Navigator
-} from 'react-native';
-
+import {AppRegistry, StyleSheet } from 'react-native';
+import { Icon } from 'native-base';
 import { 
-	Button,
-	Image,
-	Icon
-} from 'native-base';
-
-import { Scene, Router, Route, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
+	Scene, 
+	Router,
+	Modal, 
+	Actions, 
+	Reducer, 
+	ActionConst 
+} from 'react-native-router-flux';
 
 /* FULL LIST OF PAGES IN APP STRUCTURE  */
 import LoginPage from './src/components/LoginPage';
@@ -30,9 +34,24 @@ import CheckOutPage from './src/components/CheckOutPage';
 import MaterialListPage from './src/components/MaterialListPage';
 import MaterialDetailPage from './src/components/MaterialDetailPage';
 
-import NavigationDrawer from './src/components/navigation/NavigationDrawer'
+/* NAVIGATION DRAWER COMPONENTS */
+import NavigationDrawer from './src/components/navigation/NavigationDrawer';
 const navigationImageSrc = <Icon name='ios-menu'/>
 
+/* TAB ICONS */
+class ListIcon extends Component {
+	render(){ return ( <Icon name='ios-list'/>);}
+}
+
+class CartIcon extends Component {
+	render(){ return ( <Icon name='ios-cart'/>);}
+}
+
+class AccountIcon extends Component {
+	render(){ return ( <Icon name='ios-person'/>);}
+}
+
+/* TAB STYLES */
 const styles = StyleSheet.create({
 	 tabBarStyle: {
     	backgroundColor: '#eee',
@@ -40,26 +59,9 @@ const styles = StyleSheet.create({
   	tabBarSelectedItemStyle: {
     	backgroundColor: '#ddd',
   	}
-	
 })
 
-
-//tab display
-class ListIcon extends Component {
-	render(){ return ( <Icon name='ios-list'/>);}
-}
-
-class CartIcon extends Component {
-	render(){ return ( <Icon name='ios-cart' />);}
-}
-
-class AccountIcon extends Component {
-	render(){ return ( <Icon name='ios-person'/>);}
-}
-
-
 /* APP ARCHITECTURE */
-
 const scenes = Actions.create(
 	<Scene key="modal" component={Modal} >
  	<Scene key="root">
@@ -94,11 +96,10 @@ const scenes = Actions.create(
 const reducerCreate = params=>{
 	const defaultReducer = Reducer(params);
 	return (state, action)=>{
-		console.log("ACTION:", action);
+		//DEBUG: console.log("ACTION:", action);
 		return defaultReducer(state, action);
 	}
 };
-
 
 class JumboSTOMP extends Component {
 	constructor(props) {

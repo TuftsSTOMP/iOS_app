@@ -1,12 +1,23 @@
+/*
+ *  AuthService.js
+ *
+ *  Author: Sam Heilbron
+ *  Last Updated: 10-04-2016
+ *
+ *  Class to handle Stomp Api service (all calls to API)
+ */
+
+'use strict';
 
 import StompApiConstants from '../constants/StompApiConstants';
 import StompApiActions from '../actions/StompApiActions';
 import MaterialCartActions from '../actions/MaterialCartActions';
-import {AlertIOS, AsyncStorage} from 'react-native';
-
 
 export default {
-
+    /*
+     *  Generic Post
+     *  Parameters: endpoint, post data, jwt, successful callback action
+     */
 	submitPost(endpoint, postData, jwt, cbAction) {
 
         var myHeaders = new Headers();
@@ -35,6 +46,10 @@ export default {
             .done();
     },
 
+    /*
+     *  Generic Get
+     *  Parameters: endpoint, jwt, successful callback action
+     */
     submitGet(endpoint, jwt, cbAction) {
 
         var myHeaders = new Headers();
@@ -62,6 +77,9 @@ export default {
             .done();
     },
 
+    /***
+     *** SPECIFIC CALLS TO API
+     ***/
     getUserDetails(serverName, jwt) {
         this.submitGet(serverName + StompApiConstants.USER_DETAILS_URL, 
                         jwt, 

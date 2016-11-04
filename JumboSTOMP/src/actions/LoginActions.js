@@ -1,3 +1,11 @@
+/*
+ *	LoginActions.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Dispatch flux actions related to Login
+ */
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
 import LoginConstants from '../constants/LoginConstants.js';
 import {AlertIOS} from 'react-native';
@@ -6,7 +14,6 @@ import StompApiService from '../services/StompApiService';
 
 export default {
 	loginUser: (loginJsonResponse) => {
-	
 		AppDispatcher.dispatch({
 	  		actionType: LoginConstants.LOGIN_USER,
 	  		jwt: loginJsonResponse.stomp_jwt,
@@ -15,12 +22,10 @@ export default {
 		});
 
 		StompApiService.getUserDetails(loginJsonResponse.stomp_serverName, loginJsonResponse.stomp_jwt);
-
 		Actions.AppContent()
   	},
   
   	logoutUser: () => {
-
 		AppDispatcher.dispatch({
 	  		actionType: LoginConstants.LOGOUT_USER
 		});
@@ -29,7 +34,6 @@ export default {
   	},
 
   	loginError: (title, error) => {
-	
 		AppDispatcher.dispatch({
 	  		actionType: null,
 	  		error: error

@@ -1,12 +1,19 @@
+/*
+ *	MaterialCartStore.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Store to manage Material Cart information
+ */
 import MaterialCartConstants from '../constants/MaterialCartConstants';
 import BaseStore from './BaseStore';
 import _ from 'underscore';
 
 class MaterialCartStore extends BaseStore {
-
 	constructor() {
-		console.log("material cart store created")
 		super();
+
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._cart = {};
 		this._CheckInCart = {};
@@ -75,7 +82,6 @@ class MaterialCartStore extends BaseStore {
 	isCheckInCartEmpty() {
 		return this._CheckInCart != {};
 	}
-
 }
 
 export default new MaterialCartStore();

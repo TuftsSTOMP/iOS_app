@@ -1,3 +1,15 @@
+/*
+ *	AuthenticatedComponent.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	A wrapper to create a High Order Component which requires that users are
+ *	logged in. Manages what users receive upon succesful login
+ */
+
+'use strict';
+
 import React, {Component} from 'react';
 import LoginStore from '../stores/LoginStore';
 import StompApiStore from '../stores/StompApiStore';

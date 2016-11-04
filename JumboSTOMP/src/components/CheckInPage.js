@@ -1,23 +1,27 @@
+/*
+ *	CheckInPage.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	The page to handle users checkin in materials (that they have removed)
+ */
+
 'use strict';
 
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  View,
-  TouchableHighlight,
-  RefreshControl,
-  AlertIOS,
-  ScrollView,
-  Dimensions
+ 	StyleSheet,
+ 	View,
+  	RefreshControl,
+  	Dimensions
 } from 'react-native';
-
 import { 
 	Container, 
 	Content, 
 	Text,
 	List,
 	ListItem,
-	Badge,
 	Header,
 	Spinner,
 	Footer,
@@ -27,21 +31,16 @@ import {
 } from 'native-base';
 
 import Theme from '../themes/version1';
-
 import Picker from 'react-native-picker';
-
 import {Actions} from 'react-native-router-flux';
 
-import StompApiService from '../services/StompApiService';
-
-import StompApiConstants from '../constants/StompApiConstants';
 import AuthenticatedComponent from './AuthenticatedComponent';
 
+import StompApiService from '../services/StompApiService';
 import StompApiStore from '../stores/StompApiStore';
+
 import MaterialCartStore from '../stores/MaterialCartStore';
-
 import MaterialCartActions from '../actions/MaterialCartActions';
-
 
 var styles = StyleSheet.create({
   	emptyCartMsg: {
@@ -59,23 +58,22 @@ var styles = StyleSheet.create({
 });
 
 const contextTypes = {
-  drawer: React.PropTypes.object,
+  	drawer: React.PropTypes.object,
 };
 
-
 class CheckInPage extends Component {
-  constructor(props) {
-	super(props)
-	this.state = {
-	  	loading : true,
-	  	checkInCart : this._getCheckInList(),
-	  	pickerData : [1,2,3],
-		selectedValue : 1,
-		pickerTitle : ""
-	}
+ 	constructor(props) {
+		super(props)
+		this.state = {
+	  		loading : true,
+	  		checkInCart : this._getCheckInList(),
+	  		pickerData : [1,2,3],
+			selectedValue : 1,
+			pickerTitle : ""
+		}
 
-	  this.changeCheckInListener = this._onCheckInDataChange.bind(this);
-  }
+	  	this.changeCheckInListener = this._onCheckInDataChange.bind(this);
+  	}
 
   	_getCheckInList() {
 		var cart = MaterialCartStore.getCheckInCart();
@@ -86,7 +84,6 @@ class CheckInPage extends Component {
 	}
 
 	_onCheckInDataChange() {
-
 		this.setState({loading : false});
 	  	this.setState({checkInCart : this._getCheckInList()});
 	}
@@ -103,7 +100,6 @@ class CheckInPage extends Component {
 	  	MaterialCartStore.removeChangeListener(this.changeCheckInListener);
   	}
 
-
 	_onRefresh() {
 		this.setState({loading : true});
   		StompApiService.getMyCheckedOutTotal(this.props.serverName, this.props.jwt);
@@ -113,12 +109,7 @@ class CheckInPage extends Component {
 		MaterialCartActions.RemoveCheckInItem(materialName);
 	}
 
-	//
-	//	Adjust the quantity of a material in the cart
-	//	Max quantity is used to limit the adjustment
-	//
 	changeQuantity(materialName, currentQuantity, maxQuantity) {
-
 		var quantityOptions = [];
 		for (var i = 1; i <= maxQuantity; i++) {
     		quantityOptions.push(i);
@@ -131,11 +122,7 @@ class CheckInPage extends Component {
 		this.picker.toggle();
   	}
 
-  	//
-	//	Submit the material cart for checkout. Query the Stomp API check in endpoint
-	//
 	_submitCheckIn() {
-
 		var postData = new FormData();
 		this._getCheckInList().map(
 			function(material) {

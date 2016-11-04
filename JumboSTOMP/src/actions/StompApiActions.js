@@ -1,13 +1,24 @@
+/*
+ *	StompApiActions.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Dispatch flux actions related to the Stomp API
+ */
+
 import {Actions} from 'react-native-router-flux';
 import {AlertIOS} from 'react-native';
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
+import _ from 'underscore';
+
 import StompApiConstants from '../constants/StompApiConstants';
-import MaterialCartConstants from '../constants/MaterialCartConstants';
-import MaterialCartActions from './MaterialCartActions';
-import LoginStore from '../stores/LoginStore';
 import StompApiStore from '../stores/StompApiStore';
 
-import _ from 'underscore';
+import MaterialCartConstants from '../constants/MaterialCartConstants';
+import MaterialCartActions from './MaterialCartActions';
+
+import LoginStore from '../stores/LoginStore';
 
 export default {
 	ApiGenericRequestSuccess: (data) => {
@@ -16,7 +27,6 @@ export default {
 	},
 
 	ApiRequestSuccess: (data) => {
-	
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_SUCCESS,
 			data: data
@@ -24,7 +34,6 @@ export default {
 	},
 
 	ApiUserDetailsRequestSuccess: (data) => {
-		
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_USER_DETAILS_SUCCESS,
 			data: data
@@ -32,7 +41,6 @@ export default {
 	},
 
 	ApiMaterialListRequestSuccess: (data) => {
-
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_SUCCESS,
 			data: data
@@ -40,7 +48,6 @@ export default {
 	},
 
 	ApiMaterialDetailRequestSuccess: (data) => {
-
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_MATERIAL_DETAIL_SUCCESS,
 			data: data
@@ -78,7 +85,6 @@ export default {
 	},
 
 	ApiRequestError: (title, error) => {
-	
 		AppDispatcher.dispatch({
 			actionType: StompApiConstants.STOMP_API_ERROR,
 			error: error

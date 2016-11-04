@@ -1,3 +1,11 @@
+/*
+ *  version1.js
+ *
+ *  Author: Sam Heilbron
+ *  Last Updated: 10-04-2016
+ *
+ *  Version of theme format and color scheme
+ */
 import Color from 'color';
 
 import {Platform} from 'react-native';

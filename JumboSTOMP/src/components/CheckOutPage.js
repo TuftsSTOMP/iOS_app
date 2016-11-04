@@ -1,19 +1,20 @@
+/*
+ *	CheckOutPage.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	The page to handle users checking out materials
+ */
+
 'use strict';
 
 import React, { Component } from 'react';
 import {
 	StyleSheet,
-	ScrollView,
-	TextInput,
 	View,
-	TouchableHighlight,
-	ActivityIndicatorIOS,
-	Image,
-	ListView,
-	Dimensions,
-	TouchableOpacity
+	Dimensions
 } from 'react-native';
-
 import { 
 	Container, 
 	Content, 
@@ -29,15 +30,14 @@ import {
 } from 'native-base';
 
 import Theme from '../themes/version1';
-
 import Picker from 'react-native-picker';
+
 import AuthenticatedComponent from './AuthenticatedComponent';
 
 import MaterialCartStore from '../stores/MaterialCartStore';
 import MaterialCartActions from '../actions/MaterialCartActions';
 
 import StompApiService from '../services/StompApiService';
-
 
 var styles = StyleSheet.create({
   	emptyCartMsg: {
@@ -82,8 +82,6 @@ class CheckOutPage extends Component {
 		return materialList;
 	}
 
-
-	//All loads
 	componentWillMount() {
 		MaterialCartStore.addChangeListener(this.changeMaterialCartListener);
 	}
@@ -105,7 +103,6 @@ class CheckOutPage extends Component {
 	//	Max quantity is used to limit the adjustment
 	//
 	changeQuantity(materialName, currentQuantity, maxQuantity) {
-
 		var quantityOptions = [];
 		for (var i = 1; i <= maxQuantity; i++) {
     		quantityOptions.push(i);

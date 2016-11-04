@@ -1,4 +1,13 @@
-//NOT USED
+/*
+ *  CustomNavBar.js
+ *
+ *  Author: Sam Heilbron
+ *  Last Updated: 10-04-2016
+ *
+ *  Possible Custom nav bar. 
+ *
+ *  NOTE : THIS IS NOT USED AND NEEDS TO BE TESTED
+ */
 
 const React = require('react');
 const ReactNative = require('react-native');

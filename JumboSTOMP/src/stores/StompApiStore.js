@@ -1,13 +1,19 @@
+/*
+ *	StompApiStore.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Store to manage info returned by Stomp Api
+ */
 import StompApiConstants from '../constants/StompApiConstants';
 import BaseStore from './BaseStore';
-
 import _ from 'underscore';
 
 class StompApiStore extends BaseStore {
-
 	constructor() {
-		console.log("stomp api store created")
 		super();
+
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._data = null;
 		this._materialList = null;
@@ -86,6 +92,7 @@ class StompApiStore extends BaseStore {
 		return this._userDetails;
 	}
 
+	//still working on
 	getUserFirstName() {
 		console.log(this._userDetails)
 		return ""

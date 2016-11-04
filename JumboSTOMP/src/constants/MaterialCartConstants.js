@@ -1,3 +1,11 @@
+/*
+ *	MaterialCartConstants.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Constants for Material Cart actions
+ */
 export default {
   	ADD_ITEM: 'add_item',
     REMOVE_ITEM: 'remove_item',

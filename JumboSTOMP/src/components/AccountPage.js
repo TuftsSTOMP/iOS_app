@@ -1,3 +1,12 @@
+/*
+ *	AccountPage.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	The Account page. Access to user information. User data is loaed on login
+ *	so the normal StompAPI call is not made in the componentDidMount handler
+ */
 'use strict';
 
 import React, { Component } from 'react';
@@ -64,7 +73,6 @@ const contextTypes = {
 
 
 class AccountPage extends Component {
-
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -76,7 +84,6 @@ class AccountPage extends Component {
 	  	this.changeStompApiUserDetailsListener = this._onStompApiUserDetailsChange.bind(this);
 	}
 
-
 	_getStompApiUserDetailsState() {
 	 	return (StompApiStore.getUserDetails());
 	}
@@ -86,7 +93,6 @@ class AccountPage extends Component {
 	}
 
 	componentDidMount() {
-		console.log(this.state)
 		// Load the user details immediately when the user logs in, not when they visit the page
 		// This way the name is available in the nav bar
 		// If the call were made on the page it would be:
@@ -95,7 +101,6 @@ class AccountPage extends Component {
 
 	_onStompApiUserDetailsChange() {
 	  	this.setState({details : JSON.parse(this._getStompApiUserDetailsState())});
-
 	  	this.setState({loading : false});
 	}
 

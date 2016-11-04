@@ -1,3 +1,11 @@
+/*
+ *	MaterialCartActions.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Dispatch flux actions related to the Material Cart
+ */
 import {Actions} from 'react-native-router-flux';
 import {AlertIOS} from 'react-native';
 import AppDispatcher from '../dispatchers/AppDispatcher.js';

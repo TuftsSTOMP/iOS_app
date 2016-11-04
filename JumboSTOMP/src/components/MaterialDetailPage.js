@@ -1,10 +1,18 @@
+/*
+ *	MaterialDetailPage.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	The page to view information about a specific material
+ */
+
 'use strict';
 
 import React, { Component } from 'react';
 import {
 	ListView
 } from 'react-native';
-
 import { 
 	Container, 
 	Content, 
@@ -20,11 +28,9 @@ import {
 } from 'native-base';
 
 import Theme from '../themes/version1';
-
-import AuthenticatedComponent from './AuthenticatedComponent';
-
 import {Actions} from 'react-native-router-flux';
 
+import AuthenticatedComponent from './AuthenticatedComponent';
 
 import StompApiService from '../services/StompApiService';
 import StompApiConstants from '../constants/StompApiConstants';
@@ -33,7 +39,6 @@ import StompApiStore from '../stores/StompApiStore';
 const contextTypes = {
   drawer: React.PropTypes.object,
 };
-
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -49,11 +54,9 @@ class MaterialDetailPage extends Component {
 		this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
 	}
 	
-
 	_getStompApiDataState() {
 		return StompApiStore.getMaterialDetail();
 	}
-
 
 	componentWillMount() {
 		StompApiStore.addChangeListener(this.changeStompApiDataListener);
@@ -69,7 +72,6 @@ class MaterialDetailPage extends Component {
 	componentWillUnmount() {
 		StompApiStore.removeChangeListener(this.changeStompApiDataListener);
 	}
-
 
 	_renderRow(material) {
 		return (
@@ -107,7 +109,6 @@ class MaterialDetailPage extends Component {
             </List>
 		);
 	}
-
 
 	render() {
 		return (

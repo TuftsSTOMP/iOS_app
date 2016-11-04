@@ -1,3 +1,11 @@
+/*
+ *  StompApiConstants.js
+ *
+ *  Author: Sam Heilbron
+ *  Last Updated: 10-04-2016
+ *
+ *  Constants for Stomp Api Actions
+ */
 export default {
   	STOMP_API_SUCCESS: 'STOMP_API_SUCCESS',
     STOMP_API_MATERIAL_LIST_SUCCESS: 'STOMP_API_MATERIAL_LIST_SUCCESS',
