@@ -57,8 +57,8 @@ class AuthService {
 				return false;
 			})
 			.done(() => {
-				postSubmit();
-
+				//@todo: this is null at the moment. Need to handle clearing login form
+				postSubmit(); 
 			});
 	}
 

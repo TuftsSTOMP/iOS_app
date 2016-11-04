@@ -15,7 +15,6 @@ import MaterialCartStore from '../stores/MaterialCartStore';
 
 export default {
 	AddItemWithMaxQuantity: (materialName, quantity, maxQuantity) => {
-	
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.ADD_ITEM,
 			materialName: materialName,
@@ -30,7 +29,6 @@ export default {
 	},
 
 	UpdateItemWithQuantity: (materialName, quantity) => {
-	
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.ADD_ITEM,
 			materialName: materialName,
@@ -39,7 +37,6 @@ export default {
 	},
 
 	RemoveItem: (materialName) => {
-	
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.REMOVE_ITEM,
 			materialName: materialName
@@ -53,7 +50,6 @@ export default {
 	},
 
 	SuccessfulCartCheckout: (data) => {
-	
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.REMOVE_ALL,
 		});
@@ -66,7 +62,6 @@ export default {
 	},
 
 	AddCheckInItemWithMaxQuantity: (materialName, quantity, maxQuantity, transaction_date) => {
-
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.UPDATE_CHECKIN_QUANTITY,
 			materialName: materialName,
@@ -80,7 +75,6 @@ export default {
 	},
 
 	AddCheckInList: (jsonList) => {
-
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.UPDATE_CHECKIN_QUANTITY,
 			update: jsonList
@@ -88,7 +82,6 @@ export default {
 	},
 
 	UpdateCheckInItemWithQuantity: (materialName, quantity) => {
-
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.UPDATE_CHECKIN_QUANTITY,
 			materialName: materialName,
@@ -100,7 +93,6 @@ export default {
 	},
 
 	RemoveCheckInItem: (materialName) => {
-
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.REMOVE_CHECKIN_ITEM,
 			materialName: materialName
@@ -108,7 +100,6 @@ export default {
 	},
 
 	SuccessfulCheckIn: (data) => {
-
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.REMOVE_CHECKIN_ALL,
 		});

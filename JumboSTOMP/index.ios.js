@@ -28,7 +28,6 @@ import {
 import LoginPage from './src/components/LoginPage';
 import AccountPage from './src/components/AccountPage';
 import EditAccountPage from './src/components/EditAccountPage';
-import TransactionPage from './src/components/TransactionPage';
 import CheckInPage from './src/components/CheckInPage';
 import CheckOutPage from './src/components/CheckOutPage';
 import MaterialListPage from './src/components/MaterialListPage';

@@ -14,6 +14,7 @@ import {PropTypes} from "react";
 import { Actions } from 'react-native-router-flux';
 import AuthService from '../../services/AuthService';
 import StompApiStore from '../../stores/StompApiStore';
+
 import {
 	StyleSheet, 
 	View, 
@@ -31,7 +32,7 @@ const contextTypes = {
 };
 
 const propTypes = {
-    firstName: React.PropTypes.String
+    firstName: React.PropTypes.string
 };
 
 var styles = StyleSheet.create({
@@ -54,7 +55,7 @@ var styles = StyleSheet.create({
 
 const SideNavContent = (props, context) => {
   	const drawer = context.drawer;
-  	const {firstName} = this.props
+  	const {firstName} = props
 
   	return (
     	<View style={styles.background}>

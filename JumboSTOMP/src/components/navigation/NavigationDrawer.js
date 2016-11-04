@@ -12,7 +12,8 @@
 import React, { PropTypes } from 'react';
 import Drawer from 'react-native-drawer';
 import { DefaultRenderer, Actions } from 'react-native-router-flux';
-import SideNavContent from './SideNavContent'
+import SideNavContent from './SideNavContent';
+import StompApiStore from '../../stores/StompApiStore';
 
 const propTypes = {
   navigationState: PropTypes.object

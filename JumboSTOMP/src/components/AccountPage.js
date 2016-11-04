@@ -79,7 +79,6 @@ class AccountPage extends Component {
 			details : JSON.parse(this._getStompApiUserDetailsState()),
 			loading : false, //See component did mount function for explanation
 	  	}
-	  	console.log(this.state)
 
 	  	this.changeStompApiUserDetailsListener = this._onStompApiUserDetailsChange.bind(this);
 	}

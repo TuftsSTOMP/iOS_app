@@ -1,10 +1,18 @@
+/*
+ *	EditAccountPage.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	The page to handle editing a users account
+ */
+
 'use strict';
 
 import React, { Component } from 'react';
 import {
  	StyleSheet,
   	View,
-  	AlertIOS
 } from 'react-native';
 import { 
 	Container, 
@@ -23,7 +31,6 @@ import {
 	Title
 } from 'native-base';
 
-//import Button from 'react-native-button';
 import Theme from '../themes/version1';
 
 import {Actions} from 'react-native-router-flux';
@@ -32,6 +39,7 @@ import AuthService from '../services/AuthService';
 import StompApiService from '../services/StompApiService';
 
 import StompApiConstants from '../constants/StompApiConstants';
+import StompApiActions from '../actions/StompApiActions';
 import LoginConstants from '../constants/LoginConstants';
 
 import AuthenticatedComponent from './AuthenticatedComponent';
@@ -49,8 +57,7 @@ var styles = StyleSheet.create({
 });
 
 
-export default AuthenticatedComponent(class EditAccountPage extends Component {
-
+class EditAccountPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -81,7 +88,7 @@ export default AuthenticatedComponent(class EditAccountPage extends Component {
         		postData.append(property, userDetails[property]);
     		}
 		}
-
+		StompApiActions.ApiUserDetailsRequestSuccess(userDetails);
 		StompApiService.updateUser(this.props.serverName, this.props.jwt, postData);
 	}
 
@@ -154,4 +161,6 @@ export default AuthenticatedComponent(class EditAccountPage extends Component {
 		  	</Container>
 		);
   	}
-});
+}
+
+export default AuthenticatedComponent(EditAccountPage);

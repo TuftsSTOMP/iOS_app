@@ -1,3 +1,11 @@
+/*
+ *	LoginConstants.js
+ *
+ *	Author: Sam Heilbron
+ *	Last Updated: 10-04-2016
+ *
+ *	Constants for Login
+ */
 var BASE_URL_LOCAL = 'http://stomp.api.local';
 var BASE_URL = 'http://stompinv.uit.tufts.edu';
 export default {
