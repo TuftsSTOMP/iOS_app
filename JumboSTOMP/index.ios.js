@@ -66,7 +66,7 @@ const scenes = Actions.create(
  	<Scene key="root">
 		<Scene key="Login" component={LoginPage} hideNavBar={true} title="Login" type={ActionConst.REPLACE} />
 
-		<Scene key="AppContent" component={NavigationDrawer} tabs={false} open={false} direction="vertical">
+		<Scene key="AppContent" component={NavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
 
 			<Scene key="MaterialIndex" initial tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 				<Scene key="MaterialWrapper" title="Materials" icon={ListIcon} hideNavBar={true}>

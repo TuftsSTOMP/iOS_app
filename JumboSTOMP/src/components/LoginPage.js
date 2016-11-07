@@ -18,7 +18,8 @@ import {
 	TextInput,
 	View,
 	TouchableHighlight,
-	AlertIOS
+	AlertIOS,
+	Image
 } from 'react-native';
 
 export default class Login extends Component {
@@ -32,6 +33,9 @@ export default class Login extends Component {
 
 	render() {
 		return (
+			<View style={{flex: 1}}> //@todo: float the stomp logo in the center
+			<Image source={require('../images/stomp_logo_objects.jpg')} />
+
 			<GiftedForm
 				formName='loginForm' 
 
@@ -43,6 +47,8 @@ export default class Login extends Component {
 					username:'',
 					password:''
 				}}
+
+				clearOnClose={true}
 					
 				validators={{
 					username: {
@@ -107,7 +113,6 @@ export default class Login extends Component {
 					onSubmit = {(isValid, values, validationResults, postSubmit = null, modalNavigator = null) => {
 						if (isValid === true) {
 							Auth.login(values, postSubmit);
-							GiftedFormManager.reset('loginForm');
 						}
 					}} />
 
@@ -115,6 +120,7 @@ export default class Login extends Component {
 					title='By logging in, you agree to the Terms of Service of the STOMP organization.' />
 
 			</GiftedForm> 
+			</View>
 		);
 	}
 }

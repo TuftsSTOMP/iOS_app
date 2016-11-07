@@ -57,8 +57,7 @@ class AuthService {
 				return false;
 			})
 			.done(() => {
-				//@todo: this is null at the moment. Need to handle clearing login form
-				postSubmit(); 
+				postSubmit(); //Clear the spinner on the login button
 			});
 	}
 
