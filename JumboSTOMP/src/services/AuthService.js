@@ -41,6 +41,7 @@ class AuthService {
 			})
 			.then((response) => { 			//Received response from server
 				clearTimeout(timeoutId);
+				postSubmit(); //Clear the spinner on the login button
 				return response.json()
 			})
 			.then((responseData) => {
@@ -56,9 +57,7 @@ class AuthService {
 				LoginActions.loginError("Connection Error", error.message)
 				return false;
 			})
-			.done(() => {
-				postSubmit(); //Clear the spinner on the login button
-			});
+			.done(() => {});
 	}
 
 	/*

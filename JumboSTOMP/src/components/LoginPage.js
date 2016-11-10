@@ -22,6 +22,16 @@ import {
 	Image
 } from 'react-native';
 
+var styles = StyleSheet.create({
+	wrapper : {
+		flex: 1,
+		alignItems: 'center'
+	},
+	stompLogo : {
+
+	}
+});
+
 export default class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -33,8 +43,8 @@ export default class Login extends Component {
 
 	render() {
 		return (
-			<View style={{flex: 1}}> //@todo: float the stomp logo in the center
-			<Image source={require('../images/stomp_logo_objects.jpg')} />
+			<View style={styles.wrapper}>
+			<Image style={styles.stompLogo} source={require('../images/stomp_logo_objects.jpg')} />
 
 			<GiftedForm
 				formName='loginForm' 

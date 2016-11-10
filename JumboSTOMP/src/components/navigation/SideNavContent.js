@@ -50,7 +50,12 @@ var styles = StyleSheet.create({
     	alignItems: "center",
     	padding:10,
     	marginTop: 40
-  	}
+  	},
+    userName: {
+      marginBottom: 30,
+      marginTop: 30,
+      alignItems: "center"
+    }
 });
 
 const SideNavContent = (props, context) => {
@@ -59,7 +64,7 @@ const SideNavContent = (props, context) => {
 
   	return (
     	<View style={styles.background}>
-        	<TouchableOpacity style={styles.logout} onPress={AuthService.logout}>
+        	<TouchableOpacity style={styles.userName}>
               	<Text style={styles.menuNames}> Hi {firstName} </Text>
             </TouchableOpacity>
 

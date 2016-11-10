@@ -47,21 +47,6 @@ import AuthenticatedComponent from './AuthenticatedComponent';
 import StompApiStore from '../stores/StompApiStore';
 import LoginStore from '../stores/LoginStore';
 
-
-var styles = StyleSheet.create({
- 	description: {
-		marginBottom: 20,
-		fontSize: 18,
-		textAlign: 'center',
-		color: '#656565'
-  	},
-  	container: {
-		padding: 30,
-		marginTop: 10,
-		alignItems: 'center'
-  	}
-});
-
 /*
 Look to refactor and add this to the AuthenticatedComponent HOC so that it isn't required
 for each new component. Leave like this for now though because it works
