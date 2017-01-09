@@ -124,6 +124,20 @@ export default {
                         postData,
                         jwt,
                         StompApiActions.ApiUserUpdateSuccess);
-    }
+    },
+
+    guestRemoveMaterial(serverName, jwt, postData) {
+        this.submitPost(serverName + StompApiConstants.GUEST_REMOVE_MATERIAL_URL,
+                        postData,
+                        jwt,
+                        MaterialCartActions.SuccessfulCartCheckout);
+    },
+
+    guestReturnMaterial(serverName, jwt, postData) {
+        this.submitPost(serverName + StompApiConstants.GUEST_RETURN_MATERIAL_URL,
+                        postData,
+                        jwt,
+                        MaterialCartActions.SuccessfulCheckIn);
+    },
 
 }

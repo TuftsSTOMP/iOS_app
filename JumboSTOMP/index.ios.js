@@ -30,6 +30,7 @@ import AccountPage from './src/components/AccountPage';
 import EditAccountPage from './src/components/EditAccountPage';
 import CheckInPage from './src/components/CheckInPage';
 import CheckOutPage from './src/components/CheckOutPage';
+import GuestCheckOutPage from './src/components/GuestCheckOutPage';
 import MaterialListPage from './src/components/MaterialListPage';
 import MaterialDetailPage from './src/components/MaterialDetailPage';
 
@@ -66,8 +67,7 @@ const scenes = Actions.create(
  	<Scene key="root">
 		<Scene key="Login" component={LoginPage} hideNavBar={true} title="Login" type={ActionConst.REPLACE} />
 
-		<Scene key="AppContent" component={NavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
-
+		<Scene key="StomperAppContent" component={NavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
 			<Scene key="MaterialIndex" initial tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 				<Scene key="MaterialWrapper" title="Materials" icon={ListIcon} hideNavBar={true}>
 					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
@@ -84,7 +84,17 @@ const scenes = Actions.create(
 				<Scene key="AccountPage" component={AccountPage} title="My Account" navImageSrc={navigationImageSrc}/>
 				<Scene key="EditAccountPage" component={EditAccountPage} title="Edit Account" direction="vertical"/>
 			</Scene>
+		</Scene>
 
+		<Scene key="GuestAppContent" component={NavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
+			<Scene key="GuestIndex" tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
+				<Scene key="GuestListWrapper" icon={ListIcon} hideNavBar={true}>
+					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
+				</Scene>
+				<Scene key="GuestCheckoutWrapper" icon={CartIcon} hideNavBar={true}>
+					<Scene key="GuestCart" title="Cart" component={GuestCheckOutPage} navImageSrc={navigationImageSrc}/>
+				</Scene>
+			</Scene>
 		</Scene>
 
   	</Scene> 

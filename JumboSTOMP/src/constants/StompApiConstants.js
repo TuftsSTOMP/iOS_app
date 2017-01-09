@@ -32,5 +32,8 @@ export default {
   	USER_PERMISSIONS_URL: '/Stomp/user/permissions',
   	USER_API_VERSION_URL: '/Stomp/user/version',
     USER_DETAILS_URL: '/Stomp/user/details',
-    USER_UPDATE_URL: '/Stomp/updateUser'
+    USER_UPDATE_URL: '/Stomp/updateUser',
+
+    GUEST_REMOVE_MATERIAL_URL: '/Stomp/guest/remove',
+    GUEST_RETURN_MATERIAL_URL: '/Stomp/guest/return'
 }

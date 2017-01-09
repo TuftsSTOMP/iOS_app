@@ -23,7 +23,18 @@ export default {
 		});
 
 		StompApiService.getUserDetails(loginJsonResponse.stomp_serverName, loginJsonResponse.stomp_jwt);
-		Actions.AppContent()
+
+		switch(loginJsonResponse.stomp_user){
+			case 'Stomper':
+				Actions.StomperAppContent();
+				break;
+			case '_Guest':
+				Actions.GuestAppContent();
+				break;
+			default:
+				AlertIOS.alert("OTHER LOGIN", "attempted to login");
+		}
+		
   	},
   
   	logoutUser: () => {

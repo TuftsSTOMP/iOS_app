@@ -2,7 +2,7 @@
  *	LoginPage.js
  *
  *	Author: Sam Heilbron
- *	Last Updated: 10-04-2016
+ *	Last Updated: 01-09-2017
  *
  *	The Login page
  */
@@ -14,11 +14,7 @@ import Auth from '../services/AuthService';
 import {GiftedForm, GiftedFormManager} from 'react-native-gifted-form';
 import {
 	StyleSheet,
-	Text,
-	TextInput,
 	View,
-	TouchableHighlight,
-	AlertIOS,
 	Image
 } from 'react-native';
 
@@ -127,7 +123,26 @@ export default class Login extends Component {
 					}} />
 
 				<GiftedForm.NoticeWidget
-					title='By logging in, you agree to the Terms of Service of the STOMP organization.' />
+					title='By logging in, you agree to the Terms of Service of the STOMP organization.' 
+					widgetStyles={{
+						noticeTitle: {textAlign: 'center'}
+					}} />
+
+				<GiftedForm.SeparatorWidget />
+
+				<GiftedForm.SubmitWidget
+					title='Continue as Guest'
+					widgetStyles={{
+						submitButton: {marginTop: 50, height: 50, backgroundColor: "green"},
+						textSubmitButton: {fontSize: 20}
+					}}
+						
+					onSubmit = {(isValid, values = null, validationResults, postSubmit = null, modalNavigator = null) => {
+						//Guest username and password according to API
+						Auth.login(
+							{username:"guest", password:"guest"}, 
+							postSubmit);
+					}} />
 
 			</GiftedForm> 
 			</View>
