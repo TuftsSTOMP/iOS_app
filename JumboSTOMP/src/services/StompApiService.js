@@ -130,14 +130,14 @@ export default {
         this.submitPost(serverName + StompApiConstants.GUEST_REMOVE_MATERIAL_URL,
                         postData,
                         jwt,
-                        MaterialCartActions.SuccessfulCartCheckout);
+                        MaterialCartActions.SuccessfulGuestRemove);
     },
 
     guestReturnMaterial(serverName, jwt, postData) {
         this.submitPost(serverName + StompApiConstants.GUEST_RETURN_MATERIAL_URL,
                         postData,
                         jwt,
-                        MaterialCartActions.SuccessfulCheckIn);
+                        MaterialCartActions.SuccessfulGuestReturn);
     },
 
 }

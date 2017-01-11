@@ -1,10 +1,11 @@
 /*
- *  NavigationDrawer.js
+ *  GuestNavigationDrawer.js
  *
  *  Author: Sam Heilbron
  *  Last Updated: 10-04-2016
  *
  *  The framework for the Navigation Drawer which slides out from the left
+ *    for the Guest user
  */
 
 'use strict';
@@ -12,14 +13,14 @@
 import React, { PropTypes } from 'react';
 import Drawer from 'react-native-drawer';
 import { DefaultRenderer, Actions } from 'react-native-router-flux';
-import SideNavContent from './SideNavContent';
+import GuestSideNavContent from './content/GuestSideNavContent';
 import StompApiStore from '../../stores/StompApiStore';
 
 const propTypes = {
   navigationState: PropTypes.object
 };
 
-class NavigationDrawer extends React.Component {
+class GuestNavigationDrawer extends React.Component {
     render() {
         const state = this.props.navigationState;
         const children = state.children;
@@ -30,7 +31,7 @@ class NavigationDrawer extends React.Component {
         		type="displace"
         		onOpen={() => Actions.refresh({ key: state.key, open: true })}
         		onClose={() => Actions.refresh({ key: state.key, open: false })}
-        		content={<SideNavContent firstName={StompApiStore.getUserFirstName()} />}
+        		content={<GuestSideNavContent firstName={StompApiStore.getUserFirstName()} />}
         		tapToClose
         		openDrawerOffset={0.4}
         		panCloseMask={0.4}
@@ -45,5 +46,5 @@ class NavigationDrawer extends React.Component {
   	}
 }
 
-NavigationDrawer.propTypes = propTypes;
-export default NavigationDrawer;
+GuestNavigationDrawer.propTypes = propTypes;
+export default GuestNavigationDrawer;

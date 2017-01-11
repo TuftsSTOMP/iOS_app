@@ -1,6 +1,6 @@
 {
   "name": "JumboSTOMP",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start"
@@ -15,6 +15,7 @@
     "react-dom": "^15.3.1",
     "react-modal": "^1.4.0",
     "react-native": "^0.39.0",
+    "react-native-calendar-picker": "^3.0.0",
     "react-native-drawer": "^2.3.0",
     "react-native-gifted-form": "0.0.13",
     "react-native-modal-picker": "0.0.16",

@@ -12,8 +12,8 @@
 import React from 'react';
 import {PropTypes} from "react";
 import { Actions } from 'react-native-router-flux';
-import AuthService from '../../services/AuthService';
-import StompApiStore from '../../stores/StompApiStore';
+import AuthService from '../../../services/AuthService';
+import StompApiStore from '../../../stores/StompApiStore';
 
 import {
 	StyleSheet, 
@@ -58,7 +58,7 @@ var styles = StyleSheet.create({
     }
 });
 
-const SideNavContent = (props, context) => {
+const StomperSideNavContent = (props, context) => {
   	const drawer = context.drawer;
   	const {firstName} = props
 
@@ -89,6 +89,6 @@ const SideNavContent = (props, context) => {
   	);
 };
 
-SideNavContent.contextTypes = contextTypes;
-SideNavContent.propTypes = propTypes;
-export default SideNavContent;
+StomperSideNavContent.contextTypes = contextTypes;
+StomperSideNavContent.propTypes = propTypes;
+export default StomperSideNavContent;

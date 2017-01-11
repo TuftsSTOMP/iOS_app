@@ -35,7 +35,8 @@ import MaterialListPage from './src/components/MaterialListPage';
 import MaterialDetailPage from './src/components/MaterialDetailPage';
 
 /* NAVIGATION DRAWER COMPONENTS */
-import NavigationDrawer from './src/components/navigation/NavigationDrawer';
+import StomperNavigationDrawer from './src/components/navigation/StomperNavigationDrawer';
+import GuestNavigationDrawer from './src/components/navigation/GuestNavigationDrawer';
 const navigationImageSrc = <Icon name='ios-menu'/>
 
 /* TAB ICONS */
@@ -67,7 +68,7 @@ const scenes = Actions.create(
  	<Scene key="root">
 		<Scene key="Login" component={LoginPage} hideNavBar={true} title="Login" type={ActionConst.REPLACE} />
 
-		<Scene key="StomperAppContent" component={NavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
+		<Scene key="StomperAppContent" component={StomperNavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
 			<Scene key="MaterialIndex" initial tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 				<Scene key="MaterialWrapper" title="Materials" icon={ListIcon} hideNavBar={true}>
 					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
@@ -86,10 +87,11 @@ const scenes = Actions.create(
 			</Scene>
 		</Scene>
 
-		<Scene key="GuestAppContent" component={NavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
+		<Scene key="GuestAppContent" component={GuestNavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
 			<Scene key="GuestIndex" tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 				<Scene key="GuestListWrapper" icon={ListIcon} hideNavBar={true}>
 					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
+					<Scene key="MaterialDetailPage" component={MaterialDetailPage} title="Material Detail" />
 				</Scene>
 				<Scene key="GuestCheckoutWrapper" icon={CartIcon} hideNavBar={true}>
 					<Scene key="GuestCart" title="Cart" component={GuestCheckOutPage} navImageSrc={navigationImageSrc}/>

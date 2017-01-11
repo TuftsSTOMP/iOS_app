@@ -111,5 +111,29 @@ export default {
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.EMTPY_CHECKIN_CART,
 		});
-	}
+	},
+
+	SuccessfulGuestRemove: (data) => {
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.REMOVE_ALL,
+		});
+
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_TOGGLE_FALSE_ALL,
+		});
+
+		AlertIOS.alert("Successful Removal", "Your transaction has been completed");
+	},
+
+	SuccessfulGuestReturn: (data) => {
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.REMOVE_ALL,
+		});
+
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_TOGGLE_FALSE_ALL,
+		});
+
+		AlertIOS.alert("Successful Return", "Your transaction has been completed");
+	},
 }

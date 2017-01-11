@@ -186,6 +186,8 @@ class MaterialListPage extends Component {
 						pickerTitle = {this.state.pickerTitle}
 						pickerCancelBtnText= "Undo"
 						pickerBtnText= "Save"
+						pickerToolBarFontSize = {10}
+						pickerFontSize = {10}
 						showMask={true}
 						elevation={5}
 						selectedValue={this.state.selectedValue}
