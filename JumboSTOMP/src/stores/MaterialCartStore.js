@@ -17,6 +17,7 @@ class MaterialCartStore extends BaseStore {
 		this.subscribe(() => this._registerToActions.bind(this))
 		this._cart = {};
 		this._CheckInCart = {};
+		this._returnDate = null;
 	}
 
 	_registerToActions(action) {
@@ -46,6 +47,10 @@ class MaterialCartStore extends BaseStore {
 				break;
 			case MaterialCartConstants.REMOVE_CHECKIN_ALL:
 				this._CheckInCart = {};
+				this.emitChange();
+				break;
+			case MaterialCartConstants.UPDATE_RETURN_DATE:
+				this._returnDate = action.returnDate;
 				this.emitChange();
 				break;
 			default:
@@ -81,6 +86,10 @@ class MaterialCartStore extends BaseStore {
 
 	isCheckInCartEmpty() {
 		return this._CheckInCart != {};
+	}
+
+	getReturnDate() {
+		return this._returnDate;
 	}
 }
 

@@ -33,6 +33,7 @@ import CheckOutPage from './src/components/CheckOutPage';
 import GuestCheckOutPage from './src/components/GuestCheckOutPage';
 import MaterialListPage from './src/components/MaterialListPage';
 import MaterialDetailPage from './src/components/MaterialDetailPage';
+import CalendarPage from './src/components/CalendarPage';
 
 /* NAVIGATION DRAWER COMPONENTS */
 import StomperNavigationDrawer from './src/components/navigation/StomperNavigationDrawer';
@@ -79,6 +80,7 @@ const scenes = Actions.create(
 				</Scene>
 				<Scene key="CheckOutWrapper" icon={CartIcon} hideNavBar={true}>
 					<Scene key="CheckOut" title="Check Out" component={CheckOutPage} navImageSrc={navigationImageSrc}/>
+					<Scene key="CheckOutDate" title="Return Date" component={CalendarPage} direction="vertical"/>
 				</Scene>
 			</Scene>
 			<Scene key="AccountIndex" tabs={false} title="Account" hideNavBar={true}>

@@ -134,16 +134,8 @@ class CheckInPage extends Component {
 	}
   
   	_renderRow(material) {
-  		let date = material.transaction_date;
-  		let dateOptions = {
-  			hour12 : true,
-  			//timeZoneName : 'short',
-  			// weekday: 'long', 
-  			// year: 'numeric', 
-  			// month: 'long', 
-  			// day: 'numeric' 
-  		}
-  		let prettyDate = (new Date(date)).toLocaleString('en-US', dateOptions);
+  		let date = material.action_date;
+  		let prettyDate = (new Date(date)).toDateString();
 
   		return (
   			<ListItem iconRight

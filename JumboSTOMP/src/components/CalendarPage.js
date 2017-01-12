@@ -14,17 +14,25 @@ import {
   AppRegistry,
   Dimensions,
   StyleSheet,
-  Text,
   View
 } from 'react-native';
+import { 
+	Container, 
+	Content, 
+	Text,
+	Header,
+	Button,
+	Footer,
+	Title
+} from 'native-base';
 
-import CalendarPicker from 'react-native-calendar-picker',
+import CalendarPicker from 'react-native-calendar-picker';
 import Theme from '../themes/version1';
 import AuthenticatedComponent from './AuthenticatedComponent';
+import {Actions} from 'react-native-router-flux';
 
-const contextTypes = {
-  	drawer: React.PropTypes.object,
-};
+import MaterialCartStore from '../stores/MaterialCartStore';
+import MaterialCartActions from '../actions/MaterialCartActions';
 
 var styles = StyleSheet.create({
 	container: {
@@ -37,45 +45,65 @@ var styles = StyleSheet.create({
 });
 
 class CalendarPage extends Component {
-
 	constructor(props) {
 		super(props)
 		this.state = {
-			 date: new Date()
+			 returnDate: new Date()
 		}
+
+		this.changeReturnDateListener = this._onReturnDateChange.bind(this);
 	}
 
-	onDateChange(date) {
-    	this.setState({ date: date });
+	componentWillMount() {
+		MaterialCartStore.addChangeListener(this.changeReturnDateListener);
+	}
+
+	componentWillUnmount() {
+		MaterialCartStore.removeChangeListener(this.changeReturnDateListener);
+	}
+
+	_onReturnDateChange() {
+		this.setState({returnDate: this._getReturnDate()});
+	}
+
+	_getReturnDate() {
+		return MaterialCartStore.getReturnDate();
+	}
+
+	onDateChange(newReturnDate) {
+		this.setState({returnDate: newReturnDate});
   	}
 
-	menuClick() {
-		this.context.drawer.open()
-	}
+  	_submitReturnDate() {
+  		MaterialCartActions.UpdateCheckOutReturnDate(this.state.returnDate);
+  		Actions.pop();
+  	}
 
 	render() {
 		return (
 			<Container theme={Theme}>
 				<Header>
-					<Button transparent onPress = {this.menuClick.bind(this)}> 
-                 		{this.props.navImageSrc}
+					<Button transparent onPress={Actions.pop}>
+                 		<Text> Cancel </Text>
                  	</Button>
                  	<Title>{this.props.title}</Title>
                 </Header>
             	<Content>
 					<View style={styles.container}>
         				<CalendarPicker 
-          					selectedDate={this.state.date}
-          					onDateChange={this.onDateChange}
+          					selectedDate={this.state.returnDate}
+          					onDateChange={this.onDateChange.bind(this)}
           					screenWidth={Dimensions.get('window').width}
           					selectedBackgroundColor={'#5ce600'} />
-        				<Text style={styles.selectedDate}> Date: { this.state.date.toString() } </Text>
       				</View>
+
+      				<Button block success onPress = {this._submitReturnDate.bind(this)}>
+						<Text> Set as Return Date </Text>
+					</Button>
 				</Content>
 			</Container>
 		);
 	}
 }
 
-CalendarPage.contextTypes = contextTypes;
 export default AuthenticatedComponent(CalendarPage);

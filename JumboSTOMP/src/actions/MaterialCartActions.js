@@ -113,6 +113,13 @@ export default {
 		});
 	},
 
+	UpdateCheckOutReturnDate: (returnDate) => {
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.UPDATE_RETURN_DATE,
+			returnDate: returnDate
+		});
+	},
+
 	SuccessfulGuestRemove: (data) => {
 		AppDispatcher.dispatch({
 			actionType: MaterialCartConstants.REMOVE_ALL,
