@@ -1,5 +1,5 @@
 /*
- *  NavigationDrawer.js
+ *  StomperNavigationDrawer.js
  *
  *  Author: Sam Heilbron
  *  Last Updated: 10-04-2016

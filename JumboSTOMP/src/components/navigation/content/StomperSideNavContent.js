@@ -1,5 +1,5 @@
 /*
- *  SideNavContent.js
+ *  StomperSideNavContent.js
  *
  *  Author: Sam Heilbron
  *  Last Updated: 10-04-2016

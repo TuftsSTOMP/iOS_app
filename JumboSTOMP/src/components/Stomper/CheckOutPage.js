@@ -208,7 +208,7 @@ class CheckOutPage extends Component {
 				submitMessage = (
 					<View>
 						<Button block warning onPress = {this.selectCalendarPage.bind(this)}>
-							<Text>Return On: {returnDate.toDateString()}</Text>
+							<Text>Return before: {returnDate.toDateString()}</Text>
 						</Button>
 						<Button block success style={styles.checkoutButton} onPress = {this._submitCheckout.bind(this)}>
 							<Text> Submit CheckOut </Text>

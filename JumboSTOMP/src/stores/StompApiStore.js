@@ -23,6 +23,7 @@ class StompApiStore extends BaseStore {
 		this._userName = null;
 		this._materialTransactionTotal = null;
 		this._error = null;
+		this._teamCheckedoutList = null;
 	}
 
 	_registerToActions(action) {
@@ -64,6 +65,10 @@ class StompApiStore extends BaseStore {
 				break;
 			case StompApiConstants.STOMP_API_MATERIAL_TRANSACTION_TOTAL_SUCCESS:
 				this._materialTransactionTotal = action.data;
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_TEAM_CHECKEDOUTLIST_SUCCESS:
+				this._teamCheckedoutList = action.data;
 				this.emitChange();
 				break;
 			case StompApiConstants.STOMP_API_ERROR:
@@ -114,6 +119,10 @@ class StompApiStore extends BaseStore {
 
 	getMaterialTransactionTotal() {
 		return this._materialTransactionTotal;
+	}
+
+	getTeamCheckedoutList() {
+		return this._teamCheckedoutList;
 	}
 }
 

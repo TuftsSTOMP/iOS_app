@@ -35,7 +35,7 @@ import MaterialListPage from './src/components/Stomper/MaterialListPage';
 import MaterialDetailPage from './src/components/Stomper/MaterialDetailPage';
 import MaterialTransactionInfoPage from './src/components/Stomper/MaterialTransactionInfoPage';
 import CalendarPage from './src/components/Stomper/CalendarPage';
-import TeamLandingPage from './src/components/Stomper/TeamLandingPage';
+import TeamCheckedOutListPage from './src/components/Stomper/TeamCheckedOutListPage';
 
 import GuestCheckOutPage from './src/components/Guest/GuestCheckOutPage';
 import GuestMaterialListPage from './src/components/Guest/GuestMaterialListPage';
@@ -91,7 +91,7 @@ const scenes = Actions.create(
 				</Scene>
 			</Scene>
 			<Scene key="TeamIndex" tabs={false} title="Team" hideNavBar={true}>
-				<Scene key="TeamLandingPage" component={TeamLandingPage} title="Team Information" navImageSrc={navigationImageSrc}/>
+				<Scene key="TeamCheckedOutListPage" component={TeamCheckedOutListPage} title="Team Checked Out List" navImageSrc={navigationImageSrc}/>
 			</Scene>
 			<Scene key="AccountIndex" tabs={false} title="Account" hideNavBar={true}>
 				<Scene key="AccountPage" component={AccountPage} title="My Account" navImageSrc={navigationImageSrc}/>

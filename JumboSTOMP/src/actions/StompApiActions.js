@@ -61,6 +61,13 @@ export default {
 		});
 	},
 
+	ApiTeamCheckedoutListRequestSuccess: (data) => {
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_TEAM_CHECKEDOUTLIST_SUCCESS,
+			data: data
+		});
+	},
+
 	ApiCheckinListRequestSuccess: (data) => {
 		//Load data into StompApiStore
 		//Used to handle refresh. This is the copy of the real amount that must 

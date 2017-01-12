@@ -145,6 +145,12 @@ export default {
         this.submitGet(serverName + url,
                         jwt,
                         StompApiActions.ApiMaterialTransactionRequestSuccess);
+    },
+
+    getTeamCheckedoutList(serverName, jwt) {
+        this.submitGet(serverName + StompApiConstants.TEAM_CHECKED_OUT_LIST_URL,
+                        jwt,
+                        StompApiActions.ApiTeamCheckedoutListRequestSuccess);
     }
 
 }
