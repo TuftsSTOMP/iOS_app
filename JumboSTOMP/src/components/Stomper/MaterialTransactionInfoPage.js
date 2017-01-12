@@ -1,10 +1,10 @@
 /*
- *	MaterialDetailPage.js
+ *	MaterialTransactionInfoPage.js
  *
  *	Author: Sam Heilbron
  *	Last Updated: 10-04-2016
  *
- *	The page to view information about a specific material
+ *	The page to view information about a specific material's transactions
  */
 
 'use strict';
@@ -27,14 +27,14 @@ import {
 	Title
 } from 'native-base';
 
-import Theme from '../themes/version1';
+import Theme from '../../themes/version1';
 import {Actions} from 'react-native-router-flux';
 
-import AuthenticatedComponent from './AuthenticatedComponent';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 
-import StompApiService from '../services/StompApiService';
-import StompApiConstants from '../constants/StompApiConstants';
-import StompApiStore from '../stores/StompApiStore';
+import StompApiService from '../../services/StompApiService';
+import StompApiConstants from '../../constants/StompApiConstants';
+import StompApiStore from '../../stores/StompApiStore';
 
 const contextTypes = {
   drawer: React.PropTypes.object,
@@ -42,18 +42,17 @@ const contextTypes = {
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-
-class MaterialDetailPage extends Component {
+class MaterialTransactionInfoPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			materialDetail : ds.cloneWithRows([]),
-			loading : true
+			materialTransactions : ds.cloneWithRows([]),
+			//loading : true
 		}
 
-		this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
+		//this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
 	}
-	
+	/*
 	_getStompApiDataState() {
 		return StompApiStore.getMaterialDetail();
 	}
@@ -71,6 +70,10 @@ class MaterialDetailPage extends Component {
 
 	componentWillUnmount() {
 		StompApiStore.removeChangeListener(this.changeStompApiDataListener);
+	}
+
+	_seeMaterialTransactionDetails(materialName) {
+		Actions.MaterialTransactionInfoPage({materialName})
 	}
 
 	_renderRow(material) {
@@ -106,9 +109,20 @@ class MaterialDetailPage extends Component {
                     <Text>Low Quantity Threshold</Text>
                     <Badge>{material.low_q_thresh}</Badge>
                 </ListItem>
+                <ListItem button onPress = {this._seeMaterialTransactionDetails.bind(this, material.name)}>
+               		<Text>Transaction details</Text>
+                    <Text note>See who currently has this material</Text>
+                </ListItem>
             </List>
 		);
 	}
+
+	<ListView
+						enableEmptySections = {true}
+						dataSource={this.state.materialDetail}
+						renderRow = {this._renderRow} />
+
+	*/
 
 	render() {
 		return (
@@ -117,14 +131,12 @@ class MaterialDetailPage extends Component {
 					<Button transparent onPress={Actions.pop}>
 						<Icon name = 'ios-arrow-back'/>
 					</Button>
-					<Title> Material Detail </Title>
+					<Title>{this.props.title}</Title>
 				</Header>
 				<Content>
 				{this.state.loading ? <Spinner /> : 
-					<ListView
-						enableEmptySections = {true}
-						dataSource={this.state.materialDetail}
-						renderRow = {this._renderRow} />
+					<Text> Material Transaction Info Page </Text>
+				
 				}
 				</Content>
 			</Container>
@@ -132,5 +144,5 @@ class MaterialDetailPage extends Component {
 	}
 }
 
-MaterialDetailPage.contextTypes = contextTypes;
-export default AuthenticatedComponent(MaterialDetailPage);
+MaterialTransactionInfoPage.contextTypes = contextTypes;
+export default AuthenticatedComponent(MaterialTransactionInfoPage);

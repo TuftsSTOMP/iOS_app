@@ -27,12 +27,12 @@ import {
 } from 'native-base';
 
 import CalendarPicker from 'react-native-calendar-picker';
-import Theme from '../themes/version1';
-import AuthenticatedComponent from './AuthenticatedComponent';
+import Theme from '../../themes/version1';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 import {Actions} from 'react-native-router-flux';
 
-import MaterialCartStore from '../stores/MaterialCartStore';
-import MaterialCartActions from '../actions/MaterialCartActions';
+import MaterialCartStore from '../../stores/MaterialCartStore';
+import MaterialCartActions from '../../actions/MaterialCartActions';
 
 var styles = StyleSheet.create({
 	container: {

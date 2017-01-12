@@ -70,14 +70,20 @@ const StomperSideNavContent = (props, context) => {
 
         	<List>
           		<ListItem>
-            		<TouchableOpacity onPress={() => {drawer.close(); Actions.AccountIndex();}}>
-              			<Text style={styles.menuNames}> Account Info </Text>
-            		</TouchableOpacity>
-          		</ListItem>
-          
-          		<ListItem>
             		<TouchableOpacity onPress={() => {drawer.close(); Actions.MaterialIndex();}}>
               			<Text style={styles.menuNames}> Materials </Text>
+            		</TouchableOpacity>
+          		</ListItem>
+
+              	<ListItem>
+                	<TouchableOpacity onPress={() => {drawer.close(); Actions.TeamIndex();}}>
+                    	<Text style={styles.menuNames}> Team Details </Text>
+                	</TouchableOpacity>
+              	</ListItem>
+
+             	<ListItem>
+            		<TouchableOpacity onPress={() => {drawer.close(); Actions.AccountIndex();}}>
+              			<Text style={styles.menuNames}> Account Info </Text>
             		</TouchableOpacity>
           		</ListItem>
        		</List>

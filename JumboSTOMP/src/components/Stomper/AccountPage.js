@@ -33,19 +33,19 @@ import {
 } from 'native-base';
 
 //import Button from 'react-native-button';
-import Theme from '../themes/version1';
+import Theme from '../../themes/version1';
 
 import {Actions} from 'react-native-router-flux';
 
-import AuthService from '../services/AuthService';
-import StompApiService from '../services/StompApiService';
+import AuthService from '../../services/AuthService';
+import StompApiService from '../../services/StompApiService';
 
-import StompApiConstants from '../constants/StompApiConstants';
-import LoginConstants from '../constants/LoginConstants';
-import AuthenticatedComponent from './AuthenticatedComponent';
+import StompApiConstants from '../../constants/StompApiConstants';
+import LoginConstants from '../../constants/LoginConstants';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 
-import StompApiStore from '../stores/StompApiStore';
-import LoginStore from '../stores/LoginStore';
+import StompApiStore from '../../stores/StompApiStore';
+import LoginStore from '../../stores/LoginStore';
 
 /*
 Look to refactor and add this to the AuthenticatedComponent HOC so that it isn't required

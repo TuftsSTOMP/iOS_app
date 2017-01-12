@@ -30,17 +30,17 @@ import {
 	Title
 } from 'native-base';
 
-import Theme from '../themes/version1';
+import Theme from '../../themes/version1';
 import Picker from 'react-native-picker';
 import {Actions} from 'react-native-router-flux';
 
-import AuthenticatedComponent from './AuthenticatedComponent';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 
-import StompApiService from '../services/StompApiService';
-import StompApiStore from '../stores/StompApiStore';
+import StompApiService from '../../services/StompApiService';
+import StompApiStore from '../../stores/StompApiStore';
 
-import MaterialCartActions from '../actions/MaterialCartActions';
-import MaterialCartStore from '../stores/MaterialCartStore';
+import MaterialCartActions from '../../actions/MaterialCartActions';
+import MaterialCartStore from '../../stores/MaterialCartStore';
 
 const styles = StyleSheet.create({
   	selectedQuantity: {

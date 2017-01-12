@@ -30,17 +30,17 @@ import {
 	Title
 } from 'native-base';
 
-import Theme from '../themes/version1';
+import Theme from '../../themes/version1';
 import Picker from 'react-native-picker';
 import {Actions} from 'react-native-router-flux';
 
-import AuthenticatedComponent from './AuthenticatedComponent';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 
-import StompApiService from '../services/StompApiService';
-import StompApiStore from '../stores/StompApiStore';
+import StompApiService from '../../services/StompApiService';
+import StompApiStore from '../../stores/StompApiStore';
 
-import MaterialCartStore from '../stores/MaterialCartStore';
-import MaterialCartActions from '../actions/MaterialCartActions';
+import MaterialCartStore from '../../stores/MaterialCartStore';
+import MaterialCartActions from '../../actions/MaterialCartActions';
 
 var styles = StyleSheet.create({
   	emptyCartMsg: {
@@ -159,7 +159,7 @@ class CheckInPage extends Component {
 			if (StompApiStore.isCheckinListEmpty()) {
 				submitMessage = (
 					<Text style={styles.emptyCartMsg}>
-		 				There are no items in your cart (Pull to refresh)
+		 				There are no items in your cart  (Pull to refresh)
 					</Text>
 				);
 			} else { // cart is emtpy because the user deleted some items from the view

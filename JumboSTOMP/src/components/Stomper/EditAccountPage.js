@@ -31,21 +31,21 @@ import {
 	Title
 } from 'native-base';
 
-import Theme from '../themes/version1';
+import Theme from '../../themes/version1';
 
 import {Actions} from 'react-native-router-flux';
 
-import AuthService from '../services/AuthService';
-import StompApiService from '../services/StompApiService';
+import AuthService from '../../services/AuthService';
+import StompApiService from '../../services/StompApiService';
 
-import StompApiConstants from '../constants/StompApiConstants';
-import StompApiActions from '../actions/StompApiActions';
-import LoginConstants from '../constants/LoginConstants';
+import StompApiConstants from '../../constants/StompApiConstants';
+import StompApiActions from '../../actions/StompApiActions';
+import LoginConstants from '../../constants/LoginConstants';
 
-import AuthenticatedComponent from './AuthenticatedComponent';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 
-import StompApiStore from '../stores/StompApiStore';
-import LoginStore from '../stores/LoginStore';
+import StompApiStore from '../../stores/StompApiStore';
+import LoginStore from '../../stores/LoginStore';
 
 
 var styles = StyleSheet.create({

@@ -21,8 +21,6 @@ import {
 	Text,
 	List,
 	ListItem,
-	Card,
-	CardItem,
 	Spinner,
 	Header,
 	Footer,
@@ -31,17 +29,15 @@ import {
 	Title
 } from 'native-base';
 
-import Theme from '../themes/version1';
+import Theme from '../../themes/version1';
 import Picker from 'react-native-picker';
-import {Actions} from 'react-native-router-flux';
-import {AlertIOS} from 'react-native';
 
-import AuthenticatedComponent from './AuthenticatedComponent';
+import AuthenticatedComponent from '../AuthenticatedComponent';
 
-import MaterialCartStore from '../stores/MaterialCartStore';
-import MaterialCartActions from '../actions/MaterialCartActions';
+import MaterialCartStore from '../../stores/MaterialCartStore';
+import MaterialCartActions from '../../actions/MaterialCartActions';
 
-import StompApiService from '../services/StompApiService';
+import StompApiService from '../../services/StompApiService';
 
 var styles = StyleSheet.create({
   	emptyCartMsg: {
@@ -54,7 +50,19 @@ var styles = StyleSheet.create({
   	container: {
 		padding: 30,
 		marginTop: 15,
-		alignItems: 'center'
+		alignItems: 'center',
+		flex: 1,
+		flexDirection: 'row'
+  	},
+  	leftButton: {
+  		alignSelf: 'stretch',
+  		flex: 0.5,
+  		marginRight: 10
+  	},
+  	rightButton: {
+  		alignSelf: 'stretch',
+  		flex: 0.5,
+  		marginLeft: 10
   	}
 });
 
@@ -71,12 +79,10 @@ class CheckOutPage extends Component {
 			cart : this._getMaterialCart(),
 			pickerData : [1,2,3],
 			selectedValue : 1,
-			pickerTitle : "",
-			returnDate: this._getReturnDate()
+			pickerTitle : ""
 		}
 
 		this.changeMaterialCartListener = this._onMaterialCartChange.bind(this);
-		this.changeReturnDateListener = this._onReturnDateChange.bind(this);
 	}
 	
 
@@ -88,26 +94,16 @@ class CheckOutPage extends Component {
 		return materialList;
 	}
 
-	_getReturnDate() {
-		return MaterialCartStore.getReturnDate();
-	}
-
 	componentWillMount() {
 		MaterialCartStore.addChangeListener(this.changeMaterialCartListener);
-		MaterialCartStore.addChangeListener(this.changeReturnDateListener);
 	}
 
 	_onMaterialCartChange() {
 		this.setState({cart : this._getMaterialCart()});
 	}
 
-	_onReturnDateChange() {
-		this.setState({returnDate: this._getReturnDate()});
-	}
-
 	componentWillUnmount() {
 		MaterialCartStore.removeChangeListener(this.changeMaterialCartListener);
-		MaterialCartStore.removeChangeListener(this.changeReturnDateListener);
 	}
 
 	_removeMaterialFromCart(materialName) {
@@ -134,12 +130,7 @@ class CheckOutPage extends Component {
 	//
 	//	Submit the material cart for checkout. Query the Stomp API remove endpoint
 	//
-	_submitCheckout() {
-		if(this.state.returnDate == null) {
-			AlertIOS.alert("Invalid Checkout", "You have not specified a return date");
-			return
-		}
-
+	_submitCheckout(type) {
 		this.setState({submitting : true});
 
 		var postData = new FormData();
@@ -148,11 +139,12 @@ class CheckOutPage extends Component {
 				postData.append( material.name.replace(' ', '_'), material.quantity );
 			}
 		);
-
-		var returnDateFormatted = this.state.returnDate.toJSON().split('T')[0];
-		postData.append("due", returnDateFormatted);
 		
-		StompApiService.checkoutMaterial_remove(this.props.serverName, this.props.jwt, postData);
+		if (type == "remove") {
+			StompApiService.guestRemoveMaterial(this.props.serverName, this.props.jwt, postData);
+		} else if (type == "return") {
+			StompApiService.guestReturnMaterial(this.props.serverName, this.props.jwt, postData);
+		}
 
 		this.setState({submitting : false});
 	}
@@ -170,10 +162,6 @@ class CheckOutPage extends Component {
 		);
 	}
 
-	selectCalendarPage() {
-		Actions.CheckOutDate();
-  	}
-
 	menuClick() {
 		this.context.drawer.open()
 	}
@@ -183,24 +171,21 @@ class CheckOutPage extends Component {
 		if (this.state.cart.length == 0) {
 			submitMessage = (
 				<View>
-					<Text style={styles.emptyCartMsg}>
-		 				There are no items in your cart
-					</Text>
+				<Text style={styles.emptyCartMsg}>
+		 			There are no items in your cart
+				</Text>
 				</View>
 			);
 		} else {
-			let returnDate = this.state.returnDate;
 			submitMessage = (
-				<View>
-					<Card>
-                    	<CardItem onPress = {this.selectCalendarPage.bind(this)}>
-                    		<Icon name='ios-calendar'/>
-                        	<Text>{returnDate == null ? "Select Return Date" : "Return On: " + returnDate.toDateString()}</Text>
-                        </CardItem>
-                    </Card>
-					<Button block success onPress = {this._submitCheckout.bind(this)}>
-						<Text> Submit CheckOut </Text>
-					</Button>
+				<View style={styles.container}>
+				<Button style={styles.leftButton} large success onPress = {this._submitCheckout.bind(this, "return")}>
+					<Text> Return </Text>
+				</Button>
+				
+				<Button style={styles.rightButton} large danger onPress = {this._submitCheckout.bind(this, "remove")}>
+					<Text> Remove </Text>
+				</Button>
 				</View>
 			);
 		}

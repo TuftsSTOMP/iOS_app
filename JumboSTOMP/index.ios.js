@@ -26,14 +26,20 @@ import {
 
 /* FULL LIST OF PAGES IN APP STRUCTURE  */
 import LoginPage from './src/components/LoginPage';
-import AccountPage from './src/components/AccountPage';
-import EditAccountPage from './src/components/EditAccountPage';
-import CheckInPage from './src/components/CheckInPage';
-import CheckOutPage from './src/components/CheckOutPage';
-import GuestCheckOutPage from './src/components/GuestCheckOutPage';
-import MaterialListPage from './src/components/MaterialListPage';
-import MaterialDetailPage from './src/components/MaterialDetailPage';
-import CalendarPage from './src/components/CalendarPage';
+
+import AccountPage from './src/components/Stomper/AccountPage';
+import EditAccountPage from './src/components/Stomper/EditAccountPage';
+import CheckInPage from './src/components/Stomper/CheckInPage';
+import CheckOutPage from './src/components/Stomper/CheckOutPage';
+import MaterialListPage from './src/components/Stomper/MaterialListPage';
+import MaterialDetailPage from './src/components/Stomper/MaterialDetailPage';
+import MaterialTransactionInfoPage from './src/components/Stomper/MaterialTransactionInfoPage';
+import CalendarPage from './src/components/Stomper/CalendarPage';
+import TeamLandingPage from './src/components/Stomper/TeamLandingPage';
+
+import GuestCheckOutPage from './src/components/Guest/GuestCheckOutPage';
+import GuestMaterialListPage from './src/components/Guest/GuestMaterialListPage';
+import GuestMaterialDetailPage from './src/components/Guest/GuestMaterialDetailPage';
 
 /* NAVIGATION DRAWER COMPONENTS */
 import StomperNavigationDrawer from './src/components/navigation/StomperNavigationDrawer';
@@ -74,6 +80,7 @@ const scenes = Actions.create(
 				<Scene key="MaterialWrapper" title="Materials" icon={ListIcon} hideNavBar={true}>
 					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
 					<Scene key="MaterialDetailPage" component={MaterialDetailPage} title="Material Detail" />
+					<Scene key="MaterialTransactionInfoPage" component={MaterialTransactionInfoPage} title="Material Transactions" />
 				</Scene>
 				<Scene key="CheckInWrapper" icon={AccountIcon} hideNavBar={true}>
 					<Scene key="CheckIn" title="Check In" component={CheckInPage} navImageSrc={navigationImageSrc}/>
@@ -82,6 +89,9 @@ const scenes = Actions.create(
 					<Scene key="CheckOut" title="Check Out" component={CheckOutPage} navImageSrc={navigationImageSrc}/>
 					<Scene key="CheckOutDate" title="Return Date" component={CalendarPage} direction="vertical"/>
 				</Scene>
+			</Scene>
+			<Scene key="TeamIndex" tabs={false} title="Team" hideNavBar={true}>
+				<Scene key="TeamLandingPage" component={TeamLandingPage} title="Team Information" navImageSrc={navigationImageSrc}/>
 			</Scene>
 			<Scene key="AccountIndex" tabs={false} title="Account" hideNavBar={true}>
 				<Scene key="AccountPage" component={AccountPage} title="My Account" navImageSrc={navigationImageSrc}/>
@@ -92,8 +102,8 @@ const scenes = Actions.create(
 		<Scene key="GuestAppContent" component={GuestNavigationDrawer} tabs={false} open={false} type={ActionConst.REPLACE}>
 			<Scene key="GuestIndex" tabs={true} tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarSelectedItemStyle}>
 				<Scene key="GuestListWrapper" icon={ListIcon} hideNavBar={true}>
-					<Scene key="MaterialListPage" component={MaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
-					<Scene key="MaterialDetailPage" component={MaterialDetailPage} title="Material Detail" />
+					<Scene key="GuestMaterialListPage" component={GuestMaterialListPage} title="List of Materials" navImageSrc={navigationImageSrc}/>
+					<Scene key="GuestMaterialDetailPage" component={GuestMaterialDetailPage} title="Material Detail" />
 				</Scene>
 				<Scene key="GuestCheckoutWrapper" icon={CartIcon} hideNavBar={true}>
 					<Scene key="GuestCart" title="Cart" component={GuestCheckOutPage} navImageSrc={navigationImageSrc}/>
