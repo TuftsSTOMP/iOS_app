@@ -21,6 +21,7 @@ class StompApiStore extends BaseStore {
 		this._materialDetail = null;
 		this._userDetails = null;
 		this._userName = null;
+		this._materialTransactionTotal = null;
 		this._error = null;
 	}
 
@@ -59,6 +60,10 @@ class StompApiStore extends BaseStore {
 				break;
 			case StompApiConstants.STOMP_API_CHECKIN_LIST_REQUEST_SUCCESS:
 				this._checkInList = action.data;
+				this.emitChange();
+				break;
+			case StompApiConstants.STOMP_API_MATERIAL_TRANSACTION_TOTAL_SUCCESS:
+				this._materialTransactionTotal = action.data;
 				this.emitChange();
 				break;
 			case StompApiConstants.STOMP_API_ERROR:
@@ -105,6 +110,10 @@ class StompApiStore extends BaseStore {
 
 	hasData() {
 		return !!this._data;
+	}
+
+	getMaterialTransactionTotal() {
+		return this._materialTransactionTotal;
 	}
 }
 

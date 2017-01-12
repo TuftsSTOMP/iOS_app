@@ -54,6 +54,13 @@ export default {
 		});
 	},
 
+	ApiMaterialTransactionRequestSuccess: (data) => {
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_MATERIAL_TRANSACTION_TOTAL_SUCCESS,
+			data: data
+		});
+	},
+
 	ApiCheckinListRequestSuccess: (data) => {
 		//Load data into StompApiStore
 		//Used to handle refresh. This is the copy of the real amount that must 

@@ -12,7 +12,8 @@
 import React, { Component } from 'react';
 import {
 	View,
-	ListView
+	ListView,
+	AlertIOS
 } from 'react-native';
 import { 
 	Container, 
@@ -43,14 +44,15 @@ const contextTypes = {
   drawer: React.PropTypes.object,
 };
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+//const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 
 class MaterialDetailPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			materialDetail : ds.cloneWithRows([]),
+			materialName: this.props.name,
+			materialDetail : [],
 			loading : true
 		}
 
@@ -67,7 +69,7 @@ class MaterialDetailPage extends Component {
 
 	_onStompApiDataChange() {
 		var jsArr = JSON.parse(this._getStompApiDataState());
-		this.setState({materialDetail : ds.cloneWithRows(jsArr)});
+		this.setState({materialDetail : jsArr});
 		
 		this.setState({loading : false});
 	}
@@ -77,12 +79,13 @@ class MaterialDetailPage extends Component {
 	}
 
 	_seeMaterialTransactionDetails(materialName) {
-		Actions.MaterialTransactionInfoPage({materialName})
+		StompApiService.getMaterialTransactionInfo(this.props.serverName, this.props.jwt, materialName);
+		Actions.MaterialTransactionInfoPage({name: materialName});
 	}
 
 	_renderRow(material) {
 		return (
-			<List>
+			<View>
                 <ListItem iconLeft>
                 	<Icon name='ios-cube' />
                     <Text>Name </Text>
@@ -113,7 +116,7 @@ class MaterialDetailPage extends Component {
                     <Text>Low Quantity Threshold</Text>
                     <Badge>{material.low_q_thresh}</Badge>
                 </ListItem>
-            </List>
+            </View>
 		);
 	}
 
@@ -129,16 +132,15 @@ class MaterialDetailPage extends Component {
 				<Content>
 				{this.state.loading ? <Spinner /> : 
 					<View>
-					<ListView
-						enableEmptySections = {true}
-						dataSource={this.state.materialDetail}
+					<List
+						dataArray={this.state.materialDetail}
 						renderRow = {this._renderRow} />
 					<Card>
-						<CardItem onPress={this._seeMaterialTransactionDetails.bind(this, this.state.materialDetail.name)}>
-               				<Text style={{textAlign: 'center'}}>See who has this material right now</Text>
-               			</CardItem>
-               		</Card>
-               		</View>
+						<CardItem onPress = {this._seeMaterialTransactionDetails.bind(this, this.state.materialName)}>
+							<Text style={{textAlign:'center'}}> See who has this material currently </Text>
+						</CardItem>
+					</Card>
+					</View>
 				}
 				</Content>
 			</Container>

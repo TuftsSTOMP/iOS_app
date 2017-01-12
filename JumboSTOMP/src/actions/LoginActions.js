@@ -32,7 +32,7 @@ export default {
 				Actions.GuestAppContent();
 				break;
 			default:
-				AlertIOS.alert("OTHER LOGIN", "attempted to login");
+				AlertIOS.alert("BROKEN LOGIN", "Invalid User Type");
 		}
 		
   	},

@@ -93,7 +93,7 @@ class MaterialListPage extends Component {
 
   	viewDetails(materialName) {
 		StompApiService.getMaterialDetailPage(this.props.serverName, this.props.jwt, materialName);
-		Actions.MaterialDetailPage({materialName});
+		Actions.MaterialDetailPage({name: materialName});
   	}
 
   	_onRefresh() {

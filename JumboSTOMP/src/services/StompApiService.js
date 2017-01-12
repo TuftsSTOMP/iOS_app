@@ -140,4 +140,11 @@ export default {
                         MaterialCartActions.SuccessfulGuestReturn);
     },
 
+    getMaterialTransactionInfo(serverName, jwt, materialName) {
+        var url = (StompApiConstants.MATERIAL_TRANSACTION_TOTAL_URL).replace(/%.*%/, materialName);
+        this.submitGet(serverName + url,
+                        jwt,
+                        StompApiActions.ApiMaterialTransactionRequestSuccess);
+    }
+
 }

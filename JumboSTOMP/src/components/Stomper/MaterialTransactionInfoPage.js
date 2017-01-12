@@ -11,7 +11,8 @@
 
 import React, { Component } from 'react';
 import {
-	ListView
+	ListView,
+	AlertIOS
 } from 'react-native';
 import { 
 	Container, 
@@ -19,6 +20,8 @@ import {
 	Text,
 	List,
 	ListItem,
+	Card,
+	CardItem,
 	Badge,
 	Header,
 	Button,
@@ -40,89 +43,53 @@ const contextTypes = {
   drawer: React.PropTypes.object,
 };
 
-const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+//const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class MaterialTransactionInfoPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			materialTransactions : ds.cloneWithRows([]),
-			//loading : true
+			materialName: this.props.name,
+			materialTransactions : [],
+			loading : true
 		}
 
-		//this.changeStompApiDataListener = this._onStompApiDataChange.bind(this);
+		this.changeStompApiMaterialTransactionListener = this._onStompApiMaterialTransactionChange.bind(this);
 	}
-	/*
-	_getStompApiDataState() {
-		return StompApiStore.getMaterialDetail();
+	
+	_getStompApiMaterialTransactionState() {
+		return StompApiStore.getMaterialTransactionTotal();
 	}
 
 	componentWillMount() {
-		StompApiStore.addChangeListener(this.changeStompApiDataListener);
+		StompApiStore.addChangeListener(this.changeStompApiMaterialTransactionListener);
 	}
 
-	_onStompApiDataChange() {
-		var jsArr = JSON.parse(this._getStompApiDataState());
-		this.setState({materialDetail : ds.cloneWithRows(jsArr)});
+	_onStompApiMaterialTransactionChange() {
+		var jsArr = JSON.parse(this._getStompApiMaterialTransactionState());
+		this.setState({materialTransactions : jsArr});
 		
 		this.setState({loading : false});
 	}
 
 	componentWillUnmount() {
-		StompApiStore.removeChangeListener(this.changeStompApiDataListener);
+		StompApiStore.removeChangeListener(this.changeStompApiMaterialTransactionListener);
 	}
 
-	_seeMaterialTransactionDetails(materialName) {
-		Actions.MaterialTransactionInfoPage({materialName})
-	}
-
-	_renderRow(material) {
+	_renderRow(transaction) {
+		let prettyDate = (new Date(transaction.action_date)).toDateString();
 		return (
-			<List>
-                <ListItem iconLeft>
-                	<Icon name='ios-cube' />
-                    <Text>Name </Text>
-                    <Badge>{material.name}</Badge>
-                </ListItem>
-                <ListItem iconLeft>
-                    <Icon name='ios-eye' />
-                    <Text>Quantity Available</Text>
-                    <Badge>{material.q_avail}</Badge>
-                </ListItem>
-                <ListItem iconLeft>
-                    <Icon name='ios-eye-off' />
-                    <Text>Quantity Reserved </Text>
-                    <Badge>{material.q_reserved}</Badge>
-                </ListItem>
-                <ListItem iconLeft>
-                    <Icon name='ios-eye-off' />
-                    <Text>Quantity Removed</Text>
-                    <Badge>{material.q_removed}</Badge>
-                </ListItem>
-                <ListItem iconLeft>
-                    <Icon name='ios-flag' />
-                    <Text>Maximum Checkout Quantity</Text>
-                    <Badge>{material.max_checkout_q}</Badge>
-                </ListItem>
-                <ListItem iconLeft>
-                    <Icon name='ios-notifications' />
-                    <Text>Low Quantity Threshold</Text>
-                    <Badge>{material.low_q_thresh}</Badge>
-                </ListItem>
-                <ListItem button onPress = {this._seeMaterialTransactionDetails.bind(this, material.name)}>
-               		<Text>Transaction details</Text>
-                    <Text note>See who currently has this material</Text>
-                </ListItem>
-            </List>
+			<ListItem>
+				<Card>
+					<CardItem>
+						<Text>{transaction.f_name} {transaction.l_name} ({transaction.quantity})</Text>
+						<Text note>Due back: {prettyDate}</Text>
+					</CardItem>
+				</Card>
+			</ListItem>
 		);
 	}
 
-	<ListView
-						enableEmptySections = {true}
-						dataSource={this.state.materialDetail}
-						renderRow = {this._renderRow} />
-
-	*/
 
 	render() {
 		return (
@@ -135,7 +102,10 @@ class MaterialTransactionInfoPage extends Component {
 				</Header>
 				<Content>
 				{this.state.loading ? <Spinner /> : 
-					<Text> Material Transaction Info Page </Text>
+					<List
+						dataArray={this.state.materialTransactions}
+						renderRow = { transaction => (this._renderRow(transaction)) }>
+					</List>
 				
 				}
 				</Content>
