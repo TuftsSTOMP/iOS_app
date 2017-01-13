@@ -6,7 +6,7 @@
 Application used to handle all STOMP related activities at Tufts University.
 See Docs for further information about functionality and versioning
 
-#### Current Version: 0.1.0
+#### Current Version: 1.0.0
 
 #### Functionality:
 
