@@ -34,6 +34,13 @@ export default {
 			default:
 				AlertIOS.alert("BROKEN LOGIN", "Invalid User Type");
 		}
+
+		//Request permission to use geolocation after 1st login
+		navigator.geolocation.getCurrentPosition(
+        	(position) => {},
+         	(error) => AlertIOS.alert("Geolocation issue", error.message),
+         	{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      	);
 		
   	},
   

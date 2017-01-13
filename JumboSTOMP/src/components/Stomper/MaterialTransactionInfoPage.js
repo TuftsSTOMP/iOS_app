@@ -2,7 +2,7 @@
  *	MaterialTransactionInfoPage.js
  *
  *	Author: Sam Heilbron
- *	Last Updated: 10-04-2016
+ *	Last Updated: 01-10-2017
  *
  *	The page to view information about a specific material's transactions
  */
@@ -42,8 +42,6 @@ import StompApiStore from '../../stores/StompApiStore';
 const contextTypes = {
   drawer: React.PropTypes.object,
 };
-
-//const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
 class MaterialTransactionInfoPage extends Component {
 	constructor(props) {
@@ -106,7 +104,6 @@ class MaterialTransactionInfoPage extends Component {
 						dataArray={this.state.materialTransactions}
 						renderRow = { transaction => (this._renderRow(transaction)) }>
 					</List>
-				
 				}
 				</Content>
 			</Container>

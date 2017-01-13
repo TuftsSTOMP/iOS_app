@@ -13,7 +13,8 @@ import React, { Component } from 'react';
 import {
 	StyleSheet,
 	View,
-	Dimensions
+	Dimensions,
+	AlertIOS
 } from 'react-native';
 import { 
 	Container, 
@@ -36,6 +37,8 @@ import AuthenticatedComponent from '../AuthenticatedComponent';
 
 import MaterialCartStore from '../../stores/MaterialCartStore';
 import MaterialCartActions from '../../actions/MaterialCartActions';
+
+import LocationActions from '../../actions/LocationActions';
 
 import StompApiService from '../../services/StompApiService';
 
@@ -128,9 +131,29 @@ class CheckOutPage extends Component {
   	}
 
 	//
-	//	Submit the material cart for checkout. Query the Stomp API remove endpoint
+	//	Check the users location. Submit the checkout if close enough to CEEO
 	//
-	_submitCheckout(type) {
+	_trySubmitCheckout(type) {
+		navigator.geolocation.getCurrentPosition(
+        	(position) => {
+            	if (LocationActions.isWithinCEEORadius(position.coords)) {
+            		this._submitCheckout(type);
+            	} else {
+            		AlertIOS.alert("You must be at the CEEO to complete this transaction");
+            	}	
+         	},
+         	(error) => {
+         		AlertIOS.alert("Geolocation error", error.message);
+         		return;
+         	},
+         	{enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      	);
+	}
+
+	//
+	//	Submit the material cart for checkout. Query the Stomp API remove or return endpoint
+	//
+   	_submitCheckout(type) {
 		this.setState({submitting : true});
 
 		var postData = new FormData();
@@ -179,11 +202,11 @@ class CheckOutPage extends Component {
 		} else {
 			submitMessage = (
 				<View style={styles.container}>
-				<Button style={styles.leftButton} large success onPress = {this._submitCheckout.bind(this, "return")}>
+				<Button style={styles.leftButton} large success onPress = {this._trySubmitCheckout.bind(this, "return")}>
 					<Text> Return </Text>
 				</Button>
 				
-				<Button style={styles.rightButton} large danger onPress = {this._submitCheckout.bind(this, "remove")}>
+				<Button style={styles.rightButton} large danger onPress = {this._trySubmitCheckout.bind(this, "remove")}>
 					<Text> Remove </Text>
 				</Button>
 				</View>

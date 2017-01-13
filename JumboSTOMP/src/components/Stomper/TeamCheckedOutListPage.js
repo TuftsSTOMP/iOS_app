@@ -2,7 +2,7 @@
  *	TeamCheckedOutListPage.js
  *
  *	Author: Sam Heilbron
- *	Last Updated: 10-04-2016
+ *	Last Updated: 01-10-2017
  *
  *	The Team Landing page.
  */
@@ -95,7 +95,7 @@ class TeamCheckedOutListPage extends Component {
 			<ListItem>
 				<Card>
 					<CardItem>
-						<Text>{transaction.name} ({transaction.quantity})</Text>
+						<Text>{transaction.quantity} {transaction.name} ({transaction.f_name} {transaction.l_name})</Text>
 						<Text note>Due back: {prettyDate}</Text>
 					</CardItem>
 				</Card>
