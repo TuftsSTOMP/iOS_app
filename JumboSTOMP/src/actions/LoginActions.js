@@ -9,6 +9,8 @@
  
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
 import LoginConstants from '../constants/LoginConstants.js';
+import StompApiConstants from '../constants/StompApiConstants.js';
+import MaterialCartConstants from '../constants/MaterialCartConstants.js';
 import {AlertIOS} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import StompApiService from '../services/StompApiService';
@@ -47,6 +49,14 @@ export default {
   	logoutUser: () => {
 		AppDispatcher.dispatch({
 	  		actionType: LoginConstants.LOGOUT_USER
+		});
+
+		AppDispatcher.dispatch({
+			actionType: MaterialCartConstants.REMOVE_ALL,
+		});
+
+		AppDispatcher.dispatch({
+			actionType: StompApiConstants.STOMP_API_MATERIAL_LIST_TOGGLE_FALSE_ALL,
 		});
 
 	 	Actions.Login()
